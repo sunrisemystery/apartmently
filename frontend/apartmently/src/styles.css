@@ -1,0 +1,225 @@
+@import "~@geoapify/geocoder-autocomplete/styles/minimal.css";
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  box-sizing: border-box;
+
+}
+
+body {
+  overflow-x: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+.ads-container {
+  margin-top: 4.5em;
+  width: 100%;
+  height: 92%;
+}
+
+.head {
+  margin-left: 1.8em;
+  margin-top: 1em;
+}
+
+.info-container {
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-between;
+}
+
+.add-button {
+  background-color: #0DAAC3;
+  box-shadow: 0 8px 8px #00000029;
+  padding: 0.5vw 1.2vh;
+  border-radius: 3em;
+  border: none;
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+  margin-right: 2em;
+  margin-top: 1em;
+}
+
+.add-button p {
+  display: inline-block;
+}
+
+.fa-plus {
+  margin-right: 0.5em;
+}
+
+.search-container {
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  width: 25vw;
+  height: 6.5vh;
+  box-shadow: 0 3px 6px #00000029;
+}
+
+.fa-search {
+  opacity: 0.5;
+  font-size: 1.5em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.filter {
+  margin-left: 5em;
+}
+
+.fa-chevron-down {
+  margin-left: 0.1em;
+}
+
+.grid-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  box-sizing: border-box;
+  margin-top: 2em;
+}
+
+
+.container {
+  display: flex;
+  width: 80%;
+  height: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.ad-container {
+  width: 15em;
+  height: 20em;
+  align-self: flex-start;
+  box-shadow: 0 3px 6px #00000029;
+  margin-bottom: 3em;
+  margin-right: 2em;
+  margin-left: 2em;
+
+}
+
+.img-container {
+  width: 100%;
+  height: 47%;
+  box-shadow: 0 3px 6px #00000029;
+  overflow: hidden;
+}
+
+.img-container img {
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 53%;
+}
+
+.price {
+  margin-top: 1em;
+  margin-right: 1em;
+  font-weight: 700;
+  align-self: flex-end;
+}
+
+.name {
+  font-weight: 700;
+  margin-left: 0.5em;
+}
+
+.location {
+  display: flex;
+  justify-content: space-between;
+}
+
+.location p {
+  margin-left: 0.5em;
+  font-size: 0.8em;
+  color: #727272;
+  display: inline-block;
+}
+
+.fa-heart {
+  margin-right: 0.5em;
+  font-size: 1.7em;
+}
+
+.additional {
+  margin-top: 1.5em;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.additional p {
+  display: inline-block;
+  margin-right: 0.5em;
+  color: #727272;
+  font-size: 0.8em;
+}
+
+.additional i {
+  color: #727272;
+  font-size: 1.1em;
+}
+.geoapify-autocomplete-input {
+  border: none;
+  border-radius: 9px;
+  box-shadow: 0 8px 8px #00000029;
+  font-size: 1em;
+  height: 5vh;
+  margin-top: 2em;
+  background-color: #F3F3F3;
+
+}
+.geoapify-close-button{
+  top: 15px;
+}
+
+@media screen and (max-width: 750px) {
+  .add-button p {
+    display: none;
+  }
+
+  .add-button {
+    padding: 1vw 3vh;
+    border-radius: 3em;
+  }
+
+  .fa-plus {
+    margin: 0;
+  }
+
+  .search {
+    width: 60vw;
+    height: 6.5vh;
+    margin-bottom: 1em;
+
+  }
+  .geoapify-autocomplete-input {
+    width: 80vw;
+  }
+}

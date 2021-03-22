@@ -1,0 +1,196 @@
+.ad-container-one {
+  width: 100vw;
+  height: 100vh;
+  margin-top: 4em;
+}
+
+.float {
+  display: flex;
+  width: 100%;
+  height: 80%;
+}
+
+.ad-info {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+  height: 90%;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  height: 80%;
+}
+
+.main-info {
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 20%;
+}
+
+.fa-map-marker-alt {
+  margin-right: 0.3em;
+}
+
+.loc {
+  margin-left: 2em;
+}
+
+.loc p {
+  color: #727272;
+  font-size: 0.8em;
+  margin-top: 0.2em;
+}
+
+.img-ad {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.img-ad img {
+  width: 80%;
+}
+
+.details {
+  width: 100%;
+  height: 30%;
+  margin-top: 1em;
+  padding-left: 2em;
+}
+
+.details p {
+  margin: 1em;
+}
+
+.details p>span {
+  margin: 2em;
+  color: #727272;
+}
+
+.val {
+  color: black;
+}
+
+.user-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 60%;
+  height: 63%;
+  box-shadow: 0 3px 6px #00000029;
+  margin-bottom: 2em;
+}
+
+.user-img {
+  width: 11vh;
+  height: 11vh;
+  margin-top: 2em;
+  background-color: blue;
+  border-radius: 100%;
+}
+
+.user-div p {
+  margin-top: 1em;
+  font-weight: 700;
+  color: #727272;
+
+}
+
+section {
+  margin: 0 2em 1.5em 2em;
+}
+
+section p {
+  text-align: justify;
+}
+
+.map {
+  width: 60%;
+  height: 55vh;
+  background-color: blueviolet;
+  margin: 2.5em auto;
+}
+
+footer {
+  width: 100%;
+  height: 20vh;
+}
+
+.add {
+  font-weight: 700;
+}
+
+.fa-heart {
+  font-size: 1.5em;
+}
+
+@media screen and (min-width:1300px) {
+  .loc .fa-heart {
+    display: none;
+  }
+
+  section+.user-div {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .user-info {
+    display: none;
+  }
+
+  .ad-info {
+    width: 100vw;
+  }
+
+  .img-ad {
+    height: 50%;
+  }
+
+  .map {
+    width: 100%;
+    height: 35vh;
+  }
+
+  .loc+h3 {
+    margin-right: 2em;
+  }
+
+  .float {
+    height: 60%;
+  }
+
+  .loc .fa-heart {
+    font-size: 1em;
+  }
+
+  span {
+    font-size: 0.9em;
+  }
+
+  .user-div {
+    width: 80%;
+    height: 40%;
+    margin: auto;
+  }
+
+
+}
+
+@media screen and (max-width: 370px) {
+  * {
+    font-size: 10px;
+  }
+}
