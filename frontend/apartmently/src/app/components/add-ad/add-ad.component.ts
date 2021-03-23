@@ -16,19 +16,19 @@ export class AddAdComponent implements OnInit {
       document.getElementById("autocomplete"),
       '067d039a00d245019a1a8e4be86031f8',
       { /* Geocoder options */ skipIcons: true, placeholder: 'Enter address for autocomplete fields and choose the correct one' });
-   autocomplete.addFilterByCountry(['pl']);
+    autocomplete.addFilterByCountry(['pl']);
 
-   autocomplete.on('select', (location) => {
-    // check selected location here 
-});
+    autocomplete.on('select', (location) => {
+      // check selected location here 
+    });
 
-autocomplete.on('suggestions', (suggestions) => {
-    // process suggestions here
-});
+    autocomplete.on('suggestions', (suggestions) => {
+      // process suggestions here
+    });
 
 
   }
 
-  
+
 
 }
