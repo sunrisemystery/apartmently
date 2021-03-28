@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdsListComponent implements OnInit {
 
+  currentName: string = 'Cozy House';
+  currPrice: number = 10000;
+
   constructor() { }
 
   ngOnInit(): void {

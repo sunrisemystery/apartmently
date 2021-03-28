@@ -51,6 +51,8 @@ a {
   font-weight: 700;
   margin-right: 2em;
   margin-top: 1em;
+  outline: none;
+  cursor: pointer;
 }
 
 .add-button p {

@@ -14,7 +14,9 @@ nav {
   color: white;
   text-transform: uppercase;
   font-size: 1.2em;
-  font-family: "Century Gothic", sans-serif
+  font-family: "Century Gothic", sans-serif;
+  outline: none;
+  cursor: pointer;
 }
 
 li a {
@@ -42,6 +44,8 @@ li a:hover,
   height: 6vh;
   background-color: tomato;
   border-radius: 100%;
+  cursor: pointer;
+  outline:none;
 }
 
 .placeholder {

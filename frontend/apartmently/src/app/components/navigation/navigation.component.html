@@ -1,14 +1,14 @@
 <nav>
   <i class="fas fa-bars"></i>
-  <p class="logo">apartmently</p>
+  <p class="logo" routerLink="/" routerLinkActive="active-link">apartmently</p>
   <ul>
-    <li><a href="">buy</a></li>
-    <li><a href="">sell</a></li>
-    <li><a href="">rent</a></li>
+    <li><a routerLink="/offers" routerLinkActive="active-link">buy</a></li>
+    <li><a routerLink="/add-offer" routerLinkActive="active-link">sell</a></li>
+    <li><a routerLink="/offers" routerLinkActive="active-link">rent</a></li>
     <div class="placeholder"></div>
-    <a href=""><i class="far fa-heart"></i></a>
-    <div class="img-container">
+    <a routerLink="/favorites" routerLinkActive="active-link"><i class="far fa-heart"></i></a>
+    <div routerLink="/profile" routerLinkActive="active-link" class="img-container">
     </div>
   </ul>
-  <a class="heart-mobile" href=""><i class="far fa-heart"></i></a>
+  <a routerLink="/favorites" routerLinkActive="active-link" class="heart-mobile"><i class="far fa-heart"></i></a>
 </nav>

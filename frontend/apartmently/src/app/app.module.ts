@@ -8,6 +8,22 @@ import { AdComponent } from './components/ad/ad.component';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AddAdComponent } from './components/add-ad/add-ad.component';
+import { AdTileComponent } from './components/ad-tile/ad-tile.component';
+import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+
+
+const routes: Routes = [
+{path: 'offers', component: AdsListComponent},
+{path: 'add-offer', component: AddAdComponent},
+{path: 'offers/:id', component: AdComponent},
+{path: 'offers/:keyword', component: AdsListComponent},
+{path: 'favorites', component: FavoritesComponent},
+{path: 'profile', component: ProfileComponent},
+{path: 'profile/:id', component: ProfileComponent},
+{path: '', redirectTo:'/offers',pathMatch:'full'},
+{path: '**', redirectTo:'/offers',pathMatch:'full'},
+];
 
 @NgModule({
   declarations: [
@@ -17,10 +33,13 @@ import { AddAdComponent } from './components/add-ad/add-ad.component';
     AdComponent,
     FavoritesComponent,
     ProfileComponent,
-    AddAdComponent
+    AddAdComponent,
+    AdTileComponent
   ],
   imports: [
-    BrowserModule
+    RouterModule.forRoot(routes),
+    BrowserModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
