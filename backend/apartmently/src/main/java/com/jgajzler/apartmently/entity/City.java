@@ -1,5 +1,6 @@
 package com.jgajzler.apartmently.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +24,7 @@ public class City {
     @Column(name = "name", columnDefinition = "VARCHAR(100)", nullable = false)
     private String name;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "city")
     private Set<Address> addresses;
 }

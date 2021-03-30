@@ -51,24 +51,30 @@ public class Ad {
     @Column(name = "is_active", columnDefinition = "boolean default true")
     private boolean isActive;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
-    @ManyToOne
-    @JoinColumn(name = "ads_type_id", nullable = false)
-    private AdType adType;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ad")
+    private Set<AdImage> adImages;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_favorites",
             joinColumns = @JoinColumn(name = "ad_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     Set<User> usersFav;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ad_type", columnDefinition = "ad_type_enum", nullable = false)
+    AdType adType;
+
+
+
 
 }
