@@ -21,6 +21,7 @@ const routes: Routes = [
 {path: 'favorites', component: FavoritesComponent},
 {path: 'profile', component: ProfileComponent},
 {path: 'profile/:id', component: ProfileComponent},
+{path: 'ad', component: AdComponent},
 {path: '', redirectTo:'/offers',pathMatch:'full'},
 {path: '**', redirectTo:'/offers',pathMatch:'full'},
 ];

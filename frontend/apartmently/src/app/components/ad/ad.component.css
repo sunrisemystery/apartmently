@@ -118,9 +118,14 @@ section p {
 
 .map {
   width: 60%;
-  height: 55vh;
-  background-color: blueviolet;
+  height: 70vh;
   margin: 2.5em auto;
+}
+
+#mapid {
+  width: 100%;
+  height: 70vh;
+  z-index: 0;
 }
 
 footer {
@@ -160,6 +165,11 @@ footer {
   }
 
   .map {
+    width: 100%;
+    height: 35vh;
+  }
+
+  #mapid {
     width: 100%;
     height: 35vh;
   }
