@@ -14,9 +14,9 @@ import javax.persistence.EntityNotFoundException;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-    private UserDetailsRepository userDetailsRepository;
-    private UserMapper userMapper;
+    private final UserRepository userRepository;
+    private final UserDetailsRepository userDetailsRepository;
+    private final UserMapper userMapper;
 
     @Autowired
 
@@ -31,8 +31,6 @@ public class UserService {
     public UserDto getUserById(Long id) {
         return userMapper.toDto(findById(id), findByUserId(id));
     }
-
-
 
     private User findById(Long id) {
         return userRepository.findById(id)
