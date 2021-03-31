@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class AdMapper {
 
-    public AdDto toDto(Ad ad){
-        return new AdDto(
+    public AdDto toDto(Ad ad) {
 
+        return new AdDto(
                 ad.getId(),
                 ad.getAdName(),
                 ad.getPlotSurface(),

@@ -1,33 +1,28 @@
 package com.jgajzler.apartmently.dto;
 
 import com.jgajzler.apartmently.entity.AdImage;
-import com.jgajzler.apartmently.entity.AdType;
+import com.jgajzler.apartmently.entity.enums.AdType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Date;
 import java.util.Set;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class AdDto {
-    private Long id;
-    private String adName;
-    private double plotSurface;
-    private int price;
-    private int numberOfBedrooms;
-    private int numberOfBathrooms;
-    private Date dateCreated;
-    private Date lastUpdated;
-    private boolean isActive;
-    private String city;
-    private String country;
-    private Set<AdImage> adImages;
-    AdType adType;
 
-
-
-
+    private final Long id;
+    private final String adName;
+    private final double plotSurface;
+    private final int price;
+    private final int numberOfBedrooms;
+    private final int numberOfBathrooms;
+    private final Date dateCreated;
+    private final Date lastUpdated;
+    private final boolean isActive;
+    private final String city;
+    private final String country;
+    private final Set<AdImage> adImages;
+    private final AdType adType;
 }

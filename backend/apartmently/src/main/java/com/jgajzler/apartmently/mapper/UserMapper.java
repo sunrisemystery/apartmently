@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public UserDto toDto(User user, UserDetails userDetails){
+    public UserDto toDto(User user, UserDetails userDetails) {
+
         return new UserDto(
                 user.getId(),
                 user.getEmail(),
@@ -17,7 +18,6 @@ public class UserMapper {
                 userDetails.getSurname(),
                 userDetails.getPhoneNumber(),
                 userDetails.getImageUrl()
-
         );
     }
 }
