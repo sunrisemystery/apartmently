@@ -1,5 +1,6 @@
 package com.jgajzler.apartmently.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class AdImage {
+
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -18,7 +21,8 @@ public class AdImage {
     @Column(name = "image_url", columnDefinition = "VARCHAR(200)", nullable = false)
     private String imageUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "ad_id",nullable = false)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ad_id", nullable = false)
     private Ad ad;
 }

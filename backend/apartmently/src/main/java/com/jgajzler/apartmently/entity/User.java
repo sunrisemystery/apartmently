@@ -1,6 +1,7 @@
 package com.jgajzler.apartmently.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jgajzler.apartmently.entity.enums.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -33,7 +34,7 @@ public class User {
     @Column(name = "password", columnDefinition = "VARCHAR(255)", nullable = false)
     private String password;
 
-    @Column(name="username", columnDefinition = "VARCHAR(50)", nullable = false)
+    @Column(name = "username", columnDefinition = "VARCHAR(50)", nullable = false)
     private String username;
 
     @OneToOne(mappedBy = "user")
@@ -45,6 +46,7 @@ public class User {
     @ManyToMany(mappedBy = "usersFav")
     Set<Ad> favoriteAds;
 
+    @JsonIgnore
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role", columnDefinition = "user_role_enum default 'COMMON_USER'")
     UserRole userRole;

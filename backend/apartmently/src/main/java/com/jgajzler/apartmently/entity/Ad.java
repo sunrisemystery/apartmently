@@ -1,5 +1,6 @@
 package com.jgajzler.apartmently.entity;
 
+import com.jgajzler.apartmently.entity.enums.AdType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -73,8 +74,6 @@ public class Ad {
     @Enumerated(EnumType.STRING)
     @Column(name = "ad_type", columnDefinition = "ad_type_enum", nullable = false)
     AdType adType;
-
-
 
 
 }
