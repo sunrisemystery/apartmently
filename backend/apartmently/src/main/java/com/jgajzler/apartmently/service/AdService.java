@@ -1,6 +1,7 @@
 package com.jgajzler.apartmently.service;
 
 import com.jgajzler.apartmently.dto.AdDto;
+import com.jgajzler.apartmently.entity.Ad;
 import com.jgajzler.apartmently.mapper.AdMapper;
 import com.jgajzler.apartmently.repository.AdRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.transaction.Transactional;
 
 @Service
 public class AdService {
@@ -29,5 +31,13 @@ public class AdService {
     public Page<AdDto> getAllByUserId(Long id, Pageable pageable) {
         return adRepository.findAllByUserId(id, pageable).map(adMapper::toDto);
     }
+
+    @Transactional
+    public Long add(Ad ad) {
+
+        return adRepository.save(ad).getId();
+
+    }
+
 
 }

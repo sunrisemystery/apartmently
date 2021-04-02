@@ -39,7 +39,7 @@ public class Address {
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
 
-    @OneToOne(mappedBy = "address")
+    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Ad ad;
 

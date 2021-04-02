@@ -22,4 +22,5 @@ public class AddressController {
     public AddressDto getAddressByAdId(@PathVariable("adId") Long id) {
         return addressService.getAddressByAdId(id);
     }
+
 }
