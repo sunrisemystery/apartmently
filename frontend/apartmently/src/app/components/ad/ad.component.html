@@ -3,10 +3,15 @@
     <div class="ad-info">
       <div class="main-info">
         <div class="loc">
-          <h3>Cozy Apartment <i class="far fa-heart"></i></h3>
-          <p><i class="fas fa-map-marker-alt"></i>Kraków, Poland</p>
+          <h3>{{adTile.adName}}<i class="far fa-heart"></i></h3>
+          <p><i class="fas fa-map-marker-alt"></i>{{adTile.city}}, {{adTile.country}}</p>
         </div>
-        <h3>$100,000</h3>
+        <div *ngIf="adTile.adType == 'SALE'; else myElse">
+          <h3>{{adTile.price}} zł</h3>
+        </div>
+        <ng-template #myElse>
+          <h3>{{adTile.price}} zł/mth</h3>
+        </ng-template>
       </div>
       <div class="img-ad">
         <img src="https://source.unsplash.com/random" alt="">
@@ -14,12 +19,12 @@
       <div class="details">
         <h3>Details</h3>
         <p>
-          <span>Bedrooms: <span class="val"> 3</span></span>
-          <span>Bathrooms: <span class="val"> 3</span></span>
+          <span>Bedrooms: <span class="val">{{adTile.numberOfBedrooms}}</span></span>
+          <span>Bathrooms: <span class="val">{{adTile.numberOfBathrooms}}</span></span>
         </p>
         <p>
-          <span>Plot Surface: <span class="val"> 3</span></span>
-          <span>Floor: <span class="val">3<sup>rd</sup></span> </span>
+          <span>Plot Surface: <span class="val"> {{adTile.plotSurface}}m<sup>2</sup></span></span>
+          <span>Floor: <span class="val">{{adDetails.floor}}<sup>rd</sup></span> </span>
         </p>
       </div>
     </div>
@@ -27,8 +32,8 @@
       <div class="user-div">
         <div class="user-img">
         </div>
-        <p>Tiffany</p>
-        <p>+48 332 123 456</p>
+        <p>{{adDetails.userName}}</p>
+        <p>{{adDetails.userPhone}}</p>
         <p><i class="far fa-envelope"></i> email me</p>
       </div>
       <p class="add"><i class="far fa-heart"></i> Add to favorites</p>
@@ -36,10 +41,7 @@
   </div>
   <section>
     <h3>Description</h3>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsa fugiat animi doloremque natus veritatis, minima
-      dolore quo excepturi impedit harum earum architecto unde nisi similique praesentium quisquam molestiae commodi
-      suscipit? Doloribus dolorum cum illum. Consectetur illum ex voluptatem officia animi nobis consequuntur, vitae
-      fuga, iste omnis optio possimus fugit iure! Distinctio harum autem quibusdam incidunt?</p>
+    <p>{{adDetails.description}}</p>
   </section>
   <section>
     <h3>Localization</h3>
@@ -49,8 +51,8 @@
   </section>
   <div class="user-div">
     <div class="user-img"></div>
-    <p>Tiffany</p>
-    <p>+48 332 123 456</p>
+    <p>{{adDetails.userName}}</p>
+    <p>{{adDetails.userPhone}}</p>
     <p><i class="far fa-envelope"></i> email me</p>
   </div>
   <footer></footer>

@@ -11,6 +11,9 @@ import { AddAdComponent } from './components/add-ad/add-ad.component';
 import { AdTileComponent } from './components/ad-tile/ad-tile.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {MatPaginatorModule} from '@angular/material/paginator'
+
 
 
 const routes: Routes = [
@@ -18,6 +21,7 @@ const routes: Routes = [
 {path: 'add-offer', component: AddAdComponent},
 {path: 'offers/:id', component: AdComponent},
 {path: 'offers/:keyword', component: AdsListComponent},
+{path: 'offers', component: AdsListComponent},
 {path: 'favorites', component: FavoritesComponent},
 {path: 'profile', component: ProfileComponent},
 {path: 'profile/:id', component: ProfileComponent},
@@ -36,11 +40,16 @@ const routes: Routes = [
     ProfileComponent,
     AddAdComponent,
     AdTileComponent
+
+
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    NoopAnimationsModule,
+    MatPaginatorModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

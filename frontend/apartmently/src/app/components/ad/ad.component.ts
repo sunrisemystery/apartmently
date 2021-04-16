@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-declare const L:any;
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { AdDetails } from 'src/app/common/ad-details';
+import { AdTile } from 'src/app/common/ad-tile';
+import { AdService } from 'src/app/services/ad-service.service';
+declare const L: any;
 
 @Component({
   selector: 'app-ad',
@@ -8,21 +12,49 @@ declare const L:any;
 })
 export class AdComponent implements OnInit {
 
-  constructor() { }
+  adTile: AdTile = new AdTile();
+  adDetails: AdDetails = new AdDetails();
+
+  constructor(private adService: AdService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+
+    this.route.paramMap.subscribe(() => {
+      this.handleAdDetails();
+    })
+  }
+
+  async handleAdDetails() {
+    const adId: number = +this.route.snapshot.paramMap.get('id');
+
+    this.adService.getAd(adId).subscribe(
+      data => {
+        this.adTile = data;
+      }
+    )
+
+    this.adService.getAdDetails(adId).subscribe(
+      data => {
+        this.adDetails = data;
+      }
+    )
+
+    await this.delay(1000);
+
+    this.initializeMap([this.adDetails.latitude, this.adDetails.longitude]);
+  }
+
+  initializeMap(coordinates: number[]) {
 
     if (!navigator.geolocation) {
       console.log('not supported');
 
     }
+
     navigator.geolocation.getCurrentPosition((position) => {
-      const coords = position.coords;
-      const latLong: number[] = [coords.latitude, coords.longitude];
-      const latLong2: number[] = [50.092035, 20.003633]
-  
-      console.log(`lat: ${position.coords.latitude}, long: ${position.coords.longitude}`);
-      let mymap = L.map('mapid').setView(latLong2, 14); //14 - zoom level
+
+      let mymap = L.map('mapid').setView(coordinates, 14); //14 - zoom level
+
       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VucmlzZW15c3RlcnkiLCJhIjoiY2tscXNvZng5MDVyZTJxbXA1bzZoYTVqOCJ9._g_3XgNOvfLxWP2NlK8IOw', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
@@ -31,19 +63,19 @@ export class AdComponent implements OnInit {
         zoomOffset: -1,
         accessToken: 'your.mapbox.access.token'
       }).addTo(mymap);
-      let circle = L.circle(latLong2, {
+      let circle = L.circle(coordinates, {
         color: 'red',
         fillColor: '#f03',
         fillOpacity: 0.5,
         radius: 500
-    }).addTo(mymap);
-      let marker = L.marker(latLong2).addTo(mymap);
-      let marker2 = L.marker(latLong).addTo(mymap);
+      }).addTo(mymap);
+      let marker = L.marker(coordinates).addTo(mymap);
       marker.bindPopup('<b>hi!</b>').openPopup();
 
     }
     );
-    this.watchPosition();
+
+    // this.watchPosition();
   }
 
   watchPosition() {
@@ -66,5 +98,9 @@ export class AdComponent implements OnInit {
 
       });
   }
+
+  delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
+}
 

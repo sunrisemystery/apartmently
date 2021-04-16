@@ -1,20 +1,25 @@
 <div class="ad-container">
-    <div class="img-container">
-      <img src="https://source.unsplash.com/random">
+  <div class="img-container">
+    <img src="https://source.unsplash.com/random">
+  </div>
+  <div class="info">
+    <div *ngIf="adTile.adType == 'SALE'; else myElse">
+      <p class="price">{{adTile.price}} zł</p>
     </div>
-    <div class="info">
-      <p class="price">{{price | currency: 'USD'}}</p>
-      <p class="name">{{name}}</p>
-      <div class="location">
-        <p>Kraków, Poland</p><i class="far fa-heart"></i>
-      </div>
-      <div class="additional">
-        <i class="fas fa-home"></i>
-        <p>65m<sup>2</sup></p>
-        <i class="fas fa-bed"></i>
-        <p>2</p>
-        <i class="fas fa-bath"></i>
-        <p>3</p>
-      </div>
+    <ng-template #myElse>
+      <p class="price">{{adTile.price}} zł/mth</p>
+    </ng-template>
+    <p class="name">{{adTile.adName}}</p>
+    <div class="location">
+      <p>{{adTile.city}}, {{adTile.country}}</p><i class="far fa-heart"></i>
+    </div>
+    <div class="additional">
+      <i class="fas fa-home"></i>
+      <p>{{adTile.plotSurface}}m<sup>2</sup></p>
+      <i class="fas fa-bed"></i>
+      <p>{{adTile.numberOfBedrooms}}</p>
+      <i class="fas fa-bath"></i>
+      <p>{{adTile.numberOfBathrooms}}</p>
     </div>
   </div>
+</div>

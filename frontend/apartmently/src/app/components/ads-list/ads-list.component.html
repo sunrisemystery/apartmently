@@ -11,14 +11,13 @@
   <a class="filter">Filter<i class="fas fa-chevron-down"></i></a>
   <div class="grid-container">
     <div class="container">
-      
-      <app-ad-tile [price]="currPrice" [name]="currentName"></app-ad-tile>
-      <app-ad-tile [price]="currPrice" [name]="currentName"></app-ad-tile>
-      <app-ad-tile [price]="currPrice" [name]="currentName"></app-ad-tile>
-      <app-ad-tile [price]="currPrice" [name]="currentName"></app-ad-tile>
-      <app-ad-tile [price]="currPrice" [name]="currentName"></app-ad-tile>
-    
+      <div *ngFor="let tempAd of ads">
+        <app-ad-tile routerLink="/offers/{{tempAd.id}}" [state]="{data: tempAd}" [adTile]="tempAd"></app-ad-tile>
+      </div>
 
     </div>
   </div>
+  <mat-paginator [length]="theTotalElements" [pageSize]="thePageSize" [pageSizeOptions]="[10, 25, 100]"
+    (page)="OnPageChange($event)">
+  </mat-paginator>
 </div>
