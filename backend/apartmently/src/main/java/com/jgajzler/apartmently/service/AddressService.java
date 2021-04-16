@@ -1,6 +1,7 @@
 package com.jgajzler.apartmently.service;
 
 import com.jgajzler.apartmently.dto.AddressDto;
+import com.jgajzler.apartmently.entity.Address;
 import com.jgajzler.apartmently.mapper.AddressMapper;
 import com.jgajzler.apartmently.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +24,6 @@ public class AddressService {
         return addressMapper.toDto(addressRepository.findAddressByAdId(id).
                 orElseThrow(EntityNotFoundException::new));
     }
+
+
 }

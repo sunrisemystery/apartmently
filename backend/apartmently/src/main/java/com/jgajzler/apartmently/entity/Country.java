@@ -3,6 +3,7 @@ package com.jgajzler.apartmently.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.rest.core.annotation.RestResource;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -26,5 +27,6 @@ public class Country {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "country")
+    @RestResource(exported = false)
     private Set<Address> addresses;
 }

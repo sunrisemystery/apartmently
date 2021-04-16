@@ -1,9 +1,12 @@
 package com.jgajzler.apartmently.entity;
 
+import com.jgajzler.apartmently.config.PostgreSQLEnumType;
 import com.jgajzler.apartmently.entity.enums.AdType;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -11,7 +14,14 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "ads")
+@Table(name = "ads", uniqueConstraints = {
+        @UniqueConstraint(name = "address_unique", columnNames = "address_id")
+
+})
+@TypeDef(
+        name = "pgsql_enum",
+        typeClass = PostgreSQLEnumType.class
+)
 @Getter
 @Setter
 public class Ad {
@@ -50,10 +60,10 @@ public class Ad {
     private Date lastUpdated;
 
     @Column(name = "is_active", columnDefinition = "boolean default true")
-    private boolean isActive;
+    private boolean isActive = true;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "address_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     private Address address;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ad")
@@ -73,6 +83,7 @@ public class Ad {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ad_type", columnDefinition = "ad_type_enum", nullable = false)
+    @Type(type = "pgsql_enum")
     AdType adType;
 
 

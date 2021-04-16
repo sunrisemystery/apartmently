@@ -10,6 +10,7 @@ import java.util.Set;
 
 @Getter
 @AllArgsConstructor
+
 public class AdDto {
 
     private final Long id;
