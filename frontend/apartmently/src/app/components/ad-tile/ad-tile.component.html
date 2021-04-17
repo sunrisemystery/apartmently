@@ -3,9 +3,10 @@
     <img src="https://source.unsplash.com/random">
   </div>
   <div class="info">
-    <div *ngIf="adTile.adType == 'SALE'; else myElse">
+    <div *ngIf="adTile.adType == 'SALE'; then thenBlock else myElse"></div>
+    <ng-template #thenBlock>
       <p class="price">{{adTile.price}} zł</p>
-    </div>
+    </ng-template>
     <ng-template #myElse>
       <p class="price">{{adTile.price}} zł/mth</p>
     </ng-template>

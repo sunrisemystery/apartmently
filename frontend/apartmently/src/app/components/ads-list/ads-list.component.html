@@ -14,7 +14,6 @@
       <div *ngFor="let tempAd of ads">
         <app-ad-tile routerLink="/offers/{{tempAd.id}}" [state]="{data: tempAd}" [adTile]="tempAd"></app-ad-tile>
       </div>
-
     </div>
   </div>
   <mat-paginator [length]="theTotalElements" [pageSize]="thePageSize" [pageSizeOptions]="[10, 25, 100]"

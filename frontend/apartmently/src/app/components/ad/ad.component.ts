@@ -39,7 +39,7 @@ export class AdComponent implements OnInit {
       }
     )
 
-    await this.delay(1000);
+    await this.delay(2000);
 
     this.initializeMap([this.adDetails.latitude, this.adDetails.longitude]);
   }

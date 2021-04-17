@@ -60,4 +60,8 @@ public class AdService {
         return adRepository.findAllByAdType(adType, pageable).map(adMapper::toDto);
     }
 
+    public Page<AdDto> getAll(Pageable pageable) {
+        return adRepository.findAll(pageable).map(adMapper::toDto);
+    }
+
 }

@@ -119,8 +119,16 @@ a {
   box-shadow: 0 3px 6px #00000029;
   margin-bottom: 3em;
   margin-right: 2em;
-  margin-left: 2em;
+  margin-left: 2em; 
+}
 
+app-ad-tile{
+  border: none;
+  outline: 0;
+}
+
+.ad-container:hover{
+  cursor: pointer;
 }
 
 .img-container {

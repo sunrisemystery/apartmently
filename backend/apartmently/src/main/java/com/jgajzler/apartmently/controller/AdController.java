@@ -27,6 +27,11 @@ public class AdController {
         this.adService = adService;
     }
 
+    @GetMapping
+    public Page<AdDto> getAll(Pageable pageable) {
+        return adService.getAll(pageable);
+    }
+
     @GetMapping(path = "details/{adId}")
     public AdDetailsDto getAdDetailsById(@PathVariable("adId") Long id) {
         return adService.getAdDetailsById(id);

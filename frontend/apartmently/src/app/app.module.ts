@@ -12,22 +12,22 @@ import { AdTileComponent } from './components/ad-tile/ad-tile.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {MatPaginatorModule} from '@angular/material/paginator'
+import { MatPaginatorModule } from '@angular/material/paginator'
 
 
 
 const routes: Routes = [
-{path: 'offers', component: AdsListComponent},
-{path: 'add-offer', component: AddAdComponent},
-{path: 'offers/:id', component: AdComponent},
-{path: 'offers/:keyword', component: AdsListComponent},
-{path: 'offers', component: AdsListComponent},
-{path: 'favorites', component: FavoritesComponent},
-{path: 'profile', component: ProfileComponent},
-{path: 'profile/:id', component: ProfileComponent},
-{path: 'ad', component: AdComponent},
-{path: '', redirectTo:'/offers',pathMatch:'full'},
-{path: '**', redirectTo:'/offers',pathMatch:'full'},
+  { path: 'offers', component: AdsListComponent },
+  { path: 'for-rent', component: AdsListComponent },
+  { path: 'for-sale', component: AdsListComponent },
+  { path: 'add-offer', component: AddAdComponent },
+  { path: 'offers/:id', component: AdComponent },
+  { path: 'offers/:keyword', component: AdsListComponent },
+  { path: 'favorites', component: FavoritesComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'profile/:id', component: ProfileComponent },
+  { path: '', redirectTo: '/offers', pathMatch: 'full' },
+  { path: '**', redirectTo: '/offers', pathMatch: 'full' },
 ];
 
 @NgModule({

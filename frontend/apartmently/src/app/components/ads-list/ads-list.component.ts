@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdTile } from 'src/app/common/ad-tile';
 import { AdService } from 'src/app/services/ad-service.service';
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
@@ -17,16 +17,36 @@ export class AdsListComponent implements OnInit {
   thePageSize: number = 10;
   theTotalElements: number = 0;
 
-  constructor(private adService: AdService, private route: ActivatedRoute) { }
+  constructor(private adService: AdService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(() => {
-      this.listAdsForRent();
-    })
+    if (this.router.url === '/for-rent') {
+
+      this.route.paramMap.subscribe(() => {
+        this.listAdsForRent();
+      })
+    }
+    else if (this.router.url === '/for-sale') {
+      this.route.paramMap.subscribe(() => {
+        this.listAdsForSale();
+      })
+    }
+    else {
+      this.route.paramMap.subscribe(() => {
+        this.listAllAds();
+      })
+    }
   }
 
+  listAllAds() {
+    this.adService.getAdsPaginate(this.thePageNumber - 1, this.thePageSize).subscribe(this.processResult());
+  }
   listAdsForRent() {
     this.adService.getAdsForRentPaginate(this.thePageNumber - 1, this.thePageSize).subscribe(this.processResult());
+  }
+
+  listAdsForSale() {
+    this.adService.getAdsForSalePaginate(this.thePageNumber - 1, this.thePageSize).subscribe(this.processResult());
   }
 
   processResult() {
