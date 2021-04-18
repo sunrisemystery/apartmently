@@ -16,22 +16,29 @@ export class AdsListComponent implements OnInit {
   thePageNumber: number = 1;
   thePageSize: number = 10;
   theTotalElements: number = 0;
+  pageTitle: string = "All properties";
+  searchMode: boolean = false;
+
+  previousKeyword: string = null;
 
   constructor(private adService: AdService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     if (this.router.url === '/for-rent') {
+      this.pageTitle = "Properties for rent";
 
       this.route.paramMap.subscribe(() => {
         this.listAdsForRent();
       })
     }
     else if (this.router.url === '/for-sale') {
+      this.pageTitle = "Properties for sale";
       this.route.paramMap.subscribe(() => {
         this.listAdsForSale();
       })
     }
     else {
+      this.pageTitle = "All properties";
       this.route.paramMap.subscribe(() => {
         this.listAllAds();
       })
@@ -39,14 +46,24 @@ export class AdsListComponent implements OnInit {
   }
 
   listAllAds() {
-    this.adService.getAdsPaginate(this.thePageNumber - 1, this.thePageSize).subscribe(this.processResult());
+
+    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+    if (this.searchMode) {
+      this.searchAds();
+    } else {
+      this.adService.getAdsPaginate(this.thePageNumber - 1, this.thePageSize)
+      .subscribe(this.processResult());
+    }
   }
+
   listAdsForRent() {
-    this.adService.getAdsForRentPaginate(this.thePageNumber - 1, this.thePageSize).subscribe(this.processResult());
+    this.adService.getAdsForRentPaginate(this.thePageNumber - 1, this.thePageSize)
+    .subscribe(this.processResult());
   }
 
   listAdsForSale() {
-    this.adService.getAdsForSalePaginate(this.thePageNumber - 1, this.thePageSize).subscribe(this.processResult());
+    this.adService.getAdsForSalePaginate(this.thePageNumber - 1, this.thePageSize)
+    .subscribe(this.processResult());
   }
 
   processResult() {
@@ -63,5 +80,24 @@ export class AdsListComponent implements OnInit {
     this.thePageSize = event.pageSize;
     this.thePageNumber = event.pageIndex;
     this.listAdsForRent();
+  }
+
+  searchAds() {
+    this.pageTitle = "Search results";
+    const keyword: string = this.route.snapshot.paramMap.get('keyword');
+    if (this.previousKeyword != keyword) {
+      this.thePageNumber = 1;
+    }
+    this.previousKeyword = keyword;
+    this.adService.searchAds(this.thePageNumber - 1, this.thePageSize, keyword)
+    .subscribe(this.processResult());
+  }
+
+  doSearch(value: string) {
+    if (value) {
+      this.router.navigateByUrl(`/search/${value}`);
+    } else {
+      this.router.navigateByUrl(`/offers`);
+    }
   }
 }

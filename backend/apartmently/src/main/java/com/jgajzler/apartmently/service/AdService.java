@@ -64,4 +64,8 @@ public class AdService {
         return adRepository.findAll(pageable).map(adMapper::toDto);
     }
 
+    public Page<AdDto> findAllByKeyword(String keyword, Pageable pageable) {
+        return adRepository.findAllByKeyword(keyword, pageable).map(adMapper::toDto);
+    }
+
 }

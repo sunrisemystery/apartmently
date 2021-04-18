@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'for-sale', component: AdsListComponent },
   { path: 'add-offer', component: AddAdComponent },
   { path: 'offers/:id', component: AdComponent },
-  { path: 'offers/:keyword', component: AdsListComponent },
+  { path: 'search/:keyword', component: AdsListComponent },
   { path: 'favorites', component: FavoritesComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'profile/:id', component: ProfileComponent },
@@ -40,8 +40,6 @@ const routes: Routes = [
     ProfileComponent,
     AddAdComponent,
     AdTileComponent
-
-
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -49,7 +47,6 @@ const routes: Routes = [
     HttpClientModule,
     NoopAnimationsModule,
     MatPaginatorModule
-
   ],
   providers: [],
   bootstrap: [AppComponent]

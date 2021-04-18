@@ -1,12 +1,15 @@
 <div class="ads-container">
   <div class="info-container">
-    <h2 class="head">Properties for sale</h2>
+    <h2 class="head">{{pageTitle}}</h2>
     <button routerLink="/add-offer" routerLinkActive="active-link" class="add-button"><i class="fas fa-plus"></i>
       <p>Add property</p>
     </button>
   </div>
   <div class="search-container">
-    <div class="search"><i class="fas fa-search"></i>SEARCH</div>
+    <div class="search">
+      <input #myInput type="text" placeholder="SEARCH" class="search-input" (keyup.enter)="doSearch(myInput.value)" />
+      <i class="fas fa-search"></i>
+    </div>
   </div>
   <a class="filter">Filter<i class="fas fa-chevron-down"></i></a>
   <div class="grid-container">

@@ -57,6 +57,11 @@ public class AdController {
         return adService.getAdByAdType(AdType.SALE, pageable);
     }
 
+    @GetMapping(path = "search/{keyword}")
+    public Page<AdDto> getAllByKeyword(@PathVariable("keyword") String keyword, Pageable pageable) {
+        return adService.findAllByKeyword(keyword, pageable);
+    }
+
     @PostMapping
     public ResponseEntity<Map<String, Long>> create(@RequestBody Ad ad) {
 
