@@ -68,4 +68,7 @@ public class AdService {
         return adRepository.findAllByKeyword(keyword, pageable).map(adMapper::toDto);
     }
 
+    public Page<AdDto> findUserFavoritesByUserId(Long id, Pageable pageable) {
+        return adRepository.findAdsByUsersFavId(id, pageable).map(adMapper::toDto);
+    }
 }

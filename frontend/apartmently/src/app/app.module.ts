@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { AdsListComponent } from './components/ads-list/ads-list.component';
 import { AdComponent } from './components/ad/ad.component';
-import { FavoritesComponent } from './components/favorites/favorites.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AddAdComponent } from './components/add-ad/add-ad.component';
 import { AdTileComponent } from './components/ad-tile/ad-tile.component';
@@ -23,7 +22,7 @@ const routes: Routes = [
   { path: 'add-offer', component: AddAdComponent },
   { path: 'offers/:id', component: AdComponent },
   { path: 'search/:keyword', component: AdsListComponent },
-  { path: 'favorites', component: FavoritesComponent },
+  { path: 'favorites', component: AdsListComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'profile/:id', component: ProfileComponent },
   { path: '', redirectTo: '/offers', pathMatch: 'full' },
@@ -36,7 +35,6 @@ const routes: Routes = [
     NavigationComponent,
     AdsListComponent,
     AdComponent,
-    FavoritesComponent,
     ProfileComponent,
     AddAdComponent,
     AdTileComponent

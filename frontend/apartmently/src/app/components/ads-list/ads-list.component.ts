@@ -18,6 +18,8 @@ export class AdsListComponent implements OnInit {
   theTotalElements: number = 0;
   pageTitle: string = "All properties";
   searchMode: boolean = false;
+  //hardcoded value
+  userId: number = 1;
 
   previousKeyword: string = null;
 
@@ -30,14 +32,17 @@ export class AdsListComponent implements OnInit {
       this.route.paramMap.subscribe(() => {
         this.listAdsForRent();
       })
-    }
-    else if (this.router.url === '/for-sale') {
+    } else if (this.router.url === '/for-sale') {
       this.pageTitle = "Properties for sale";
       this.route.paramMap.subscribe(() => {
         this.listAdsForSale();
       })
-    }
-    else {
+    } else if (this.router.url === '/favorites') {
+      this.pageTitle = "Your favorites";
+      this.route.paramMap.subscribe(() => {
+        this.listUserFavorites();
+      })
+    } else {
       this.pageTitle = "All properties";
       this.route.paramMap.subscribe(() => {
         this.listAllAds();
@@ -52,18 +57,23 @@ export class AdsListComponent implements OnInit {
       this.searchAds();
     } else {
       this.adService.getAdsPaginate(this.thePageNumber - 1, this.thePageSize)
-      .subscribe(this.processResult());
+        .subscribe(this.processResult());
     }
   }
 
   listAdsForRent() {
     this.adService.getAdsForRentPaginate(this.thePageNumber - 1, this.thePageSize)
-    .subscribe(this.processResult());
+      .subscribe(this.processResult());
   }
 
   listAdsForSale() {
     this.adService.getAdsForSalePaginate(this.thePageNumber - 1, this.thePageSize)
-    .subscribe(this.processResult());
+      .subscribe(this.processResult());
+  }
+
+  listUserFavorites() {
+    this.adService.getUserFavoritesPaginate(this.thePageNumber - 1, this.thePageSize, this.userId)
+      .subscribe(this.processResult());
   }
 
   processResult() {
@@ -90,7 +100,7 @@ export class AdsListComponent implements OnInit {
     }
     this.previousKeyword = keyword;
     this.adService.searchAds(this.thePageNumber - 1, this.thePageSize, keyword)
-    .subscribe(this.processResult());
+      .subscribe(this.processResult());
   }
 
   doSearch(value: string) {

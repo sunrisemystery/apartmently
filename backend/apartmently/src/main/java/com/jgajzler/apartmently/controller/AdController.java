@@ -62,6 +62,12 @@ public class AdController {
         return adService.findAllByKeyword(keyword, pageable);
     }
 
+    @GetMapping(path = "favorites/{userId}")
+    public Page<AdDto> getUserFavorites(@PathVariable("userId") Long id, Pageable pageable) {
+        return adService.findUserFavoritesByUserId(id, pageable);
+
+    }
+
     @PostMapping
     public ResponseEntity<Map<String, Long>> create(@RequestBody Ad ad) {
 

@@ -1,6 +1,5 @@
 package com.jgajzler.apartmently.service;
 
-import com.jgajzler.apartmently.dto.AdDto;
 import com.jgajzler.apartmently.dto.UserDto;
 import com.jgajzler.apartmently.entity.User;
 import com.jgajzler.apartmently.entity.UserDetails;
@@ -12,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -25,7 +22,8 @@ public class UserService {
 
 
     @Autowired
-    public UserService(UserRepository userRepository, UserDetailsRepository userDetailsRepository, UserMapper userMapper, AdMapper adMapper) {
+    public UserService(UserRepository userRepository, UserDetailsRepository userDetailsRepository,
+                       UserMapper userMapper, AdMapper adMapper) {
         this.userRepository = userRepository;
         this.userDetailsRepository = userDetailsRepository;
         this.userMapper = userMapper;
@@ -47,13 +45,12 @@ public class UserService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    public Set<AdDto> getUserFavorites(Long id) {
-        return userRepository.findUserById(id)
-                .getFavoriteAds()
-                .stream()
-                .map(adMapper::toDto).collect(Collectors.toSet());
-
-    }
-
+//    public Set<AdDto> getUserFavorites(Long id) {
+//        return userRepository.findUserById(id)
+//                .getFavoriteAds()
+//                .stream()
+//                .map(adMapper::toDto).collect(Collectors.toSet());
+//
+//    }
 
 }

@@ -26,4 +26,6 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
             "or upper(a.address.country.name) like upper(?1)")
     Page<Ad> findAllByKeyword(String keyword, Pageable pageable);
 
+    Page<Ad> findAdsByUsersFavId(Long id, Pageable pageable);
+
 }

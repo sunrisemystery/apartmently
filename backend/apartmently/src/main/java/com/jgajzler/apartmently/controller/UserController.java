@@ -23,10 +23,10 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping(path = "favorites/{userId}")
-    public Set<AdDto> getUserFavorites(@PathVariable("userId") Long id) {
-        return userService.getUserFavorites(id);
-    }
+//    @GetMapping(path = "favorites/{userId}")
+//    public Set<AdDto> getUserFavorites(@PathVariable("userId") Long id) {
+//        return userService.getUserFavorites(id);
+//    }
 
 
 }
