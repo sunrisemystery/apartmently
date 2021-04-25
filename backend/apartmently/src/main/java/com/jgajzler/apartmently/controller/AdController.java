@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -65,7 +67,11 @@ public class AdController {
     @GetMapping(path = "favorites/{userId}")
     public Page<AdDto> getUserFavorites(@PathVariable("userId") Long id, Pageable pageable) {
         return adService.findUserFavoritesByUserId(id, pageable);
+    }
 
+    @GetMapping(path = "ad-types")
+    public List<AdType> getAdTypes() {
+        return Arrays.asList(AdType.values());
     }
 
     @PostMapping

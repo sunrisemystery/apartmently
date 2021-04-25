@@ -11,7 +11,16 @@ import { AdTileComponent } from './components/ad-tile/ad-tile.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatPaginatorModule } from '@angular/material/paginator'
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from "@angular/fire";
+import { environment } from "../environments/environment";
+import {
+  AngularFireStorageModule,
+  AngularFireStorageReference,
+  AngularFireUploadTask
+} from "@angular/fire/storage";
+
 
 
 
@@ -44,7 +53,9 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     NoopAnimationsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    AngularFireStorageModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

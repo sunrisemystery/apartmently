@@ -15,7 +15,9 @@
   height: 100%;
 }
 
-.ad-form {
+
+
+.form-group{
   display: flex;
   align-items: center;
   height: 90%;
@@ -105,6 +107,22 @@ input[type="text"] {
   background-color: #F3F3F3;
 }
 
+select{
+  height: 6vh;
+  width: 19vw;
+  border: 0;
+  padding-left: 2.5vh;
+  background: #FFFFFF 0 0 no-repeat padding-box;
+  box-shadow: 0 8px 8px #00000029;
+  opacity: 0.92;
+  appearance: none;
+  outline: none;
+  border-radius: 9px;
+  margin: 1vh 1vh 2vh;
+  font-size: 1em;
+  background-color: #F3F3F3;
+}
+
 textarea {
   width: 80%;
   height: 40%;
@@ -142,7 +160,8 @@ button:hover {
 }
 
 @media screen and (max-width: 1000px) {
-  .ad-form {
+
+  .form-group{
     flex-direction: column;
   }
 
@@ -163,6 +182,10 @@ button:hover {
   }
 
   input[type="text"] {
+    width: 80%;
+  }
+
+  select{
     width: 80%;
   }
 

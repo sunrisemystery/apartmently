@@ -9,6 +9,7 @@ public class CountryMapper {
     public CountryDto toDto(Country country) {
 
         return new CountryDto(
+                country.getId(),
                 country.getName()
         );
     }
