@@ -14,7 +14,7 @@ export class AdsListComponent implements OnInit {
   ads: AdTile[];
   //new properties for pagination
   thePageNumber: number = 1;
-  thePageSize: number = 10;
+  thePageSize: number = 5;
   theTotalElements: number = 0;
   pageTitle: string = "All properties";
   searchMode: boolean = false;
@@ -89,7 +89,15 @@ export class AdsListComponent implements OnInit {
 
     this.thePageSize = event.pageSize;
     this.thePageNumber = event.pageIndex;
-    this.listAdsForRent();
+    console.log(this.thePageSize);
+    if (this.router.url === '/offers') {
+      this.listAllAds();
+    } else if (this.router.url === '/for-sale') {
+      this.listAdsForSale();
+    } else {
+      this.listAdsForRent();
+    }
+
   }
 
   searchAds() {

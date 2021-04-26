@@ -10,6 +10,7 @@ export class AdOffer {
     price: number;
     numberOfBedrooms: number;
     numberOfBathrooms: number;
+    floorNumber: number;
     address: Address = new Address();
     user: User = new User();
     adType: string;

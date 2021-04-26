@@ -102,6 +102,7 @@ export class AddAdComponent implements OnInit {
     this.addedAd.numberOfBedrooms = +this.adFormGroup.get('ad.numberOfBedrooms').value;
     this.addedAd.plotSurface = +this.adFormGroup.get('ad.plotSurface').value;
     this.addedAd.price = +this.adFormGroup.get('ad.price').value;
+    this.addedAd.floorNumber = +this.adFormGroup.get('ad.floor').value;
     //hardcoded value TODO
     this.addedAd.user.id = 1;
     this.addedAd.address.city.name = this.adFormGroup.get('ad.city').value;
