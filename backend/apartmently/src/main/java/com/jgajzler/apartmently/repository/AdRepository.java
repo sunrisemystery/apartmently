@@ -5,8 +5,10 @@ import com.jgajzler.apartmently.entity.enums.AdType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -27,5 +29,11 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
     Page<Ad> findAllByKeyword(String keyword, Pageable pageable);
 
     Page<Ad> findAdsByUsersFavId(Long id, Pageable pageable);
+
+    @Transactional
+    @Modifying
+    @Query("update Ad ad set ad.isActive = ?2 where ad.id = ?1")
+    void setActiveById(Long id, boolean isActive);
+
 
 }

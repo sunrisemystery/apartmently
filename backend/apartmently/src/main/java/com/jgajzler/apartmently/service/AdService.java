@@ -71,4 +71,14 @@ public class AdService {
     public Page<AdDto> findUserFavoritesByUserId(Long id, Pageable pageable) {
         return adRepository.findAdsByUsersFavId(id, pageable).map(adMapper::toDto);
     }
+
+    public void deleteAdById(Long id) {
+        adRepository.deleteById(id);
+    }
+
+    public void setActiveById(Long id, boolean isActive) {
+        adRepository.setActiveById(id, isActive);
+    }
+
+
 }

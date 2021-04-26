@@ -87,4 +87,14 @@ public class AdController {
     public void addToFavorites(@PathVariable("userId") Long userId, @PathVariable("adId") Long adId) {
         adService.addToFavorites(userId, adId);
     }
+
+    @DeleteMapping(path = "{adId}")
+    public void deleteAd(@PathVariable("adId") Long id) {
+        adService.deleteAdById(id);
+    }
+
+    @PatchMapping("active/{adId}/{isActive}")
+    public void changeActiveState(@PathVariable("adId") Long id, @PathVariable("isActive") boolean isActive) {
+        adService.setActiveById(id, isActive);
+    }
 }
