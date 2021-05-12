@@ -26,4 +26,10 @@ public class AdImageService {
                 .map(adImageMapper::toDto)
                 .collect(Collectors.toList());
     }
+
+    public void saveImage(Long id, List<String> urls) {
+        for (String url : urls) {
+            adImageRepository.saveImageByAdId(id, url);
+        }
+    }
 }
