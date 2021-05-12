@@ -5,6 +5,11 @@ import { Country } from 'src/app/common/country';
 import { AdFormService } from 'src/app/services/ad-form.service';
 import { Router } from '@angular/router';
 import { AdOffer } from 'src/app/common/ad-offer';
+import { Observable } from 'rxjs';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { finalize } from "rxjs/operators";
+import { v4 as uuidv4 } from 'uuid';
+
 
 @Component({
   selector: 'app-add-ad',
@@ -19,9 +24,15 @@ export class AddAdComponent implements OnInit {
   adTypes: string[] = [];
   cityId: number;
   cityExists: boolean;
+  imageSrc: string;
+  selectedFile: File = null;
+  downloadURL: Observable<string>;
+  firebaseLink: string;
+  adLinks: string[] = [];
+  createdAdId: number = null;
 
 
-  constructor(private formBuilder: FormBuilder, private adFormService: AdFormService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private adFormService: AdFormService, private router: Router, private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
 
@@ -152,15 +163,83 @@ export class AddAdComponent implements OnInit {
     })
   }
 
+  onFileChange(event) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+
+        this.imageSrc = reader.result as string;
+
+        this.adFormGroup.patchValue({
+          fileSource: reader.result
+        });
+
+      };
+
+
+      const storageFile = event.target.files[0];
+      const uuid = uuidv4();
+      const filePath = `user/1/ads/${uuid}`;
+      const fileRef = this.storage.ref(filePath);
+      const task = this.storage.upload(filePath, storageFile);
+      task.snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.downloadURL = fileRef.getDownloadURL();
+            this.downloadURL.subscribe(url => {
+              if (url) {
+                this.firebaseLink = url;
+                this.adLinks.push(this.firebaseLink);
+              }
+              console.log(this.firebaseLink);
+            });
+
+          })
+        )
+        .subscribe(url => {
+          if (url) {
+            console.log(url);
+          }
+        });
+    }
+
+  }
+
+  deleteFirebaseImages() {
+    this.adLinks.forEach((element) => {
+      this.storage.refFromURL(element).delete();
+    })
+  }
+
   placeAd(cityId: number) {
     this.addedAd.address.city.id = cityId;
 
     this.adFormService.placeAd(this.addedAd).subscribe(
       {
         next: response => {
+          console.log(response);
+          this.createdAdId = response.id;
+          this.adFormService.placeImages(this.createdAdId, this.adLinks).subscribe(
+            {
+              next: response => {
+
+              },
+              error: err => {
+                this.deleteFirebaseImages();
+                alert(err.message);
+              }
+            }
+          )
+
           alert(`You added an offer`);
+
         },
         error: err => {
+          this.deleteFirebaseImages();
           alert(err.message);
         }
       }

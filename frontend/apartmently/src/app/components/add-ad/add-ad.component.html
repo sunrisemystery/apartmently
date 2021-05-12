@@ -10,8 +10,9 @@
             <i class="far fa-images"></i>
             <p id="choose">PRESS TO CHOOSE A FILE</p>
           </label>
-          <input class="file-input" id="file-input" name="file" type="file">
+          <input class="file-input" id="file-input" name="file" type="file" #adPhoto (change)="onFileChange($event)">
         </div>
+        <img [src]="imageSrc" *ngIf="imageSrc" style="height: 200px; width:400px">
         <textarea formControlName="description" name="" form="ad-form" cols="30" rows="10" wrap="soft"
           placeholder="Write property description here"></textarea>
       </div>

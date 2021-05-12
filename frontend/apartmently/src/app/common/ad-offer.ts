@@ -1,4 +1,4 @@
-import { AdType } from "./ad-type.enum";
+
 import { Address } from "./address";
 import { User } from "./user";
 
@@ -13,5 +13,6 @@ export class AdOffer {
     floorNumber: number;
     address: Address = new Address();
     user: User = new User();
+    // adImages: Array<AdImage> =  new Array();
     adType: string;
 }

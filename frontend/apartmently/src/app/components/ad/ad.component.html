@@ -14,7 +14,8 @@
         </ng-template>
       </div>
       <div class="img-ad">
-        <img src="https://source.unsplash.com/random" alt="">
+        <img src={{currentImage}} alt="">
+        <i (click)="mySlide($event)" class="fas fa-chevron-right"></i>
       </div>
       <div class="details">
         <h3>Details</h3>

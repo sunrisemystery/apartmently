@@ -23,6 +23,27 @@ a {
   text-decoration: none;
 }
 
+.pagination {
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+html::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	/* border-radius: 10px; */
+	background-color: #F5F5F5;
+}
+
+html::-webkit-scrollbar{
+  width: 12px;
+	background-color: #F5F5F5;
+}
+
+html::-webkit-scrollbar-thumb{
+  /* border-radius: 10px; */
+	box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #48474B;
+}
 
 .ads-container {
   margin-top: 4.5em;

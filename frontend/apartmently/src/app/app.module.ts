@@ -12,6 +12,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from "@angular/fire";
 import { environment } from "../environments/environment";
@@ -23,6 +24,13 @@ import {
 
 
 
+
+
+
+const MAT_MODULES = [
+  BrowserAnimationsModule,
+  MatPaginatorModule
+];
 
 const routes: Routes = [
   { path: 'offers', component: AdsListComponent },
@@ -46,16 +54,20 @@ const routes: Routes = [
     AdComponent,
     ProfileComponent,
     AddAdComponent,
-    AdTileComponent
+    AdTileComponent,
+   
   ],
   imports: [
     RouterModule.forRoot(routes),
     BrowserModule,
     HttpClientModule,
     NoopAnimationsModule,
-    MatPaginatorModule,
+    MAT_MODULES,
     AngularFireStorageModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig, "cloud"),
+
+   
   ],
   providers: [],
   bootstrap: [AppComponent]

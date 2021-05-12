@@ -59,6 +59,11 @@
   overflow: hidden;
 }
 
+.img-ad i {
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
 .img-ad img {
   width: 80%;
 }

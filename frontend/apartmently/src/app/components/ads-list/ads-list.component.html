@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <mat-paginator [length]="theTotalElements" [pageSize]="thePageSize" [pageSizeOptions]="[5, 10, 15]"
+  <mat-paginator #paginator [length]="theTotalElements" [pageSize]="thePageSize" [pageSizeOptions]="[6, 12, 18]"
     (page)="OnPageChange($event)">
   </mat-paginator>
 </div>

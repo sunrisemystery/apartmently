@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AdDetails } from 'src/app/common/ad-details';
 import { AdTile } from 'src/app/common/ad-tile';
 import { AdService } from 'src/app/services/ad-service.service';
+
 declare const L: any;
 
 @Component({
@@ -14,6 +15,10 @@ export class AdComponent implements OnInit {
 
   adTile: AdTile = new AdTile();
   adDetails: AdDetails = new AdDetails();
+  images: string[] = []
+  currentImage: string;
+  counter: number = 0;
+
 
   constructor(private adService: AdService, private route: ActivatedRoute) { }
 
@@ -30,6 +35,14 @@ export class AdComponent implements OnInit {
     this.adService.getAd(adId).subscribe(
       data => {
         this.adTile = data;
+
+        this.adTile.adImages.forEach((element) => {
+          const pathImage: any = JSON.parse(JSON.stringify(element));
+          this.images.push(pathImage.imageUrl);
+
+        })
+
+        this.currentImage = this.images[0];
       }
     )
 
@@ -97,6 +110,19 @@ export class AdComponent implements OnInit {
         maximumAge: 0,
 
       });
+  }
+
+  mySlide(event) {
+    const max = this.images.length
+    if (this.counter < max - 1) {
+      this.counter = this.counter + 1;
+      this.currentImage = this.images[this.counter]
+    }
+    else {
+      this.counter = 0;
+      this.currentImage = this.images[this.counter]
+    }
+
   }
 
   delay(ms: number) {

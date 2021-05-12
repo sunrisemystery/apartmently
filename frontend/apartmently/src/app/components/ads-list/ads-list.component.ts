@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdTile } from 'src/app/common/ad-tile';
 import { AdService } from 'src/app/services/ad-service.service';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-ads-list',
@@ -13,8 +14,8 @@ export class AdsListComponent implements OnInit {
 
   ads: AdTile[];
   //new properties for pagination
-  thePageNumber: number = 1;
-  thePageSize: number = 5;
+  thePageNumber: number = 0;
+  thePageSize: number = 6;
   theTotalElements: number = 0;
   pageTitle: string = "All properties";
   searchMode: boolean = false;
@@ -22,6 +23,10 @@ export class AdsListComponent implements OnInit {
   userId: number = 1;
 
   previousKeyword: string = null;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  pageEvent: PageEvent;
+  
 
   constructor(private adService: AdService, private route: ActivatedRoute, private router: Router) { }
 
@@ -56,40 +61,41 @@ export class AdsListComponent implements OnInit {
     if (this.searchMode) {
       this.searchAds();
     } else {
-      this.adService.getAdsPaginate(this.thePageNumber - 1, this.thePageSize)
+      this.adService.getAdsPaginate(this.thePageNumber, this.thePageSize)
         .subscribe(this.processResult());
     }
   }
 
   listAdsForRent() {
-    this.adService.getAdsForRentPaginate(this.thePageNumber - 1, this.thePageSize)
+    this.adService.getAdsForRentPaginate(this.thePageNumber, this.thePageSize)
       .subscribe(this.processResult());
   }
 
   listAdsForSale() {
-    this.adService.getAdsForSalePaginate(this.thePageNumber - 1, this.thePageSize)
+    this.adService.getAdsForSalePaginate(this.thePageNumber, this.thePageSize)
       .subscribe(this.processResult());
   }
 
   listUserFavorites() {
-    this.adService.getUserFavoritesPaginate(this.thePageNumber - 1, this.thePageSize, this.userId)
+    this.adService.getUserFavoritesPaginate(this.thePageNumber, this.thePageSize, this.userId)
       .subscribe(this.processResult());
   }
 
   processResult() {
     return data => {
       this.ads = data.content;
-      this.thePageNumber = data.pageable.number + 1;
-      this.thePageSize = data.pageable.size;
-      this.theTotalElements = data.pageable.totalElements;
+      this.thePageNumber = data.number;
+      this.thePageSize = data.size;
+      this.theTotalElements = data.totalElements;
     };
   }
 
-  OnPageChange(event: PageEvent) {
+  OnPageChange(event?: PageEvent) {
 
     this.thePageSize = event.pageSize;
     this.thePageNumber = event.pageIndex;
-    console.log(this.thePageSize);
+
+    
     if (this.router.url === '/offers') {
       this.listAllAds();
     } else if (this.router.url === '/for-sale') {
@@ -107,7 +113,7 @@ export class AdsListComponent implements OnInit {
       this.thePageNumber = 1;
     }
     this.previousKeyword = keyword;
-    this.adService.searchAds(this.thePageNumber - 1, this.thePageSize, keyword)
+    this.adService.searchAds(this.thePageNumber, this.thePageSize, keyword)
       .subscribe(this.processResult());
   }
 

@@ -15,6 +15,7 @@ export class AdFormService {
   private adUrl = 'http://localhost:8080/api/ad';
   private adTypeUrl = 'http://localhost:8080/api/ad/ad-types';
   private cityUrl = 'http://localhost:8080/api/cities';
+  private adImageUrl = 'http://localhost:8080/api/ad-image';
 
 
   constructor(private httpClient: HttpClient) { }
@@ -43,6 +44,12 @@ export class AdFormService {
   async placeCity(city: City): Promise<number> {
     const s = await this.httpClient.post<number>(this.cityUrl, city).toPromise();
     return s;
+  }
+
+  placeImages(adId: number, imageUrls: string[]): Observable<any> {
+    const imagesUrl = `${this.adImageUrl}/${adId}`;
+    return this.httpClient.post<string[]>(imagesUrl, imageUrls);
+
   }
 
   placeAd(ad: AdOffer): Observable<any> {
