@@ -1,0 +1,24 @@
+<div class="register-container">
+  <form [formGroup]="registrationFormGroup" (ngSubmit)="onSubmit()">
+    <div class="left">
+      <h2>Complete registration</h2>
+      <div class="form-img">
+        <label class="label-img" for="file-input">
+          <i class="far fa-images"></i>
+          <p id="choose">PRESS TO CHOOSE A FILE</p>
+        </label>
+        <input class="file-input" id="file-input" name="file" type="file">
+      </div>
+    </div>
+    <div class="input-cont">
+      <div class="inputs">
+        <input formControlName="name" type="text" name="name" placeholder="name">
+        <input formControlName="surname" type="text" name="surname" placeholder="surname">
+        <input formControlName="phoneNumber" type="text" name="phone-number" placeholder="phone number">
+      </div>
+      <div class="submit-div">
+        <button>SIGN UP</button>
+      </div>
+    </div>
+  </form>
+</div>

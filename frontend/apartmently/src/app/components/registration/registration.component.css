@@ -1,0 +1,166 @@
+.register-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  margin-top: 4em;
+  justify-content: center;
+}
+
+form {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.left {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 35%;
+  height: 70%;
+}
+
+
+.input-cont {
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 70%;
+  width: 65%;
+}
+
+.inputs {
+  display: inline-flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  /* height: 90%; */
+  width: 100%;
+}
+
+.form-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 40%;
+  width: 80%;
+  margin-top: 2em;
+  box-shadow: 0 3px 6px #00000029;
+}
+
+.label-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 90%;
+}
+
+.label-img:hover {
+  cursor: pointer;
+}
+
+.fa-images {
+  font-size: 9em;
+  color: #0DAAC3;
+  opacity: 0.9;
+}
+
+
+input[type="file"] {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  padding-left: 5vh;
+  box-sizing: border-box;
+  display: none;
+}
+
+input[type="text"] {
+  height: 6vh;
+  width: 19vw;
+  border: 0;
+  padding: 2.5vh;
+  background: #FFFFFF 0 0 no-repeat padding-box;
+  box-shadow: 0 8px 8px #00000029;
+  opacity: 0.92;
+  appearance: none;
+  outline: none;
+  border-radius: 9px;
+  margin: 1vh 1vh 2vh;
+  font-size: 1em;
+  background-color: #F3F3F3;
+}
+
+button {
+  width: 7vw;
+  height: 5vh;
+  background: #0DAAC3 0 0 no-repeat padding-box;
+  box-shadow: 0 8px 8px #00000029;
+  border: 1px solid #0DAAC3;
+  border-radius: 25px;
+  opacity: 1;
+  color: white;
+  font-weight: 600;
+  transition: color .8s;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.submit-div {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 1000px) {
+  form {
+    flex-direction: column;
+  }
+
+  .left {
+    width: 95%;
+  }
+
+  .input-cont {
+    width: 95%;
+    height: 100vh;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    margin-top: 2em;
+  }
+
+  .inputs {
+    flex-wrap: nowrap;
+
+  }
+
+  .form-img {
+    width: 100%;
+    height: 90%;
+  }
+
+  input[type="text"] {
+    width: 90%;
+    height: 7vh;
+  }
+
+  .submit-div {
+    height: 10vh;
+    margin-top: 2em;
+  }
+
+  button {
+    width: 40vw;
+    height: 7vh;
+    margin-bottom: 2em;
+  }
+}

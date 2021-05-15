@@ -1,0 +1,83 @@
+h2 {
+  margin-bottom: 3em;
+  text-align: center;
+}
+
+input[type="text"],
+input[type="password"] {
+  height: 6vh;
+  width: 19vw;
+  border: 0;
+  padding: 2.5vh;
+  background: #FFFFFF 0 0 no-repeat padding-box;
+  box-shadow: 0 8px 8px #00000029;
+  opacity: 0.92;
+  appearance: none;
+  outline: none;
+  border-radius: 9px;
+  margin: 1vh 1vh 2vh;
+  font-size: 1em;
+  background-color: #F3F3F3;
+}
+
+form {
+  width: 60%;
+  height: 45%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #48474B;
+  border-radius: 10px;
+  padding-top: 2.5em;
+}
+
+button {
+  width: 7vw;
+  height: 5vh;
+  background: #0DAAC3 0 0 no-repeat padding-box;
+  box-shadow: 0 8px 8px #00000029;
+  border: 1px solid #0DAAC3;
+  border-radius: 25px;
+  opacity: 1;
+  color: white;
+  font-weight: 600;
+  transition: color .8s;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+p {
+  color: white;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+@media screen and (max-width: 1000px) {
+
+  form {
+    width: 90%;
+    height: 55%;
+  }
+
+  .form {
+    opacity: 0.9;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 80%;
+    height: 7vh;
+  }
+
+  button {
+    width: 35%;
+    height: 6vh;
+  }
+}

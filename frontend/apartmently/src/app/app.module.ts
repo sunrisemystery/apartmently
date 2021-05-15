@@ -21,6 +21,10 @@ import {
   AngularFireStorageReference,
   AngularFireUploadTask
 } from "@angular/fire/storage";
+import { LoginComponent } from './components/login/login.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 
 
@@ -42,6 +46,9 @@ const routes: Routes = [
   { path: 'favorites', component: AdsListComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'profile/:id', component: ProfileComponent },
+  { path: 'login', component: LoginComponent, data: { registration: false } },
+  { path: 'register', component: LoginComponent, data: { registration: true } },
+  { path: 'full-info', component: RegistrationComponent },
   { path: '', redirectTo: '/offers', pathMatch: 'full' },
   { path: '**', redirectTo: '/offers', pathMatch: 'full' },
 ];
@@ -55,7 +62,11 @@ const routes: Routes = [
     ProfileComponent,
     AddAdComponent,
     AdTileComponent,
-   
+    LoginComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
+    RegistrationComponent,
+
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -67,7 +78,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, "cloud"),
 
-   
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,10 @@
+<h2>Register now to have access to amazing properties</h2>
+<form [formGroup]="registerFormGroup" id="register-form" (ngSubmit)="onSubmit()">
+  <div class="form">
+    <input formControlName="email" type="text" name="email" placeholder="email">
+    <input formControlName="username" type="text" name="username" placeholder="username">
+    <input formControlName="password" type="password" name="password" placeholder="password">
+    <input formControlName="passwordConfirm" type="password" name="passwordConfirm" placeholder="confirm password">
+    <button type="submit">SIGN UP</button>
+  </div>
+</form>

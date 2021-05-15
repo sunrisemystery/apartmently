@@ -1,0 +1,10 @@
+<div class="log-container">
+  <div class="left"></div>
+  <div class="right">
+    <div class="if-div" *ngIf="!isRegistration; else myElse">
+      <app-login-form></app-login-form>
+    </div>
+    <ng-template #myElse>
+      <app-register-form></app-register-form>
+    </ng-template>
+  </div>

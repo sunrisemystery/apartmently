@@ -1,0 +1,61 @@
+.log-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  margin-top: 4em;
+  overflow: hidden;
+}
+
+h2 {
+  margin-bottom: 3em;
+  text-align: center;
+}
+
+.left {
+  height: 100%;
+  width: 45%;
+  background-image: url('/assets/images/login-img.jpg');
+  background-size: cover;
+  overflow: hidden;
+}
+
+.right {
+  height: 100%;
+  width: 55%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.if-div {
+  height: 100%;
+  width: 100%;
+}
+
+app-login-form,
+app-register-form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1000px) {
+
+  .log-container {
+    margin-top: 0;
+  }
+
+  .left {
+    display: none;
+  }
+
+  .right {
+    width: 100%;
+    background-image: url('/assets/images/login-img.jpg');
+    overflow: hidden;
+  }
+}

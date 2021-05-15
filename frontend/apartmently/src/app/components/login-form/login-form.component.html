@@ -1,0 +1,10 @@
+<h2>Welcome back. Explore properties wherever you want</h2>
+<form [formGroup]="loginFormGroup" id="login-form" (ngSubmit)="onSubmit()">
+  <div class="form">
+    <input formControlName="email" type="text" name="email" placeholder="email">
+    <input formControlName="password" type="password" name="password" placeholder="password">
+    <button type="submit">SIGN IN</button>
+    <p>Don't have account?</p>
+    <button [routerLink]="['/register']" type="button">SIGN UP</button>
+  </div>
+</form>
