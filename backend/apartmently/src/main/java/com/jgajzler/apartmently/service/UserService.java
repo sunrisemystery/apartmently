@@ -45,6 +45,18 @@ public class UserService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public void add(User user) {
+        userRepository.save(user);
+    }
+
 //    public Set<AdDto> getUserFavorites(Long id) {
 //        return userRepository.findUserById(id)
 //                .getFavoriteAds()

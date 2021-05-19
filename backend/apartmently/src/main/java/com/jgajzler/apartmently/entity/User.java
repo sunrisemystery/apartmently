@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jgajzler.apartmently.entity.enums.UserRole;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -49,5 +50,6 @@ public class User {
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role", columnDefinition = "user_role_enum default 'COMMON_USER'")
-    UserRole userRole;
+    @Type(type = "pgsql_enum")
+    UserRole userRole = UserRole.COMMON_USER;
 }
