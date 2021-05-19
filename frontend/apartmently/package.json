@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~11.1.2",
     "@angular/router": "~11.1.2",
     "@geoapify/geocoder-autocomplete": "^1.2.2",
+    "angular-jwt": "github:auth0/angular-jwt",
     "firebase": "^8.4.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",

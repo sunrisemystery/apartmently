@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs/operators';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 
@@ -12,9 +14,16 @@ import { Router } from '@angular/router';
 export class LoginFormComponent implements OnInit {
 
   loginFormGroup: FormGroup;
+  loading: boolean = false;
+  submitted: boolean = false;
+  error: string = '';
 
 
-  constructor(private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private authenticationService: AuthenticationService, private route: ActivatedRoute) {
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/']);
+    }
+  }
 
   ngOnInit(): void {
 
@@ -26,10 +35,29 @@ export class LoginFormComponent implements OnInit {
     );
   }
 
+  // convenience getter for easy access to form fields
+  get f() { return this.loginFormGroup.controls; }
+
   onSubmit() {
+    this.submitted = true;
     if (this.loginFormGroup.invalid) {
       this.loginFormGroup.markAllAsTouched();
       return;
     }
+    this.loading = true;
+    this.authenticationService.login(this.f.email.value, this.f.password.value)
+      .pipe(first())
+      .subscribe({
+        next: () => {
+          // get return url from route parameters or default to '/'
+          const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+          this.router.navigate([returnUrl]);
+        },
+        error: error => {
+          this.error = error;
+          this.loading = false;
+        }
+      });
   }
+
 }

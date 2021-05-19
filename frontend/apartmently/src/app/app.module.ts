@@ -9,7 +9,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AddAdComponent } from './components/add-ad/add-ad.component';
 import { AdTileComponent } from './components/ad-tile/ad-tile.component';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,10 +25,9 @@ import { LoginComponent } from './components/login/login.component';
 import { LoginFormComponent } from './components/login-form/login-form.component';
 import { RegisterFormComponent } from './components/register-form/register-form.component';
 import { RegistrationComponent } from './components/registration/registration.component';
-
-
-
-
+import { JwtInterceptor } from './security/jwt.interceptor';
+import { ErrorInterceptor } from './security/error.interceptor';
+import { AuthGuard } from './security/auth.guard';
 
 
 const MAT_MODULES = [
@@ -37,18 +36,18 @@ const MAT_MODULES = [
 ];
 
 const routes: Routes = [
-  { path: 'offers', component: AdsListComponent },
+  { path: 'offers', component: AdsListComponent,canActivate:[AuthGuard] },
   { path: 'for-rent', component: AdsListComponent },
   { path: 'for-sale', component: AdsListComponent },
-  { path: 'add-offer', component: AddAdComponent },
+  { path: 'add-offer', component: AddAdComponent, canActivate:[AuthGuard] },
   { path: 'offers/:id', component: AdComponent },
   { path: 'search/:keyword', component: AdsListComponent },
-  { path: 'favorites', component: AdsListComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'profile/:id', component: ProfileComponent },
+  { path: 'favorites', component: AdsListComponent, canActivate:[AuthGuard]},
+  { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard] },
+  { path: 'profile/:id', component: ProfileComponent, canActivate:[AuthGuard] },
   { path: 'login', component: LoginComponent, data: { registration: false } },
   { path: 'register', component: LoginComponent, data: { registration: true } },
-  { path: 'full-info', component: RegistrationComponent },
+  { path: 'full-info', component: RegistrationComponent, canActivate:[AuthGuard] },
   { path: '', redirectTo: '/offers', pathMatch: 'full' },
   { path: '**', redirectTo: '/offers', pathMatch: 'full' },
 ];
@@ -80,7 +79,11 @@ const routes: Routes = [
 
 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

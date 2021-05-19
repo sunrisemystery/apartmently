@@ -6,6 +6,9 @@
     <li><a routerLink="/add-offer" routerLinkActive="active-link">sell</a></li>
     <li><a routerLink="/for-rent" routerLinkActive="active-link">rent</a></li>
     <div class="placeholder"></div>
+    <div *ngIf='authService.isLoggedIn()'>
+      <p class="logout" (click)="logout()">logout</p>
+    </div>
     <a routerLink="/favorites" routerLinkActive="active-link"><i class="far fa-heart"></i></a>
     <div routerLink="/profile" routerLinkActive="active-link" class="img-container">
     </div>

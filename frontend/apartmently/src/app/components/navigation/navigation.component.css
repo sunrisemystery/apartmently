@@ -60,6 +60,10 @@ li a:hover,
   display: none;
 }
 
+.logout:hover{
+  cursor: pointer;
+}
+
 @media screen and (min-width: 750px) {
   nav ul {
     display: flex;
