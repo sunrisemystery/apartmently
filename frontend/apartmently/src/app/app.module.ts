@@ -37,8 +37,8 @@ const MAT_MODULES = [
 
 const routes: Routes = [
   { path: 'offers', component: AdsListComponent,canActivate:[AuthGuard] },
-  { path: 'for-rent', component: AdsListComponent },
-  { path: 'for-sale', component: AdsListComponent },
+  { path: 'for-rent', component: AdsListComponent, canActivate:[AuthGuard] },
+  { path: 'for-sale', component: AdsListComponent, canActivate:[AuthGuard] },
   { path: 'add-offer', component: AddAdComponent, canActivate:[AuthGuard] },
   { path: 'offers/:id', component: AdComponent },
   { path: 'search/:keyword', component: AdsListComponent },
