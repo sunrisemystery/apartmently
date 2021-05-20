@@ -32,7 +32,7 @@ public class UserService {
 
 
     public UserDto getUserById(Long id) {
-        return userMapper.toDto(findById(id), findByUserId(id));
+        return userMapper.toDto(findById(id), findDetailsByUserId(id));
     }
 
     private User findById(Long id) {
@@ -40,7 +40,7 @@ public class UserService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    public UserDetails findByUserId(Long id) {
+    public UserDetails findDetailsByUserId(Long id) {
         return userDetailsRepository.findByUserId(id)
                 .orElseThrow(EntityNotFoundException::new);
     }

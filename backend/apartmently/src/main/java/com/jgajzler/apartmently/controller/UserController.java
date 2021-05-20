@@ -45,6 +45,7 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+
     @PostMapping("/sign-in")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginDto loginRequest) {
         Authentication authentication = authenticationManager.authenticate(

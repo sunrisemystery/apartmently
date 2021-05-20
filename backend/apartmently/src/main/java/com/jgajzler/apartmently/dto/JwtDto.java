@@ -10,7 +10,6 @@ import java.util.List;
 
 public class JwtDto {
     private String token;
-    private String type = "Bearer";
     private Long id;
     private String username;
     private String email;

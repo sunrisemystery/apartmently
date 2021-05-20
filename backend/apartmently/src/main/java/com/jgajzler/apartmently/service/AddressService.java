@@ -20,9 +20,8 @@ public class AddressService {
     }
 
     public AddressDto getAddressByAdId(Long id) {
-        return addressMapper.toDto(addressRepository.findAddressByAdId(id).
-                orElseThrow(EntityNotFoundException::new));
+        return addressMapper.toDto(addressRepository.findAddressByAdId(id)
+                .orElseThrow(EntityNotFoundException::new));
     }
-
 
 }
