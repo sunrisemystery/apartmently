@@ -35,6 +35,8 @@ public class UserService {
         return userMapper.toDto(findById(id), findDetailsByUserId(id));
     }
 
+    public User findUserById(Long id){ return  userRepository.findUserById(id);}
+
     private User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
@@ -55,6 +57,10 @@ public class UserService {
 
     public void add(User user) {
         userRepository.save(user);
+    }
+
+    public void addDetails(UserDetails userDetails){
+        userDetailsRepository.save(userDetails);
     }
 
 //    public Set<AdDto> getUserFavorites(Long id) {

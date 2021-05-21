@@ -1,9 +1,6 @@
 package com.jgajzler.apartmently.controller;
 
-import com.jgajzler.apartmently.dto.JwtDto;
-import com.jgajzler.apartmently.dto.LoginDto;
-import com.jgajzler.apartmently.dto.RegisterDto;
-import com.jgajzler.apartmently.dto.UserDto;
+import com.jgajzler.apartmently.dto.*;
 import com.jgajzler.apartmently.entity.User;
 import com.jgajzler.apartmently.security.UserDetails;
 import com.jgajzler.apartmently.security.jwt.JwtUtils;
@@ -88,6 +85,22 @@ public class UserController {
         userService.add(user);
 
         return ResponseEntity.ok(Collections.singletonMap("message", "User registered successfully!"));
+
+    }
+
+    @PostMapping("/details")
+    public ResponseEntity<?> addDetails(@RequestBody UserDetailsDto userDetailsDto) {
+        com.jgajzler.apartmently.entity.UserDetails userDetails = new com.jgajzler.apartmently.entity.UserDetails();
+        userDetails.setUser(userService.findUserById(userDetailsDto.getUserId()));
+        userDetails.setImageUrl(userDetailsDto.getImageUrl());
+        userDetails.setName(userDetailsDto.getName());
+        userDetails.setSurname(userDetailsDto.getSurname());
+        userDetails.setPhoneNumber(userDetailsDto.getPhoneNumber());
+        userDetails.setImageUrl(userDetailsDto.getImageUrl());
+
+        userService.addDetails(userDetails);
+        return ResponseEntity.ok(Collections.singletonMap("message", "Info added successfully!"));
+
 
     }
 
