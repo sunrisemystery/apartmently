@@ -1,5 +1,5 @@
 export class AdDetails {
-    
+
     id: number;
     floor: number;
     userId: number;

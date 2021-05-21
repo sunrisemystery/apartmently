@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AdTile } from 'src/app/common/ad-tile';
-import { AdService } from 'src/app/services/ad-service.service';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { ViewChild } from '@angular/core';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AdTile} from 'src/app/common/ad-tile';
+import {AdService} from 'src/app/services/ad-service.service';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
+import {ViewChild} from '@angular/core';
+import {AuthenticationService} from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-ads-list',
@@ -30,7 +30,8 @@ export class AdsListComponent implements OnInit {
 
 
   constructor(private adService: AdService, private route: ActivatedRoute, private router: Router,
-              private authService: AuthenticationService) { }
+              private authService: AuthenticationService) {
+  }
 
   ngOnInit(): void {
     if (this.router.url === '/for-rent') {

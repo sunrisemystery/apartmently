@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,11 +10,12 @@ export class LoginComponent implements OnInit {
 
   isRegistration: boolean;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.route.data.subscribe(v => {
       this.isRegistration = v.registration;
-    })
+    });
   }
 }

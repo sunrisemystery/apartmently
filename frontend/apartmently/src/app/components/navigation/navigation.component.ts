@@ -18,7 +18,7 @@ export class NavigationComponent implements OnInit {
     this.userService.getImage.subscribe(img => this.imageUrl = img);
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
   }

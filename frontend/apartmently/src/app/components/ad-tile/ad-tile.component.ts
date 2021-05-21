@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { AdTile } from 'src/app/common/ad-tile';
+import {Component, OnInit, Input} from '@angular/core';
+import {AdTile} from 'src/app/common/ad-tile';
 
 @Component({
   selector: 'app-ad-tile',
@@ -10,7 +10,8 @@ export class AdTileComponent implements OnInit {
 
   @Input() adTile: AdTile;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

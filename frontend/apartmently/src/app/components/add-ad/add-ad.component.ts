@@ -1,15 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { GeocoderAutocomplete } from '@geoapify/geocoder-autocomplete';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Country } from 'src/app/common/country';
-import { AdFormService } from 'src/app/services/ad-form.service';
-import { Router } from '@angular/router';
-import { AdOffer } from 'src/app/common/ad-offer';
-import { Observable } from 'rxjs';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { finalize } from 'rxjs/operators';
-import { v4 as uuidv4 } from 'uuid';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import {Component, OnInit} from '@angular/core';
+import {GeocoderAutocomplete} from '@geoapify/geocoder-autocomplete';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Country} from 'src/app/common/country';
+import {AdFormService} from 'src/app/services/ad-form.service';
+import {Router} from '@angular/router';
+import {AdOffer} from 'src/app/common/ad-offer';
+import {Observable} from 'rxjs';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {finalize} from 'rxjs/operators';
+import {v4 as uuidv4} from 'uuid';
+import {AuthenticationService} from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -34,7 +34,8 @@ export class AddAdComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder, private adFormService: AdFormService, private router: Router,
-              private storage: AngularFireStorage,private authService: AuthenticationService) { }
+              private storage: AngularFireStorage, private authService: AuthenticationService) {
+  }
 
   ngOnInit(): void {
 
@@ -42,7 +43,10 @@ export class AddAdComponent implements OnInit {
     const autocomplete = new GeocoderAutocomplete(
       document.getElementById("autocomplete"),
       '067d039a00d245019a1a8e4be86031f8',
-      { /* Geocoder options */ skipIcons: true, placeholder: 'Enter address for autocomplete fields and choose the correct one' });
+      { /* Geocoder options */
+        skipIcons: true,
+        placeholder: 'Enter address for autocomplete fields and choose the correct one'
+      });
     autocomplete.addFilterByCountry(['pl']);
 
     autocomplete.on('select', (location) => {
@@ -139,19 +143,57 @@ export class AddAdComponent implements OnInit {
   }
 
   // use in html to check validation
-  get name() { return this.adFormGroup.get('ad.name'); }
-  get country() { return this.adFormGroup.get('ad.country'); }
-  get city() { return this.adFormGroup.get('ad.city'); }
-  get streetName() { return this.adFormGroup.get('ad.streetName'); }
-  get streetNumber() { return this.adFormGroup.get('ad.streetNumber'); }
-  get postalCode() { return this.adFormGroup.get('ad.postalCode'); }
-  get adType() { return this.adFormGroup.get('ad.adType'); }
-  get plotSurface() { return this.adFormGroup.get('ad.plotSurface'); }
-  get numberOfBedrooms() { return this.adFormGroup.get('ad.numberOfBedrooms'); }
-  get numberOfBathrooms() { return this.adFormGroup.get('ad.numberOfBathrooms'); }
-  get floor() { return this.adFormGroup.get('ad.floor'); }
-  get price() { return this.adFormGroup.get('ad.price'); }
-  get description() { return this.adFormGroup.get('ad.description'); }
+  get name() {
+    return this.adFormGroup.get('ad.name');
+  }
+
+  get country() {
+    return this.adFormGroup.get('ad.country');
+  }
+
+  get city() {
+    return this.adFormGroup.get('ad.city');
+  }
+
+  get streetName() {
+    return this.adFormGroup.get('ad.streetName');
+  }
+
+  get streetNumber() {
+    return this.adFormGroup.get('ad.streetNumber');
+  }
+
+  get postalCode() {
+    return this.adFormGroup.get('ad.postalCode');
+  }
+
+  get adType() {
+    return this.adFormGroup.get('ad.adType');
+  }
+
+  get plotSurface() {
+    return this.adFormGroup.get('ad.plotSurface');
+  }
+
+  get numberOfBedrooms() {
+    return this.adFormGroup.get('ad.numberOfBedrooms');
+  }
+
+  get numberOfBathrooms() {
+    return this.adFormGroup.get('ad.numberOfBathrooms');
+  }
+
+  get floor() {
+    return this.adFormGroup.get('ad.floor');
+  }
+
+  get price() {
+    return this.adFormGroup.get('ad.price');
+  }
+
+  get description() {
+    return this.adFormGroup.get('ad.description');
+  }
 
   changeVal() {
     this.adFormGroup.patchValue({
