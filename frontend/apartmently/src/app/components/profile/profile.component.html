@@ -3,25 +3,22 @@
   <div class="profile-flex-container">
     <div class="user-info">
       <div class="img-profile">
+        <img src={{user.imageUrl}}>
       </div>
-      <p>Juliett</p>
-      <p>somenickname</p>
-      <p>somemail@com.pl</p>
-      <p>22 33 44 55 66</p>
+      <p>{{user.name}}</p>
+      <p>{{this.authService.currentUserValue.username}}</p>
+      <p>{{this.authService.currentUserValue.email}}</p>
+      <p>{{user.phoneNumber}}</p>
       <button class="add-button">
         <p>Edit data</p>
       </button>
     </div>
     <div class="ad-info">
       <h3 class="h3-ad">My ads</h3>
-      <div class="list-ad-profile">
-       <app-ad-tile></app-ad-tile>
-       <app-ad-tile></app-ad-tile>
-       <app-ad-tile></app-ad-tile>
-       <app-ad-tile></app-ad-tile>
-       <app-ad-tile></app-ad-tile>
-       <app-ad-tile></app-ad-tile>
-       <app-ad-tile></app-ad-tile>
+      <div class="list-ad-profile" >
+        <div  *ngFor="let tempAd of ads">
+        <app-ad-tile routerLink="/offers/{{tempAd.id}}" [state]="{data: tempAd}" [adTile]="tempAd"></app-ad-tile>
+      </div>
       </div>
     </div>
   </div>

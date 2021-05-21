@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthenticationService} from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -13,7 +13,8 @@ export class RegisterFormComponent implements OnInit {
 
   registerFormGroup: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authenticationService: AuthenticationService) { }
+  constructor(private formBuilder: FormBuilder, private router: Router, private authenticationService: AuthenticationService) {
+  }
 
   ngOnInit(): void {
     this.registerFormGroup = this.formBuilder.group({
@@ -21,11 +22,13 @@ export class RegisterFormComponent implements OnInit {
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
       passwordConfirm: new FormControl('', [Validators.required])
-    })
+    });
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.registerFormGroup.controls; }
+  get f() {
+    return this.registerFormGroup.controls;
+  }
 
   onSubmit() {
     if (this.registerFormGroup.invalid) {
@@ -37,9 +40,7 @@ export class RegisterFormComponent implements OnInit {
       .subscribe(val => {
         alert(val.message);
         this.router.navigateByUrl('/login');
-
-      })
-
+      });
   }
 
 }

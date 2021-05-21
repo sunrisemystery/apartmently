@@ -19,6 +19,11 @@ nav {
   cursor: pointer;
 }
 
+img{
+  height: 100%;
+  width: auto;
+}
+
 li a {
   text-transform: uppercase;
   text-decoration: none;
@@ -42,7 +47,6 @@ li a:hover,
 .img-container {
   width: 6vh;
   height: 6vh;
-  background-color: tomato;
   border-radius: 100%;
   cursor: pointer;
   outline:none;

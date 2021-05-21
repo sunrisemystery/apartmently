@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdTile } from 'src/app/common/ad-tile';
 import { AdService } from 'src/app/services/ad-service.service';
-import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-ads-list',
@@ -13,22 +14,23 @@ import { ViewChild } from '@angular/core';
 export class AdsListComponent implements OnInit {
 
   ads: AdTile[];
-  //new properties for pagination
-  thePageNumber: number = 0;
-  thePageSize: number = 6;
-  theTotalElements: number = 0;
-  pageTitle: string = "All properties";
-  searchMode: boolean = false;
-  //hardcoded value
-  userId: number = 1;
+  // new properties for pagination
+  thePageNumber = 0;
+  thePageSize = 6;
+  theTotalElements = 0;
+  pageTitle = "All properties";
+  searchMode = false;
+
+  userId: number;
 
   previousKeyword: string = null;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   pageEvent: PageEvent;
-  
 
-  constructor(private adService: AdService, private route: ActivatedRoute, private router: Router) { }
+
+  constructor(private adService: AdService, private route: ActivatedRoute, private router: Router,
+              private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     if (this.router.url === '/for-rent') {
@@ -36,22 +38,22 @@ export class AdsListComponent implements OnInit {
 
       this.route.paramMap.subscribe(() => {
         this.listAdsForRent();
-      })
+      });
     } else if (this.router.url === '/for-sale') {
       this.pageTitle = "Properties for sale";
       this.route.paramMap.subscribe(() => {
         this.listAdsForSale();
-      })
+      });
     } else if (this.router.url === '/favorites') {
       this.pageTitle = "Your favorites";
       this.route.paramMap.subscribe(() => {
         this.listUserFavorites();
-      })
+      });
     } else {
       this.pageTitle = "All properties";
       this.route.paramMap.subscribe(() => {
         this.listAllAds();
-      })
+      });
     }
   }
 
@@ -77,6 +79,7 @@ export class AdsListComponent implements OnInit {
   }
 
   listUserFavorites() {
+    this.userId = this.authService.currentUserValue.id;
     this.adService.getUserFavoritesPaginate(this.thePageNumber, this.thePageSize, this.userId)
       .subscribe(this.processResult());
   }
@@ -95,7 +98,7 @@ export class AdsListComponent implements OnInit {
     this.thePageSize = event.pageSize;
     this.thePageNumber = event.pageIndex;
 
-    
+
     if (this.router.url === '/offers') {
       this.listAllAds();
     } else if (this.router.url === '/for-sale') {
@@ -109,8 +112,8 @@ export class AdsListComponent implements OnInit {
   searchAds() {
     this.pageTitle = "Search results";
     const keyword: string = this.route.snapshot.paramMap.get('keyword');
-    if (this.previousKeyword != keyword) {
-      this.thePageNumber = 1;
+    if (this.previousKeyword !== keyword) {
+      this.thePageNumber = 0;
     }
     this.previousKeyword = keyword;
     this.adService.searchAds(this.thePageNumber, this.thePageSize, keyword)

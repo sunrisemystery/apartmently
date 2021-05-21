@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
+import { UserInfo } from 'src/app/common/user-info';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserService } from 'src/app/services/user.service';
 
 
 
@@ -14,12 +16,15 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class LoginFormComponent implements OnInit {
 
   loginFormGroup: FormGroup;
-  loading: boolean = false;
-  submitted: boolean = false;
-  error: string = '';
+  loading = false;
+  submitted = false;
+  error = '';
+  userInfo: UserInfo;
 
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authenticationService: AuthenticationService, private route: ActivatedRoute) {
+  constructor(private formBuilder: FormBuilder, private router: Router,
+              private authenticationService: AuthenticationService, private route: ActivatedRoute,
+              private userService: UserService) {
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
@@ -49,7 +54,18 @@ export class LoginFormComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
+          console.log(this.authenticationService.currentUserValue.id);
           // get return url from route parameters or default to '/'
+          this.userService.getUserInfo(this.authenticationService.currentUserValue.id).subscribe({
+            next: response => {
+              console.log(response);
+              this.userInfo = response;
+              this.userService.getImage.next(this.userInfo.imageUrl);
+            },
+            error: err => {
+              this.router.navigateByUrl('/full-info');
+            }
+          });
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigate([returnUrl]);
         },

@@ -7,8 +7,9 @@ import { Router } from '@angular/router';
 import { AdOffer } from 'src/app/common/ad-offer';
 import { Observable } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { finalize } from "rxjs/operators";
+import { finalize } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class AddAdComponent implements OnInit {
   createdAdId: number = null;
 
 
-  constructor(private formBuilder: FormBuilder, private adFormService: AdFormService, private router: Router, private storage: AngularFireStorage) { }
+  constructor(private formBuilder: FormBuilder, private adFormService: AdFormService, private router: Router,
+              private storage: AngularFireStorage,private authService: AuthenticationService) { }
 
   ngOnInit(): void {
 
@@ -85,7 +87,7 @@ export class AddAdComponent implements OnInit {
       })
     });
 
-    //populate countries
+    // populate countries
     this.adFormService.getCountries().subscribe(
       data => {
         this.countries = data;
@@ -114,8 +116,8 @@ export class AddAdComponent implements OnInit {
     this.addedAd.plotSurface = +this.adFormGroup.get('ad.plotSurface').value;
     this.addedAd.price = +this.adFormGroup.get('ad.price').value;
     this.addedAd.floorNumber = +this.adFormGroup.get('ad.floor').value;
-    //hardcoded value TODO
-    this.addedAd.user.id = 1;
+
+    this.addedAd.user.id = this.authService.currentUserValue.id;
     this.addedAd.address.city.name = this.adFormGroup.get('ad.city').value;
     this.addedAd.address.country = this.adFormGroup.get('ad.country').value;
     this.addedAd.address.postalCode = this.adFormGroup.get('ad.postalCode').value;
@@ -126,17 +128,17 @@ export class AddAdComponent implements OnInit {
       if (!exists) {
         this.adFormService.placeCity(this.addedAd.address.city).then((val) => {
           this.placeAd(val);
-        })
+        });
       } else {
         this.adFormService.getCityId(this.addedAd.address.city.name).then((val) => {
           this.placeAd(val);
-        })
+        });
       }
-    })
+    });
 
   }
 
-  //use in html to check validation
+  // use in html to check validation
   get name() { return this.adFormGroup.get('ad.name'); }
   get country() { return this.adFormGroup.get('ad.country'); }
   get city() { return this.adFormGroup.get('ad.city'); }
@@ -160,7 +162,7 @@ export class AddAdComponent implements OnInit {
         city: this.addedAd.address.city.name
 
       }
-    })
+    });
   }
 
   onFileChange(event) {
@@ -183,7 +185,7 @@ export class AddAdComponent implements OnInit {
 
       const storageFile = event.target.files[0];
       const uuid = uuidv4();
-      const filePath = `user/1/ads/${uuid}`;
+      const filePath = `user/${this.addedAd.user.id}/ads/${uuid}`;
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, storageFile);
       task.snapshotChanges()
@@ -212,7 +214,7 @@ export class AddAdComponent implements OnInit {
   deleteFirebaseImages() {
     this.adLinks.forEach((element) => {
       this.storage.refFromURL(element).delete();
-    })
+    });
   }
 
   placeAd(cityId: number) {
@@ -233,7 +235,7 @@ export class AddAdComponent implements OnInit {
                 alert(err.message);
               }
             }
-          )
+          );
 
           alert(`You added an offer`);
 
@@ -243,7 +245,7 @@ export class AddAdComponent implements OnInit {
           alert(err.message);
         }
       }
-    )
+    );
 
     this.router.navigateByUrl('/');
   }

@@ -7,8 +7,9 @@
           <i class="far fa-images"></i>
           <p id="choose">PRESS TO CHOOSE A FILE</p>
         </label>
-        <input class="file-input" id="file-input" name="file" type="file">
+        <input class="file-input" id="file-input" name="file" type="file" (change)="onFileChange($event)">
       </div>
+      <img [src]="imageSrc" *ngIf="imageSrc" style="height: 200px; width:400px">
     </div>
     <div class="input-cont">
       <div class="inputs">

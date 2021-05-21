@@ -9,7 +9,7 @@ import { AdTile } from '../common/ad-tile';
 })
 export class AdService {
 
-  private baseUrl = 'http://localhost:8080/api/ad'
+  private baseUrl = 'http://localhost:8080/api/ad';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -53,6 +53,12 @@ export class AdService {
     return this.httpClient.get<AdTile>(adUrl);
   }
 
+  getUserAds(thePage: number, thePageSize: number, userId: number): Observable<GetResponseAdTiles>{
+    const searchUrl = `${this.baseUrl}/user/${userId}?page=${thePage}&size=${thePageSize}`;
+    return this.getAdTiles(searchUrl);
+
+  }
+
   searchAds(thePage: number, thePageSize: number, keyword: string):
     Observable<GetResponseAdTiles> {
     const searchUrl = `${this.baseUrl}/search/${keyword}?page=${thePage}&size=${thePageSize}`;
@@ -67,12 +73,12 @@ export class AdService {
 }
 
 interface GetResponseAdTiles {
-  content: AdTile[],
+  content: AdTile[];
   pageable: {
     size: number,
     totalElements: number,
     totalPages: number,
     number: number
-  }
+  };
 }
 
