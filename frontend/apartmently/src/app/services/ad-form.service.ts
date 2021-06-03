@@ -56,4 +56,9 @@ export class AdFormService {
     return this.httpClient.post<AdOffer>(this.adUrl, ad);
   }
 
+  updateAd(ad: AdOffer, adId: number): Observable<any> {
+    const url = `${this.adUrl}/${adId}`;
+    return this.httpClient.put<AdOffer>(url, ad);
+  }
+
 }

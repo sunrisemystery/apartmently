@@ -1,6 +1,8 @@
 <div class="ad-container">
   <div class="img-container">
-    <img src="https://source.unsplash.com/random">
+    <div *ngIf="adTile.adImages.length !== 0">
+    <img src={{adTile.adImages[0].imageUrl}}>
+  </div>
   </div>
   <div class="info">
     <div *ngIf="adTile.adType == 'SALE'; then thenBlock else myElse"></div>

@@ -14,8 +14,32 @@
     <div class="input-cont">
       <div class="inputs">
         <input formControlName="name" type="text" name="name" placeholder="name">
+        <div *ngIf="f.name.errors && f.name.touched" class="validation-text">
+          <div *ngIf="f.name.errors.required">
+            Name is required
+          </div>
+          <div *ngIf="f.name.errors.minlength">
+            Name must have at least 2 characters
+          </div>
+        </div>
         <input formControlName="surname" type="text" name="surname" placeholder="surname">
+        <div *ngIf="f.surname.errors && f.surname.touched" class="validation-text">
+          <div *ngIf="f.surname.errors.required">
+            Surname is required
+          </div>
+          <div *ngIf="f.surname.errors.minlength">
+            Surname must have at least 2 characters
+          </div>
+        </div>
         <input formControlName="phoneNumber" type="text" name="phone-number" placeholder="phone number">
+        <div *ngIf="f.phoneNumber.errors && f.phoneNumber.touched" class="validation-text">
+          <div *ngIf="f.phoneNumber.errors.required">
+            phone Number is required
+          </div>
+          <div *ngIf="f.phoneNumber.errors.pattern">
+            Phone number must be numeric only
+          </div>
+        </div>
       </div>
       <div class="submit-div">
         <button>SIGN UP</button>

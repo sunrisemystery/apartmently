@@ -106,7 +106,7 @@
   border-radius: 100%;
 }
 
-.user-div p {
+.user-div p, a {
   margin-top: 1em;
   font-weight: 700;
   color: #727272;
@@ -140,10 +140,14 @@ footer {
 
 .add {
   font-weight: 700;
+  cursor: pointer;
 }
 
 .fa-heart {
   font-size: 1.5em;
+}
+a{
+  cursor: pointer;
 }
 
 @media screen and (min-width:1300px) {

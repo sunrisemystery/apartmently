@@ -25,10 +25,7 @@ export class AuthenticationService {
   }
 
   isLoggedIn(): boolean {
-    if (this.currentUserSubject.value) {
-      return true;
-    }
-    return false;
+    return this.currentUserSubject.value ? true : false;
   }
 
   login(username: string, password: string) {

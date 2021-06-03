@@ -2,9 +2,45 @@
 <form [formGroup]="registerFormGroup" id="register-form" (ngSubmit)="onSubmit()">
   <div class="form">
     <input formControlName="email" type="text" name="email" placeholder="email">
+    <div *ngIf="f.email.errors && f.email.touched" class="validation-text">
+      <div *ngIf="f.email.errors.required">
+        Email is required
+      </div>
+      <div *ngIf="f.email.errors.pattern">
+        Provided string is not an email
+      </div>
+    </div>
     <input formControlName="username" type="text" name="username" placeholder="username">
+    <div *ngIf="f.username.errors && f.username.touched" class="validation-text">
+      <div *ngIf="f.username.errors.required">
+        Username is required
+      </div>
+      <div *ngIf="f.username.errors.minlength">
+        Username must have at least 3 characters
+      </div>
+    </div>
     <input formControlName="password" type="password" name="password" placeholder="password">
+    <div *ngIf="f.password.errors" class="validation-text">
+      <div *ngIf="f.password.errors.required && f.password.touched">
+        Password is required
+      </div>
+      <div *ngIf="f.password.errors.minlength">
+        Password must be min 6 characters long
+      </div>
+
+    </div>
     <input formControlName="passwordConfirm" type="password" name="passwordConfirm" placeholder="confirm password">
+    <div *ngIf="f.passwordConfirm.errors && f.passwordConfirm.touched" class="validation-text">
+    <div *ngIf="f.passwordConfirm.errors.mustMatch">
+      Passwords are not the same
+    </div>
+    <div *ngIf="f.passwordConfirm.errors.required">
+      Password is required
+    </div>
+    <div *ngIf="f.passwordConfirm.errors.minlength">
+      Password must be min 6 characters long
+    </div>
+  </div>
     <button type="submit">SIGN UP</button>
   </div>
 </form>

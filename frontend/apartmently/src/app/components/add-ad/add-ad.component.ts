@@ -3,13 +3,14 @@ import {GeocoderAutocomplete} from '@geoapify/geocoder-autocomplete';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Country} from 'src/app/common/country';
 import {AdFormService} from 'src/app/services/ad-form.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AdOffer} from 'src/app/common/ad-offer';
 import {Observable} from 'rxjs';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
 import {v4 as uuidv4} from 'uuid';
 import {AuthenticationService} from 'src/app/services/authentication.service';
+import {AdService} from 'src/app/services/ad-service.service';
 
 
 @Component({
@@ -32,12 +33,17 @@ export class AddAdComponent implements OnInit {
   adLinks: string[] = [];
   createdAdId: number = null;
 
+  editMode = false;
+  adId: string;
 
-  constructor(private formBuilder: FormBuilder, private adFormService: AdFormService, private router: Router,
-              private storage: AngularFireStorage, private authService: AuthenticationService) {
+
+  constructor(private formBuilder: FormBuilder, private adFormService: AdFormService, private adService: AdService, private router: Router,
+              private route: ActivatedRoute, private storage: AngularFireStorage, private authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
+    this.adId = this.route.snapshot.params['id'];
+    this.editMode = !!this.adId;
 
 
     const autocomplete = new GeocoderAutocomplete(
@@ -78,15 +84,15 @@ export class AddAdComponent implements OnInit {
         country: new FormControl('', [Validators.required]),
         city: new FormControl('', [Validators.required]),
         streetName: new FormControl('', [Validators.required]),
-        streetNumber: new FormControl('', [Validators.required]),
+        streetNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
         postalCode: new FormControl('', [Validators.required]),
         adType: new FormControl('', [Validators.required]),
-        plotSurface: new FormControl('', [Validators.required]),
-        numberOfBedrooms: new FormControl('', [Validators.required]),
-        numberOfBathrooms: new FormControl('', [Validators.required]),
-        floor: new FormControl('', [Validators.required]),
-        price: new FormControl('', [Validators.required]),
-        description: new FormControl('', [Validators.required]),
+        plotSurface: new FormControl('', [Validators.required, Validators.pattern('^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$')]),
+        numberOfBedrooms: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+        numberOfBathrooms: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+        floor: new FormControl('', [Validators.required, Validators.pattern('^[0-9]*$')]),
+        price: new FormControl('', [Validators.required, Validators.pattern('^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$')]),
+        description: new FormControl('', [Validators.required, Validators.minLength(10)]),
 
       })
     });
@@ -103,6 +109,51 @@ export class AddAdComponent implements OnInit {
         this.adTypes = data;
       }
     );
+
+    if (this.editMode) {
+      this.addedAd.address.country = new Country();
+      this.adService.getAdForEdit(+this.adId).subscribe(
+        data => {
+          console.log(data);
+          this.addedAd.adName = data.adName;
+          this.addedAd.adType = data.adType;
+          this.addedAd.numberOfBathrooms = data.numberOfBathrooms;
+          this.addedAd.numberOfBedrooms = data.numberOfBedrooms;
+          this.addedAd.plotSurface = data.plotSurface;
+          this.addedAd.price = data.price;
+          this.addedAd.description = data.description;
+          this.addedAd.floorNumber = data.floorNumber;
+          this.addedAd.address.city = data.city;
+          this.addedAd.address.country = data.country;
+          this.addedAd.address.postalCode = data.addressDto.postalCode;
+          this.addedAd.address.streetName = data.addressDto.streetName;
+          this.addedAd.address.streetNumber = data.addressDto.streetNumber;
+          this.addedAd.address.latitude = data.addressDto.latitude;
+          this.addedAd.address.longitude = data.addressDto.longitude;
+
+          this.adFormGroup.patchValue({
+              ad: {
+                name: this.addedAd.adName,
+                city: this.addedAd.address.city.name,
+                adType: this.addedAd.adType,
+                plotSurface: this.addedAd.plotSurface,
+                numberOfBedrooms: this.addedAd.numberOfBedrooms,
+                numberOfBathrooms: this.addedAd.numberOfBathrooms,
+                floor: this.addedAd.floorNumber,
+                price: this.addedAd.price,
+                description: this.addedAd.description,
+                streetName: this.addedAd.address.streetName,
+                streetNumber: this.addedAd.address.streetNumber,
+                postalCode: this.addedAd.address.postalCode
+
+
+              }
+            }
+          );
+
+        }
+      );
+    }
 
   }
 
@@ -128,6 +179,7 @@ export class AddAdComponent implements OnInit {
     this.addedAd.address.streetName = this.adFormGroup.get('ad.streetName').value;
     this.addedAd.address.streetNumber = +this.adFormGroup.get('ad.streetNumber').value;
 
+
     this.adFormService.checkCity(this.addedAd.address.city.name).then((exists) => {
       if (!exists) {
         this.adFormService.placeCity(this.addedAd.address.city).then((val) => {
@@ -139,6 +191,7 @@ export class AddAdComponent implements OnInit {
         });
       }
     });
+
 
   }
 
@@ -261,33 +314,63 @@ export class AddAdComponent implements OnInit {
 
   placeAd(cityId: number) {
     this.addedAd.address.city.id = cityId;
+    if (!this.editMode) {
 
-    this.adFormService.placeAd(this.addedAd).subscribe(
-      {
-        next: response => {
-          console.log(response);
-          this.createdAdId = response.id;
-          this.adFormService.placeImages(this.createdAdId, this.adLinks).subscribe(
-            {
-              next: response => {
+      this.adFormService.placeAd(this.addedAd).subscribe(
+        {
+          next: response => {
+            console.log(response);
+            this.createdAdId = response.id;
+            this.adFormService.placeImages(this.createdAdId, this.adLinks).subscribe(
+              {
+                next: response => {
 
-              },
-              error: err => {
-                this.deleteFirebaseImages();
-                alert(err.message);
+                },
+                error: err => {
+                  this.deleteFirebaseImages();
+                  alert(err.message);
+                }
               }
-            }
-          );
+            );
 
-          alert(`You added an offer`);
+            alert(`You added an offer`);
 
-        },
-        error: err => {
-          this.deleteFirebaseImages();
-          alert(err.message);
+          },
+          error: err => {
+            this.deleteFirebaseImages();
+            alert(err.message);
+          }
         }
-      }
-    );
+      );
+    } else {
+      this.adFormService.updateAd(this.addedAd, +this.adId).subscribe(
+        {
+          next: response => {
+            console.log(response);
+            this.createdAdId = +this.adId;
+            this.adFormService.placeImages(this.createdAdId, this.adLinks).subscribe(
+              {
+                next: response => {
+
+                },
+                error: err => {
+                  this.deleteFirebaseImages();
+                  alert(err.message);
+                }
+              }
+            );
+
+            alert(`You updated an offer`);
+
+          },
+          error: err => {
+            this.deleteFirebaseImages();
+            alert(err.message);
+          }
+        }
+      );
+
+    }
 
     this.router.navigateByUrl('/');
   }

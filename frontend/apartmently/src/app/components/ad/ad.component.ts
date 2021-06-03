@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AdDetails} from 'src/app/common/ad-details';
 import {AdTile} from 'src/app/common/ad-tile';
 import {AdService} from 'src/app/services/ad-service.service';
+import {AuthenticationService} from 'src/app/services/authentication.service';
 
 declare const L: any;
 
@@ -20,7 +21,10 @@ export class AdComponent implements OnInit {
   counter = 0;
 
 
-  constructor(private adService: AdService, private route: ActivatedRoute) {
+  constructor(private adService: AdService,
+              private route: ActivatedRoute,
+              public authService: AuthenticationService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -56,6 +60,15 @@ export class AdComponent implements OnInit {
     await this.delay(2000);
 
     this.initializeMap([this.adDetails.latitude, this.adDetails.longitude]);
+  }
+
+  addToFavourites() {
+    const adId: number = +this.route.snapshot.paramMap.get('id');
+    this.adService.addToFavourites(adId).subscribe(
+      data => {
+        alert("Offer added successfully!");
+      }
+    )
   }
 
   initializeMap(coordinates: number[]) {
@@ -123,6 +136,10 @@ export class AdComponent implements OnInit {
       this.currentImage = this.images[this.counter];
     }
 
+  }
+
+  editAd() {
+    this.router.navigateByUrl(`/edit/${this.adDetails.id}`)
   }
 
   delay(ms: number) {

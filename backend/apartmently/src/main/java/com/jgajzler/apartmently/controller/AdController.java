@@ -2,6 +2,7 @@ package com.jgajzler.apartmently.controller;
 
 import com.jgajzler.apartmently.dto.AdDetailsDto;
 import com.jgajzler.apartmently.dto.AdDto;
+import com.jgajzler.apartmently.dto.AdEditDto;
 import com.jgajzler.apartmently.entity.Ad;
 import com.jgajzler.apartmently.entity.enums.AdType;
 import com.jgajzler.apartmently.service.AdService;
@@ -73,6 +74,10 @@ public class AdController {
     public List<AdType> getAdTypes() {
         return Arrays.asList(AdType.values());
     }
+    @GetMapping(path = "edit/{adId}")
+    public AdEditDto getAdForEdit(@PathVariable("adId") Long id){
+        return adService.getAdForEdit(id);
+    }
 
     @PostMapping
     public ResponseEntity<Map<String, Long>> create(@RequestBody Ad ad) {
@@ -80,6 +85,11 @@ public class AdController {
         Long createdId = adService.add(ad);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdId).toUri();
         return ResponseEntity.created(location).body(Collections.singletonMap("id", createdId));
+    }
+
+    @PutMapping("/{adId}")
+    public void update(@RequestBody Ad ad, @PathVariable("adId") Long id) {
+        adService.update(ad, id);
     }
 
     //doing it on the side where joining column

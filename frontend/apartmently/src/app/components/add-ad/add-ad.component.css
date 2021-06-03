@@ -14,8 +14,13 @@
   width: 35%;
   height: 100%;
 }
-
-
+.vaidation-text{
+  color: red;
+  font-size: 1em;
+  width: 10px;
+  height: 30px;
+  display: block;
+}
 
 .form-group{
   display: flex;
@@ -50,6 +55,11 @@
   width: 100%;
 
 }
+
+/* .ad-form .ng-touched .ng-invalid{
+  border: solid red;
+  
+} */
 
 .form-img {
   display: flex;
@@ -171,7 +181,7 @@ button:hover {
 
   .input-containr {
     width: 90%;
-    height: 100vh;
+    min-height: 100vh;
     flex-direction: column;
     flex-wrap: nowrap;
   }

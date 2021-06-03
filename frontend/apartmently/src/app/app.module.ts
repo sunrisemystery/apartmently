@@ -40,6 +40,7 @@ const routes: Routes = [
   {path: 'for-rent', component: AdsListComponent, canActivate: [AuthGuard]},
   {path: 'for-sale', component: AdsListComponent, canActivate: [AuthGuard]},
   {path: 'add-offer', component: AddAdComponent, canActivate: [AuthGuard]},
+  {path: 'edit/:id', component: AddAdComponent, canActivate: [AuthGuard]},
   {path: 'offers/:id', component: AdComponent},
   {path: 'search/:keyword', component: AdsListComponent},
   {path: 'favorites', component: AdsListComponent, canActivate: [AuthGuard]},

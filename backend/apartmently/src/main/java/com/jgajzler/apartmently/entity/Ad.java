@@ -62,7 +62,8 @@ public class Ad {
     @Column(name = "is_active", columnDefinition = "boolean default true")
     private boolean isActive = true;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+//    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id", referencedColumnName = "id", nullable = false)
     private Address address;
 

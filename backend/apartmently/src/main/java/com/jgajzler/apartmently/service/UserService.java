@@ -5,12 +5,14 @@ import com.jgajzler.apartmently.entity.User;
 import com.jgajzler.apartmently.entity.UserDetails;
 import com.jgajzler.apartmently.mapper.AdMapper;
 import com.jgajzler.apartmently.mapper.UserMapper;
+import com.jgajzler.apartmently.repository.AdRepository;
 import com.jgajzler.apartmently.repository.UserDetailsRepository;
 import com.jgajzler.apartmently.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,18 +20,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserDetailsRepository userDetailsRepository;
     private final UserMapper userMapper;
-    private final AdMapper adMapper;
 
 
     @Autowired
-    public UserService(UserRepository userRepository, UserDetailsRepository userDetailsRepository,
-                       UserMapper userMapper, AdMapper adMapper) {
+    public UserService(UserRepository userRepository, UserDetailsRepository userDetailsRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.userDetailsRepository = userDetailsRepository;
         this.userMapper = userMapper;
-        this.adMapper = adMapper;
     }
-
 
     public UserDto getUserById(Long id) {
         return userMapper.toDto(findById(id), findDetailsByUserId(id));
@@ -62,6 +60,7 @@ public class UserService {
     public void addDetails(UserDetails userDetails){
         userDetailsRepository.save(userDetails);
     }
+
 
 //    public Set<AdDto> getUserFavorites(Long id) {
 //        return userRepository.findUserById(id)

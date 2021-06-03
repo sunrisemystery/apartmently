@@ -1,5 +1,5 @@
 export class AdTile {
-    
+
     id: number;
     adName: string;
     plotSurface: number;
@@ -10,7 +10,7 @@ export class AdTile {
     lastUpdated: Date;
     city: string;
     country: string;
-    adImages: string[];
+    adImages: any[];
     adType: string;
     active: boolean;
 

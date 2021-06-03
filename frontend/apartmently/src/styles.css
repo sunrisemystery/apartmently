@@ -45,6 +45,10 @@ html::-webkit-scrollbar-thumb{
 	background-color: #48474B;
 }
 
+.validation-text{
+  color: red;
+}
+
 .ads-container {
   margin-top: 4.5em;
   width: 100%;

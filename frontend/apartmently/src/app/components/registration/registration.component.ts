@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/storage';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
-import { UserInfo } from 'src/app/common/user-info';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UserService } from 'src/app/services/user.service';
-import { v4 as uuidv4 } from 'uuid';
+import {Component, OnInit} from '@angular/core';
+import {AngularFireStorage} from '@angular/fire/storage';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs';
+import {finalize} from 'rxjs/operators';
+import {UserInfo} from 'src/app/common/user-info';
+import {AuthenticationService} from 'src/app/services/authentication.service';
+import {UserService} from 'src/app/services/user.service';
+import {v4 as uuidv4} from 'uuid';
 
 @Component({
   selector: 'app-registration',
@@ -25,16 +25,19 @@ export class RegistrationComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder, private router: Router, private storage: AngularFireStorage,
-              private authService: AuthenticationService, private userService: UserService) { }
+              private authService: AuthenticationService, private userService: UserService) {
+  }
 
-  get f() { return this.registrationFormGroup.controls; }
+  get f() {
+    return this.registrationFormGroup.controls;
+  }
 
   ngOnInit(): void {
 
     this.registrationFormGroup = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
-      surname: new FormControl('', [Validators.required]),
-      phoneNumber: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      surname: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      phoneNumber: new FormControl('', [Validators.required, Validators.pattern('[0-9]{0,14}$')]),
 
     });
 
@@ -86,29 +89,27 @@ export class RegistrationComponent implements OnInit {
       const fileRef = this.storage.ref(filePath);
       const task = this.storage.upload(filePath, storageFile);
       task.snapshotChanges()
-      .pipe(
-        finalize(() => {
-          this.downloadURL = fileRef.getDownloadURL();
-          this.downloadURL.subscribe(url => {
-            if (url) {
-              this.firebaseLink = url;
-              this.userInfo.imageUrl = this.firebaseLink;
-            }
-            console.log(this.firebaseLink);
-          });
+        .pipe(
+          finalize(() => {
+            this.downloadURL = fileRef.getDownloadURL();
+            this.downloadURL.subscribe(url => {
+              if (url) {
+                this.firebaseLink = url;
+                this.userInfo.imageUrl = this.firebaseLink;
+              }
+            });
 
-        })
-      )
-      .subscribe(url => {
-        if (url) {
-          console.log(url);
-        }
-      });
+          })
+        )
+        .subscribe(url => {
+          if (url) {
+          }
+        });
 
     }
   }
 
-  deleteFirebaseImage(){
+  deleteFirebaseImage() {
     this.storage.refFromURL(this.firebaseLink).delete();
   }
 }

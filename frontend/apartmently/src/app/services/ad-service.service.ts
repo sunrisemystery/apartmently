@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AdDetails } from '../common/ad-details';
-import { AdTile } from '../common/ad-tile';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {AdDetails} from '../common/ad-details';
+import {AdTile} from '../common/ad-tile';
+import {AuthenticationService} from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,9 @@ export class AdService {
 
   private baseUrl = 'http://localhost:8080/api/ad';
 
-  constructor(private httpClient: HttpClient) { }
+
+  constructor(private httpClient: HttpClient, private authService: AuthenticationService) {
+  }
 
   getAdsPaginate(thePage: number, thePageSize: number):
     Observable<GetResponseAdTiles> {
@@ -53,7 +56,7 @@ export class AdService {
     return this.httpClient.get<AdTile>(adUrl);
   }
 
-  getUserAds(thePage: number, thePageSize: number, userId: number): Observable<GetResponseAdTiles>{
+  getUserAds(thePage: number, thePageSize: number, userId: number): Observable<GetResponseAdTiles> {
     const searchUrl = `${this.baseUrl}/user/${userId}?page=${thePage}&size=${thePageSize}`;
     return this.getAdTiles(searchUrl);
 
@@ -66,8 +69,20 @@ export class AdService {
     return this.getAdTiles(searchUrl);
   }
 
+  getAdForEdit(adId: number): Observable<any> {
+    const url = `${this.baseUrl}/edit/${adId}`;
+    return this.httpClient.get<any>(url);
+
+  }
+
   getAdTiles(searchUrl: string): Observable<GetResponseAdTiles> {
     return this.httpClient.get<GetResponseAdTiles>(searchUrl);
+  }
+
+  addToFavourites(adId: number): Observable<any> {
+    const userId = this.authService.currentUserValue.id;
+    const url = `${this.baseUrl}/favorites/${adId}/${userId}`;
+    return this.httpClient.post(url, null);
   }
 
 }
