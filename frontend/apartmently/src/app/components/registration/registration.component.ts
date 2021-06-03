@@ -23,6 +23,8 @@ export class RegistrationComponent implements OnInit {
   firebaseLink: string;
   userInfo: UserInfo = new UserInfo();
 
+  editMode = false;
+
 
   constructor(private formBuilder: FormBuilder, private router: Router, private storage: AngularFireStorage,
               private authService: AuthenticationService, private userService: UserService) {
@@ -41,6 +43,26 @@ export class RegistrationComponent implements OnInit {
 
     });
 
+    if (this.router.url === '/update-info') {
+      this.editMode = true;
+      this.userInfo.userId = this.authService.currentUserValue.id;
+      this.userService.getUserInfo(this.userInfo.userId).subscribe(
+        data => {
+          this.userInfo.name = data.name;
+          this.userInfo.surname = data.surname;
+          this.userInfo.phoneNumber = data.phoneNumber;
+
+          this.registrationFormGroup.patchValue({
+            name: this.userInfo.name,
+            surname: this.userInfo.surname,
+            phoneNumber: this.userInfo.phoneNumber
+
+          });
+        }
+      );
+
+    }
+
   }
 
   onSubmit() {
@@ -53,16 +75,29 @@ export class RegistrationComponent implements OnInit {
     this.userInfo.surname = this.f.surname.value;
     this.userInfo.phoneNumber = this.f.phoneNumber.value;
 
-    this.userService.saveUserInfo(this.userInfo).subscribe({
-      next: response => {
-        alert(response.message);
-        this.router.navigateByUrl('/');
-      },
-      error: err => {
-        this.deleteFirebaseImage();
-        alert(err.message);
-      }
-    });
+    if (!this.editMode) {
+      this.userService.saveUserInfo(this.userInfo).subscribe({
+        next: response => {
+          alert(response.message);
+          this.router.navigateByUrl('/');
+        },
+        error: err => {
+          this.deleteFirebaseImage();
+          alert(err.message);
+        }
+      });
+    } else {
+      this.userService.updateUserInfo(this.userInfo).subscribe({
+        next: response => {
+          alert(response.message);
+          this.router.navigateByUrl('/');
+        },
+        error: err => {
+          this.deleteFirebaseImage();
+          alert(err.message);
+        }
+      });
+    }
 
   }
 

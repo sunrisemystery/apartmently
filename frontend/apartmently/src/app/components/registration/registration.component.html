@@ -41,9 +41,12 @@
           </div>
         </div>
       </div>
-      <div class="submit-div">
+      <div *ngIf="!editMode; else myElse" class="submit-div">
         <button>SIGN UP</button>
       </div>
+      <ng-template #myElse>
+        <button>UPDATE</button>
+      </ng-template>
     </div>
   </form>
 </div>

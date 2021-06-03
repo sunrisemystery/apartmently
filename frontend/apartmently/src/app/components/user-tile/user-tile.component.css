@@ -1,0 +1,14 @@
+button{
+    border: none;
+    border-radius: 15px;
+    background-color: crimson;
+    width: 60%;
+    height: 25%;
+    color: white;
+    font-weight: 700;
+    margin-top: 1em;
+}
+.info{
+    justify-content: center;
+    align-items: center;
+}

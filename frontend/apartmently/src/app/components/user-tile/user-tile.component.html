@@ -1,0 +1,13 @@
+<div class="ad-container">
+  <div class="img-container">
+    <div *ngIf="userInfo.imageUrl">
+      <img src={{userInfo.imageUrl}}>
+    </div>
+  </div>
+  <div class="info">
+    <p>{{userInfo.username}}</p>
+    <p>{{userInfo.email}}</p>
+    <p>{{userInfo.name}} {{userInfo.surname}}</p>
+    <button (click)="deleteUser(userInfo.userId)">Delete user</button>
+  </div>
+</div>

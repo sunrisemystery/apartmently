@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { first } from 'rxjs/operators';
-import { UserInfo } from 'src/app/common/user-info';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UserService } from 'src/app/services/user.service';
-
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {first} from 'rxjs/operators';
+import {UserInfo} from 'src/app/common/user-info';
+import {AuthenticationService} from 'src/app/services/authentication.service';
+import {UserService} from 'src/app/services/user.service';
 
 
 @Component({
@@ -33,15 +32,17 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void {
 
     this.loginFormGroup = this.formBuilder.group({
-      email: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required])
+        email: new FormControl('', [Validators.required]),
+        password: new FormControl('', [Validators.required])
 
-    }
+      }
     );
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.loginFormGroup.controls; }
+  get f() {
+    return this.loginFormGroup.controls;
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -54,18 +55,21 @@ export class LoginFormComponent implements OnInit {
       .pipe(first())
       .subscribe({
         next: () => {
-          console.log(this.authenticationService.currentUserValue.id);
           // get return url from route parameters or default to '/'
           this.userService.getUserInfo(this.authenticationService.currentUserValue.id).subscribe({
             next: response => {
-              console.log(response);
               this.userInfo = response;
               this.userService.getImage.next(this.userInfo.imageUrl);
+
+              if (this.authenticationService.currentUserValue.roles.includes('ADMIN')) {
+                this.router.navigateByUrl('/admin-panel');
+              }
             },
             error: err => {
               this.router.navigateByUrl('/full-info');
             }
           });
+
           const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
           this.router.navigate([returnUrl]);
         },
@@ -74,6 +78,8 @@ export class LoginFormComponent implements OnInit {
           this.loading = false;
         }
       });
+
+
   }
 
 }

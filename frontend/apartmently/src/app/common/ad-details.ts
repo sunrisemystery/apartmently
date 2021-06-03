@@ -6,6 +6,7 @@ export class AdDetails {
     userName: string;
     userPhone: string;
     userEmail: string;
+    userImage: string;
     description: string;
     longitude: number;
     latitude: number;

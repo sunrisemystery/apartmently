@@ -6,6 +6,8 @@ import com.jgajzler.apartmently.security.UserDetails;
 import com.jgajzler.apartmently.security.jwt.JwtUtils;
 import com.jgajzler.apartmently.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,12 +44,20 @@ public class UserController {
         return userService.getUserById(id);
     }
 
+    @GetMapping("/all")
+    public Page<UserDto> getAll(Pageable pageable) {
+        return userService.getAll(pageable);
+    }
+
 
     @PostMapping("/sign-in")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginDto loginRequest) {
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
+
+        System.out.println(authentication.isAuthenticated());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
@@ -68,13 +78,13 @@ public class UserController {
         if (userService.existsByUsername(register.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(Collections.singletonMap("error", "Username is already taken!"));
+                    .body(Collections.singletonMap("message", "Username is already taken!"));
         }
 
         if (userService.existsByEmail(register.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(Collections.singletonMap("error", "Email is already in use!"));
+                    .body(Collections.singletonMap("message", "Email is already taken!"));
         }
 
         User user = new User();
@@ -103,6 +113,19 @@ public class UserController {
 
 
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody UserDto user) {
+        userService.update(user);
+        return ResponseEntity.ok(Collections.singletonMap("message", "Info updated successfully!"));
+
+    }
+
+    @DeleteMapping(path = "{userId}")
+    public void deleteUser(@PathVariable("userId") Long id) {
+        userService.deleteUserById(id);
+    }
+
 
 //    @GetMapping(path = "favorites/{userId}")
 //    public Set<AdDto> getUserFavorites(@PathVariable("userId") Long id) {

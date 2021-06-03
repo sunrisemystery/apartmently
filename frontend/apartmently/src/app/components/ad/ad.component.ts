@@ -73,10 +73,6 @@ export class AdComponent implements OnInit {
 
   initializeMap(coordinates: number[]) {
 
-    if (!navigator.geolocation) {
-      console.log('not supported');
-
-    }
 
     navigator.geolocation.getCurrentPosition((position) => {
 

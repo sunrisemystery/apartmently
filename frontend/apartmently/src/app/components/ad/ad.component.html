@@ -32,6 +32,9 @@
     <div class="user-info">
       <div class="user-div">
         <div class="user-img">
+          <div class="if-div" *ngIf="adDetails.userImage">
+            <img class="img-user" src={{adDetails.userImage}} alt="">
+          </div>
         </div>
         <p>{{adDetails.userName}}</p>
         <p>{{adDetails.userPhone}}</p>
@@ -39,8 +42,8 @@
       </div>
       <p class="add" (click)="addToFavourites()"><i class="far fa-heart"></i> Add to favorites</p>
       <div *ngIf="adDetails.userId === authService.currentUserValue.id">
-      <p class="add" (click)="editAd()">Edit offer</p>
-    </div>
+        <p class="add" (click)="editAd()">Edit offer</p>
+      </div>
     </div>
   </div>
   <section>

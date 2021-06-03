@@ -14,6 +14,7 @@ public class AdDetailsMapper {
                 ad.getUser().getUserDetails().getName(),
                 ad.getUser().getUserDetails().getPhoneNumber(),
                 ad.getUser().getEmail(),
+                ad.getUser().getUserDetails().getImageUrl(),
                 ad.getDescription(),
                 ad.getAddress().getLongitude(),
                 ad.getAddress().getLatitude()

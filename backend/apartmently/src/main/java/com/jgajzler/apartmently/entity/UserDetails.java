@@ -27,7 +27,7 @@ public class UserDetails {
     @Column(name = "image_url", columnDefinition = "VARCHAR(200)")
     private String imageUrl;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

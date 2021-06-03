@@ -8,7 +8,6 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -25,10 +24,6 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "uuid", columnDefinition = "uuid default uuid_generate_v4()")
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID uuid;
-
     @Column(name = "email", columnDefinition = "VARCHAR(100)", nullable = false)
     private String email;
 
@@ -41,7 +36,7 @@ public class User {
     @OneToOne(mappedBy = "user")
     private UserDetails userDetails;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
     private Set<Ad> ads;
 
     @ManyToMany(mappedBy = "usersFav")

@@ -13,6 +13,7 @@ import {MyValidators} from 'src/app/validators/my-validators';
 export class RegisterFormComponent implements OnInit {
 
   registerFormGroup: FormGroup;
+  error: string;
 
   constructor(private formBuilder: FormBuilder, private router: Router, private authenticationService: AuthenticationService) {
   }
@@ -42,9 +43,13 @@ export class RegisterFormComponent implements OnInit {
 
     this.authenticationService.register(this.f.username.value, this.f.email.value, this.f.password.value)
       .subscribe(val => {
-        alert(val.message);
-        this.router.navigateByUrl('/login');
-      });
+          alert(val.message);
+          this.router.navigateByUrl('/login');
+        },
+        err => {
+          console.log(err);
+          this.error = err;
+        });
   }
 
 }

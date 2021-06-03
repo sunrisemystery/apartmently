@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AdTile } from 'src/app/common/ad-tile';
-import { UserInfo } from 'src/app/common/user-info';
-import { AdService } from 'src/app/services/ad-service.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UserService } from 'src/app/services/user.service';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {AdTile} from 'src/app/common/ad-tile';
+import {UserInfo} from 'src/app/common/user-info';
+import {AdService} from 'src/app/services/ad-service.service';
+import {AuthenticationService} from 'src/app/services/authentication.service';
+import {UserService} from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-profile',
@@ -20,7 +20,8 @@ export class ProfileComponent implements OnInit {
 
 
   constructor(private userService: UserService, private adService: AdService,
-              private router: Router, public authService: AuthenticationService) { }
+              private router: Router, public authService: AuthenticationService) {
+  }
 
   ngOnInit(): void {
 
@@ -31,6 +32,10 @@ export class ProfileComponent implements OnInit {
         this.user = response;
       }
     });
+  }
+
+  editData(): void {
+    this.router.navigateByUrl('/update-info');
   }
 
   processResult() {

@@ -12,6 +12,7 @@ public class AdDetailsDto {
     private final String userName;
     private final String userPhone;
     private final String userEmail;
+    private final String userImage;
     private final String description;
     private final double longitude;
     private final double latitude;

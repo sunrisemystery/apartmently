@@ -9,7 +9,7 @@
       <p>{{this.authService.currentUserValue.username}}</p>
       <p>{{this.authService.currentUserValue.email}}</p>
       <p>{{user.phoneNumber}}</p>
-      <button class="add-button">
+      <button (click)="editData()" class="add-button">
         <p>Edit data</p>
       </button>
     </div>

@@ -1,6 +1,7 @@
 <h2>Welcome back. Explore properties wherever you want</h2>
 <form [formGroup]="loginFormGroup" id="login-form" (ngSubmit)="onSubmit()">
   <div class="form">
+    <div *ngIf="error" class="validation-text">{{error}}</div>
     <input formControlName="email" type="text" name="username" placeholder="username">
     <input formControlName="password" type="password" name="password" placeholder="password">
     <button type="submit">SIGN IN</button>

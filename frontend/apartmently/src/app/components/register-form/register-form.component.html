@@ -1,6 +1,8 @@
 <h2>Register now to have access to amazing properties</h2>
 <form [formGroup]="registerFormGroup" id="register-form" (ngSubmit)="onSubmit()">
   <div class="form">
+    <div *ngIf="error" class="validation-text">{{error}}</div>
+
     <input formControlName="email" type="text" name="email" placeholder="email">
     <div *ngIf="f.email.errors && f.email.touched" class="validation-text">
       <div *ngIf="f.email.errors.required">

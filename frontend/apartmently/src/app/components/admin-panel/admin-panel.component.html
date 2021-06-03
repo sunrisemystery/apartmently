@@ -1,0 +1,19 @@
+<div class="ads-container">
+    <div class="info-container">
+      <h2 class="head">{{pageTitle}}</h2>
+      <button routerLink="/add-offer" routerLinkActive="active-link" class="add-button"><i class="fas fa-plus"></i>
+        <p>Add property</p>
+      </button>
+    </div>
+    <div class="grid-container">
+      <div class="container">
+        <div *ngFor="let tempUser of users">
+          <app-user-tile  [state]="{data: tempUser}" [userInfo]="tempUser"></app-user-tile>
+        </div>
+      </div>
+    </div>
+    <mat-paginator #paginator [length]="theTotalElements" [pageSize]="thePageSize" [pageSizeOptions]="[6, 12, 18]"
+      (page)="OnPageChange($event)">
+    </mat-paginator>
+  </div>
+  

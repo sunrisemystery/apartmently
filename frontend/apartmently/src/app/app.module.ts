@@ -28,6 +28,9 @@ import {RegistrationComponent} from './components/registration/registration.comp
 import {JwtInterceptor} from './security/jwt.interceptor';
 import {ErrorInterceptor} from './security/error.interceptor';
 import {AuthGuard} from './security/auth.guard';
+import {AdminPanelComponent} from './components/admin-panel/admin-panel.component';
+import {AdminGuard} from './security/admin.guard';
+import {UserTileComponent} from './components/user-tile/user-tile.component';
 
 
 const MAT_MODULES = [
@@ -41,14 +44,16 @@ const routes: Routes = [
   {path: 'for-sale', component: AdsListComponent, canActivate: [AuthGuard]},
   {path: 'add-offer', component: AddAdComponent, canActivate: [AuthGuard]},
   {path: 'edit/:id', component: AddAdComponent, canActivate: [AuthGuard]},
-  {path: 'offers/:id', component: AdComponent},
-  {path: 'search/:keyword', component: AdsListComponent},
+  {path: 'offers/:id', component: AdComponent, canActivate: [AuthGuard]},
+  {path: 'search/:keyword', component: AdsListComponent, canActivate: [AuthGuard]},
   {path: 'favorites', component: AdsListComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent, data: {registration: false}},
   {path: 'register', component: LoginComponent, data: {registration: true}},
   {path: 'full-info', component: RegistrationComponent, canActivate: [AuthGuard]},
+  {path: 'update-info', component: RegistrationComponent, canActivate: [AuthGuard]},
+  {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
   {path: '', redirectTo: '/offers', pathMatch: 'full'},
   {path: '**', redirectTo: '/offers', pathMatch: 'full'},
 ];
@@ -66,6 +71,8 @@ const routes: Routes = [
     LoginFormComponent,
     RegisterFormComponent,
     RegistrationComponent,
+    AdminPanelComponent,
+    UserTileComponent,
 
   ],
   imports: [

@@ -14,7 +14,7 @@ export class AdTileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.adTile.adImages);
+
   }
 
 }

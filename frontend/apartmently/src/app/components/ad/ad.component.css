@@ -17,6 +17,14 @@
   height: 90%;
 }
 
+.img-user{
+  max-height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
 .user-info {
   display: flex;
   flex-direction: column;
@@ -102,7 +110,11 @@
   width: 11vh;
   height: 11vh;
   margin-top: 2em;
-  background-color: blue;
+  border-radius: 100%;
+}
+.if-div{
+  width: 11vh;
+  height: 11vh;
   border-radius: 100%;
 }
 

@@ -15,22 +15,22 @@
         <img [src]="imageSrc" *ngIf="imageSrc" style="height: 200px; width:400px">
         <textarea formControlName="description" name="" form="ad-form" cols="30" rows="10" wrap="soft"
           placeholder="Write property description here"></textarea>
-          <div *ngIf="description.errors && description.touched" class="validation-text">
-            <div *ngIf="description.errors.required">
-              Description is required
+        <div *ngIf="description.errors && description.touched" class="validation-text">
+          <div *ngIf="description.errors.required">
+            Description is required
           </div>
 
-            <div *ngIf="description.errors.minlength">
-                Description must be at least 10 characters long
-            </div>
+          <div *ngIf="description.errors.minlength">
+            Description must be at least 10 characters long
           </div>
+        </div>
       </div>
       <div class="input-containr">
         <div class="inputs">
           <input formControlName="name" type="text" name="name" placeholder="name">
           <div *ngIf="name.errors && name.touched" class="validation-text">
             <div *ngIf="name.errors.required">
-             <p> Name is required</p>
+              <p> Name is required</p>
             </div>
           </div>
           <select formControlName="country">
@@ -93,28 +93,28 @@
           </div>
           <input formControlName="numberOfBedrooms" type="text" name="number of bedrooms"
             placeholder="number of bedrooms">
-            <div *ngIf="numberOfBedrooms.errors && numberOfBedrooms.touched" class="validation-text">
-              <div *ngIf="numberOfBedrooms.errors.required">
-               Number is required
-              </div>
-              <div *ngIf="numberOfBedrooms.errors.pattern">
-                This field must be a number
-              </div>
+          <div *ngIf="numberOfBedrooms.errors && numberOfBedrooms.touched" class="validation-text">
+            <div *ngIf="numberOfBedrooms.errors.required">
+              Number is required
             </div>
+            <div *ngIf="numberOfBedrooms.errors.pattern">
+              This field must be a number
+            </div>
+          </div>
           <input formControlName="numberOfBathrooms" type="text" name="number of bathrooms"
             placeholder="number of bathrooms">
-            <div *ngIf="numberOfBathrooms.errors && numberOfBathrooms.touched" class="validation-text">
-              <div *ngIf="numberOfBathrooms.errors.required">
-               Number is required
-              </div>
-              <div *ngIf="numberOfBathrooms.errors.pattern">
-                This field must be a number
-              </div>
+          <div *ngIf="numberOfBathrooms.errors && numberOfBathrooms.touched" class="validation-text">
+            <div *ngIf="numberOfBathrooms.errors.required">
+              Number is required
             </div>
+            <div *ngIf="numberOfBathrooms.errors.pattern">
+              This field must be a number
+            </div>
+          </div>
           <input formControlName="floor" type="text" name="floor number" placeholder="floor number">
           <div *ngIf="floor.errors && floor.touched" class="validation-text">
             <div *ngIf="floor.errors.required">
-             Number is required
+              Number is required
             </div>
             <div *ngIf="floor.errors.pattern">
               This field must be a number
@@ -123,16 +123,19 @@
           <input formControlName="price" type="text" name="price" placeholder="price">
           <div *ngIf="price.errors && price.touched" class="validation-text">
             <div *ngIf="price.errors.required">
-             Price is required
+              Price is required
             </div>
             <div *ngIf="price.errors.pattern">
               This field must be a number
             </div>
           </div>
         </div>
-        <div class="submit-div">
+        <div *ngIf="!editMode; else myElse" class="submit-div">
           <button type="submit">CREATE</button>
         </div>
+        <ng-template #myElse>
+          <button type="submit">UPDATE</button>
+        </ng-template>
       </div>
     </div>
   </form>
