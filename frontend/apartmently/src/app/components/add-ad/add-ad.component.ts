@@ -42,12 +42,12 @@ export class AddAdComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.adId = this.route.snapshot.params['id'];
+    this.adId = this.route.snapshot.params.id;
     this.editMode = !!this.adId;
 
 
     const autocomplete = new GeocoderAutocomplete(
-      document.getElementById("autocomplete"),
+      document.getElementById('autocomplete'),
       '067d039a00d245019a1a8e4be86031f8',
       { /* Geocoder options */
         skipIcons: true,
@@ -57,7 +57,6 @@ export class AddAdComponent implements OnInit {
 
     autocomplete.on('select', (location) => {
       if (location) {
-        console.log(location);
 
         this.addedAd.address.postalCode = location.properties.postcode;
         this.addedAd.address.streetNumber = location.properties.housenumber;
@@ -181,15 +180,13 @@ export class AddAdComponent implements OnInit {
 
 
     this.adFormService.checkCity(this.addedAd.address.city.name).then((exists) => {
-      if (!exists) {
-        this.adFormService.placeCity(this.addedAd.address.city).then((val) => {
+      !exists
+        ? this.adFormService.placeCity(this.addedAd.address.city).then((val) => {
+          this.placeAd(val);
+        })
+        : this.adFormService.getCityId(this.addedAd.address.city.name).then((val) => {
           this.placeAd(val);
         });
-      } else {
-        this.adFormService.getCityId(this.addedAd.address.city.name).then((val) => {
-          this.placeAd(val);
-        });
-      }
     });
 
 
@@ -292,14 +289,13 @@ export class AddAdComponent implements OnInit {
                 this.firebaseLink = url;
                 this.adLinks.push(this.firebaseLink);
               }
-              console.log(this.firebaseLink);
             });
 
           })
         )
         .subscribe(url => {
           if (url) {
-            console.log(url);
+
           }
         });
     }
@@ -318,61 +314,45 @@ export class AddAdComponent implements OnInit {
 
       this.adFormService.placeAd(this.addedAd).subscribe(
         {
-          next: response => {
-            console.log(response);
-            this.createdAdId = response.id;
-            this.adFormService.placeImages(this.createdAdId, this.adLinks).subscribe(
-              {
-                next: response => {
-
-                },
-                error: err => {
-                  this.deleteFirebaseImages();
-                  alert(err.message);
-                }
-              }
-            );
-
-            alert(`You added an offer`);
-
-          },
-          error: err => {
-            this.deleteFirebaseImages();
-            alert(err.message);
-          }
+          next: this.placeImages('You added an offer'),
+          error: this.placeError()
         }
       );
     } else {
       this.adFormService.updateAd(this.addedAd, +this.adId).subscribe(
         {
-          next: response => {
-            console.log(response);
-            this.createdAdId = +this.adId;
-            this.adFormService.placeImages(this.createdAdId, this.adLinks).subscribe(
-              {
-                next: response => {
-
-                },
-                error: err => {
-                  this.deleteFirebaseImages();
-                  alert(err.message);
-                }
-              }
-            );
-
-            alert(`You updated an offer`);
-
-          },
-          error: err => {
-            this.deleteFirebaseImages();
-            alert(err.message);
-          }
+          next: this.placeImages('You updated an offer'),
+          error: this.placeError()
         }
       );
 
     }
 
     this.router.navigateByUrl('/');
+  }
+
+  placeError() {
+    return err => {
+      this.deleteFirebaseImages();
+      alert(err.message);
+    };
+  }
+
+  placeImages(text: string) {
+    return response => {
+
+      this.createdAdId = +this.adId;
+      this.adFormService.placeImages(this.createdAdId, this.adLinks).subscribe(
+        {
+          next: response => {
+          },
+          error: this.placeError()
+        }
+      );
+
+      alert(text);
+
+    };
   }
 
 }

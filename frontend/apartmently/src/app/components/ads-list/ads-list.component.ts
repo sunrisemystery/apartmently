@@ -18,7 +18,7 @@ export class AdsListComponent implements OnInit {
   thePageNumber = 0;
   thePageSize = 6;
   theTotalElements = 0;
-  pageTitle = "All properties";
+  pageTitle = 'All properties';
   searchMode = false;
 
   userId: number;
@@ -35,51 +35,50 @@ export class AdsListComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.router.url === '/for-rent') {
-      this.pageTitle = "Properties for rent";
+      this.pageTitle = 'Properties for rent';
 
       this.route.paramMap.subscribe(() => {
         this.listAdsForRent();
       });
     } else if (this.router.url === '/for-sale') {
-      this.pageTitle = "Properties for sale";
+      this.pageTitle = 'Properties for sale';
       this.route.paramMap.subscribe(() => {
         this.listAdsForSale();
       });
     } else if (this.router.url === '/favorites') {
-      this.pageTitle = "Your favorites";
+      this.pageTitle = 'Your favorites';
       this.route.paramMap.subscribe(() => {
         this.listUserFavorites();
       });
     } else {
-      this.pageTitle = "All properties";
+      this.pageTitle = 'All properties';
       this.route.paramMap.subscribe(() => {
         this.listAllAds();
       });
+
     }
   }
 
-  listAllAds() {
+
+  listAllAds(): void {
 
     this.searchMode = this.route.snapshot.paramMap.has('keyword');
-    if (this.searchMode) {
-      this.searchAds();
-    } else {
-      this.adService.getAdsPaginate(this.thePageNumber, this.thePageSize)
-        .subscribe(this.processResult());
-    }
+
+    this.searchMode ? this.searchAds() : this.adService.getAdsPaginate(this.thePageNumber, this.thePageSize)
+      .subscribe(this.processResult());
   }
 
-  listAdsForRent() {
+  listAdsForRent(): void {
     this.adService.getAdsForRentPaginate(this.thePageNumber, this.thePageSize)
       .subscribe(this.processResult());
   }
 
-  listAdsForSale() {
+  listAdsForSale(): void {
     this.adService.getAdsForSalePaginate(this.thePageNumber, this.thePageSize)
       .subscribe(this.processResult());
   }
 
-  listUserFavorites() {
+  listUserFavorites(): void {
     this.userId = this.authService.currentUserValue.id;
     this.adService.getUserFavoritesPaginate(this.thePageNumber, this.thePageSize, this.userId)
       .subscribe(this.processResult());
@@ -94,12 +93,10 @@ export class AdsListComponent implements OnInit {
     };
   }
 
-  OnPageChange(event?: PageEvent) {
+  OnPageChange(event?: PageEvent): void {
 
     this.thePageSize = event.pageSize;
     this.thePageNumber = event.pageIndex;
-
-
     if (this.router.url === '/offers') {
       this.listAllAds();
     } else if (this.router.url === '/for-sale') {
@@ -110,8 +107,8 @@ export class AdsListComponent implements OnInit {
 
   }
 
-  searchAds() {
-    this.pageTitle = "Search results";
+  searchAds(): void {
+    this.pageTitle = 'Search results';
     const keyword: string = this.route.snapshot.paramMap.get('keyword');
     if (this.previousKeyword !== keyword) {
       this.thePageNumber = 0;
@@ -121,7 +118,7 @@ export class AdsListComponent implements OnInit {
       .subscribe(this.processResult());
   }
 
-  doSearch(value: string) {
+  doSearch(value: string): void {
     if (value) {
       this.router.navigateByUrl(`/search/${value}`);
     } else {

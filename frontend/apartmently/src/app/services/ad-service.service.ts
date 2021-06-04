@@ -39,15 +39,16 @@ export class AdService {
 
   getUserFavoritesPaginate(thePage: number, thePageSize: number, userId: number):
     Observable<GetResponseAdTiles> {
-    const seatchUrl = `${this.baseUrl}/favorites/${userId}?page=${thePage}&size=${thePageSize}`;
+    const searchUrl = `${this.baseUrl}/favorites/${userId}?page=${thePage}&size=${thePageSize}`;
 
-    return this.getAdTiles(seatchUrl);
+    return this.getAdTiles(searchUrl);
   }
 
-  getAdDetails(theAdId: number): Observable<AdDetails> {
+
+  async getAdDetails(theAdId: number): Promise<AdDetails> {
     const adUrl = `${this.baseUrl}/details/${theAdId}`;
 
-    return this.httpClient.get<AdDetails>(adUrl);
+    return await this.httpClient.get<AdDetails>(adUrl).toPromise();
   }
 
   getAd(theAdId: number): Observable<AdTile> {
@@ -83,6 +84,11 @@ export class AdService {
     const userId = this.authService.currentUserValue.id;
     const url = `${this.baseUrl}/favorites/${adId}/${userId}`;
     return this.httpClient.post(url, null);
+  }
+
+  deleteAd(adId: number): Observable<any> {
+    const url = `${this.baseUrl}/${adId}`;
+    return this.httpClient.delete(url);
   }
 
 }

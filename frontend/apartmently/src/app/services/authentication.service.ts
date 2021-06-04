@@ -39,7 +39,7 @@ export class AuthenticationService {
 
   }
 
-  logout() {
+  logout(): void {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
@@ -50,7 +50,6 @@ export class AuthenticationService {
     return this.http.post<any>(`${this.baseUrl}/sign-up`, {email, username, password})
       .pipe(map(message => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
-
         return message;
       }));
 

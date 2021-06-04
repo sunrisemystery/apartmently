@@ -1,12 +1,12 @@
 package com.jgajzler.apartmently.exception;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.persistence.EntityNotFoundException;
@@ -16,9 +16,13 @@ import java.util.Date;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(JwtException.class)
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    public JwtException jwtException(JwtException e) {
-        return e;
+    public ResponseEntity<ErrorResponse> jwtException(JwtException e) {
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(body(HttpStatus.NOT_ACCEPTABLE, e, ""));
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<ErrorResponse> jwtExpiredException(ExpiredJwtException e) {
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(body(HttpStatus.NOT_ACCEPTABLE, e, "Expired token"));
     }
 
     @ExceptionHandler(EntityNotFoundException.class)

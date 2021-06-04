@@ -29,6 +29,7 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
+    private static final String MESSAGE = "message";
 
     @Autowired
     public UserController(UserService userService, AuthenticationManager authenticationManager, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
@@ -57,7 +58,6 @@ public class UserController {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
 
-        System.out.println(authentication.isAuthenticated());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
@@ -78,13 +78,13 @@ public class UserController {
         if (userService.existsByUsername(register.getUsername())) {
             return ResponseEntity
                     .badRequest()
-                    .body(Collections.singletonMap("message", "Username is already taken!"));
+                    .body(Collections.singletonMap(MESSAGE, "Username is already taken!"));
         }
 
         if (userService.existsByEmail(register.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(Collections.singletonMap("message", "Email is already taken!"));
+                    .body(Collections.singletonMap(MESSAGE, "Email is already taken!"));
         }
 
         User user = new User();
@@ -94,7 +94,7 @@ public class UserController {
 
         userService.add(user);
 
-        return ResponseEntity.ok(Collections.singletonMap("message", "User registered successfully!"));
+        return ResponseEntity.ok(Collections.singletonMap(MESSAGE, "User registered successfully!"));
 
     }
 
@@ -109,7 +109,7 @@ public class UserController {
         userDetails.setImageUrl(userDetailsDto.getImageUrl());
 
         userService.addDetails(userDetails);
-        return ResponseEntity.ok(Collections.singletonMap("message", "Info added successfully!"));
+        return ResponseEntity.ok(Collections.singletonMap(MESSAGE, "Info added successfully!"));
 
 
     }
@@ -117,7 +117,7 @@ public class UserController {
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody UserDto user) {
         userService.update(user);
-        return ResponseEntity.ok(Collections.singletonMap("message", "Info updated successfully!"));
+        return ResponseEntity.ok(Collections.singletonMap(MESSAGE, "Info updated successfully!"));
 
     }
 
@@ -125,12 +125,5 @@ public class UserController {
     public void deleteUser(@PathVariable("userId") Long id) {
         userService.deleteUserById(id);
     }
-
-
-//    @GetMapping(path = "favorites/{userId}")
-//    public Set<AdDto> getUserFavorites(@PathVariable("userId") Long id) {
-//        return userService.getUserFavorites(id);
-//    }
-
 
 }

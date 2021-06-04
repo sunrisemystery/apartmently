@@ -14,7 +14,8 @@
   width: 35%;
   height: 100%;
 }
-.vaidation-text{
+
+.validation-text {
   color: red;
   font-size: 1em;
   width: 10px;
@@ -22,7 +23,7 @@
   display: block;
 }
 
-.form-group{
+.form-group {
   display: flex;
   align-items: center;
   height: 90%;
@@ -58,7 +59,7 @@
 
 /* .ad-form .ng-touched .ng-invalid{
   border: solid red;
-  
+
 } */
 
 .form-img {
@@ -117,7 +118,7 @@ input[type="text"] {
   background-color: #F3F3F3;
 }
 
-select{
+select {
   height: 6vh;
   width: 19vw;
   border: 0;
@@ -171,7 +172,7 @@ button:hover {
 
 @media screen and (max-width: 1000px) {
 
-  .form-group{
+  .form-group {
     flex-direction: column;
   }
 
@@ -195,7 +196,7 @@ button:hover {
     width: 80%;
   }
 
-  select{
+  select {
     width: 80%;
   }
 

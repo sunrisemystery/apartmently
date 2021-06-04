@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { AdOffer } from '../common/ad-offer';
-import { City } from '../common/city';
-import { Country } from '../common/country';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {AdOffer} from '../common/ad-offer';
+import {City} from '../common/city';
+import {Country} from '../common/country';
 
 
 @Injectable({
@@ -31,19 +31,16 @@ export class AdFormService {
 
   async checkCity(name: string): Promise<boolean> {
     const searchUrl = `${this.cityUrl}/check/${name}`;
-    const s = await this.httpClient.get<boolean>(searchUrl).toPromise();
-    return s;
+    return await this.httpClient.get<boolean>(searchUrl).toPromise();
   }
 
-  async getCityId(name: string) {
+  async getCityId(name: string): Promise<number> {
     const searchUrl = `${this.cityUrl}/${name}`;
-    const s = await this.httpClient.get<number>(searchUrl).toPromise();
-    return s;
+    return await this.httpClient.get<number>(searchUrl).toPromise();
   }
 
   async placeCity(city: City): Promise<number> {
-    const s = await this.httpClient.post<number>(this.cityUrl, city).toPromise();
-    return s;
+    return await this.httpClient.post<number>(this.cityUrl, city).toPromise();
   }
 
   placeImages(adId: number, imageUrls: string[]): Observable<any> {

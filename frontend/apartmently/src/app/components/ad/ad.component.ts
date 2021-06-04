@@ -34,7 +34,7 @@ export class AdComponent implements OnInit {
     });
   }
 
-  async handleAdDetails() {
+  handleAdDetails(): void {
     const adId: number = +this.route.snapshot.paramMap.get('id');
 
     this.adService.getAd(adId).subscribe(
@@ -44,34 +44,46 @@ export class AdComponent implements OnInit {
         this.adTile.adImages.forEach((element) => {
           const pathImage: any = JSON.parse(JSON.stringify(element));
           this.images.push(pathImage.imageUrl);
-
         });
 
         this.currentImage = this.images[0];
       }
     );
 
-    this.adService.getAdDetails(adId).subscribe(
-      data => {
-        this.adDetails = data;
-      }
-    );
+    this.adService.getAdDetails(adId).then((data) => {
+      this.adDetails = data;
+      this.initializeMap([this.adDetails.latitude, this.adDetails.longitude]);
 
-    await this.delay(2000);
+    });
 
-    this.initializeMap([this.adDetails.latitude, this.adDetails.longitude]);
   }
 
-  addToFavourites() {
+  addToFavourites(): void {
     const adId: number = +this.route.snapshot.paramMap.get('id');
     this.adService.addToFavourites(adId).subscribe(
       data => {
-        alert("Offer added successfully!");
+        alert('Offer added successfully!');
       }
-    )
+    );
   }
 
-  initializeMap(coordinates: number[]) {
+  deleteAd(): void {
+    if (this.adDetails.userId === this.authService.currentUserValue.id) {
+      if (confirm('Are you sure?')) {
+        const adId: number = +this.route.snapshot.paramMap.get('id');
+        this.adService.deleteAd(adId).subscribe(
+          data => {
+            alert(data.message);
+            this.router.navigateByUrl('/');
+          }
+        );
+      }
+    } else {
+      alert('This is not your offer');
+    }
+  }
+
+  initializeMap(coordinates: number[]): void {
 
 
     navigator.geolocation.getCurrentPosition((position) => {
@@ -97,49 +109,20 @@ export class AdComponent implements OnInit {
 
       }
     );
-
-    // this.watchPosition();
   }
 
-  watchPosition() {
-    let destLat = 0;
-    let destLon = 0;
-
-    let id: any = navigator.geolocation.watchPosition((position) => {
-        console.log(`lat: ${position.coords.latitude}, long: ${position.coords.longitude}`);
-        if (position.coords.latitude === destLat) {
-          navigator.geolocation.clearWatch(id);
-        }
-      }, (err) => {
-        console.log(err);
-
-      },
-      {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0,
-
-      });
-  }
-
-  mySlide(event) {
+  mySlide(event): void {
     const max = this.images.length;
-    if (this.counter < max - 1) {
-      this.counter = this.counter + 1;
-      this.currentImage = this.images[this.counter];
-    } else {
-      this.counter = 0;
-      this.currentImage = this.images[this.counter];
-    }
+    this.counter = (this.counter < max - 1) ? (this.counter + 1) : 0;
+    this.currentImage = this.images[this.counter];
+  }
+
+  editAd(): void {
+
+    (this.adDetails.userId === this.authService.currentUserValue.id)
+      ? this.router.navigateByUrl(`/edit/${this.adDetails.id}`) : alert('This is not your offer');
 
   }
 
-  editAd() {
-    this.router.navigateByUrl(`/edit/${this.adDetails.id}`)
-  }
-
-  delay(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
 }
 

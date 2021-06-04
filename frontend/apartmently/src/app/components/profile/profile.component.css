@@ -47,7 +47,8 @@
   border-radius: 100%;
   overflow: hidden;
 }
-.img-profile img{
+
+.img-profile img {
   max-height: 100%;
   max-width: 100%;
   overflow: hidden;
@@ -55,7 +56,7 @@
   border-radius: 100%;
 }
 
-.user-info>p {
+.user-info > p {
   font-weight: 700;
   color: #7A7A7A;
 }
@@ -87,8 +88,7 @@
   overflow-y: scroll;
 }
 
-@media screen and (max-width: 950px),
-screen and (min-height: 1350px) {
+@media screen and (max-width: 950px), screen and (min-height: 1350px) {
   .profile-container {
     overflow-y: scroll;
   }

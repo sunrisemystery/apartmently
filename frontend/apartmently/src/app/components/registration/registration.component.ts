@@ -77,31 +77,33 @@ export class RegistrationComponent implements OnInit {
 
     if (!this.editMode) {
       this.userService.saveUserInfo(this.userInfo).subscribe({
-        next: response => {
-          alert(response.message);
-          this.router.navigateByUrl('/');
-        },
-        error: err => {
-          this.deleteFirebaseImage();
-          alert(err.message);
-        }
+        next: this.getResponse(),
+        error: this.getError()
       });
     } else {
       this.userService.updateUserInfo(this.userInfo).subscribe({
-        next: response => {
-          alert(response.message);
-          this.router.navigateByUrl('/');
-        },
-        error: err => {
-          this.deleteFirebaseImage();
-          alert(err.message);
-        }
+        next: this.getResponse(),
+        error: this.getError()
       });
     }
-
   }
 
-  onFileChange(event) {
+  getResponse() {
+    return response => {
+      alert(response.message);
+      this.router.navigateByUrl('/');
+    };
+  }
+
+  getError() {
+
+    return err => {
+      this.deleteFirebaseImage();
+      alert(err.message);
+    };
+  }
+
+  onFileChange(event): void {
     const reader = new FileReader();
 
     if (event.target.files && event.target.files.length) {
@@ -144,7 +146,7 @@ export class RegistrationComponent implements OnInit {
     }
   }
 
-  deleteFirebaseImage() {
+  deleteFirebaseImage(): void {
     this.storage.refFromURL(this.firebaseLink).delete();
   }
 }

@@ -1,6 +1,7 @@
 package com.jgajzler.apartmently.security.jwt;
 
 import com.jgajzler.apartmently.security.service.UserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,9 +38,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-        catch (Exception e) {
+        catch (ExpiredJwtException e) {
 
-            System.out.println("Exception");
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
 

@@ -17,7 +17,7 @@
   height: 90%;
 }
 
-.img-user{
+.img-user {
   max-height: 100%;
   max-width: 100%;
   overflow: hidden;
@@ -87,7 +87,7 @@
   margin: 1em;
 }
 
-.details p>span {
+.details p > span {
   margin: 2em;
   color: #727272;
 }
@@ -112,7 +112,8 @@
   margin-top: 2em;
   border-radius: 100%;
 }
-.if-div{
+
+.if-div {
   width: 11vh;
   height: 11vh;
   border-radius: 100%;
@@ -158,16 +159,17 @@ footer {
 .fa-heart {
   font-size: 1.5em;
 }
-a{
+
+a {
   cursor: pointer;
 }
 
-@media screen and (min-width:1300px) {
+@media screen and (min-width: 1300px) {
   .loc .fa-heart {
     display: none;
   }
 
-  section+.user-div {
+  section + .user-div {
     display: none;
   }
 }
@@ -195,7 +197,7 @@ a{
     height: 35vh;
   }
 
-  .loc+h3 {
+  .loc + h3 {
     margin-right: 2em;
   }
 

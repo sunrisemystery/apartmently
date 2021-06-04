@@ -24,6 +24,7 @@ export class LoginFormComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private router: Router,
               private authenticationService: AuthenticationService, private route: ActivatedRoute,
               private userService: UserService) {
+
     if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
@@ -50,6 +51,7 @@ export class LoginFormComponent implements OnInit {
       this.loginFormGroup.markAllAsTouched();
       return;
     }
+
     this.loading = true;
     this.authenticationService.login(this.f.email.value, this.f.password.value)
       .pipe(first())
@@ -79,7 +81,5 @@ export class LoginFormComponent implements OnInit {
         }
       });
 
-
   }
-
 }

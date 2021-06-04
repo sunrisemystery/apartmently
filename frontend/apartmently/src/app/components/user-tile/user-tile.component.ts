@@ -21,12 +21,12 @@ export class UserTileComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: number): void {
     if (this.authService.currentUserValue.roles.includes('ADMIN')) {
-      if (confirm("Are you sure that you want to delete this user?")) {
+      if (confirm('Are you sure that you want to delete this user?')) {
         this.userService.deleteUser(id).subscribe(
           response => {
-            alert("User deleted successfully");
+            alert('User deleted successfully');
             this.router.navigateByUrl('/admin-panel');
           }
         );

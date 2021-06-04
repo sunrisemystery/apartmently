@@ -25,7 +25,7 @@
         </p>
         <p>
           <span>Plot Surface: <span class="val"> {{adTile.plotSurface}}m<sup>2</sup></span></span>
-          <span>Floor: <span class="val">{{adDetails.floor}}<sup>rd</sup></span> </span>
+          <span>Floor: <span class="val">{{adDetails.floor}}</span> </span>
         </p>
       </div>
     </div>
@@ -43,6 +43,7 @@
       <p class="add" (click)="addToFavourites()"><i class="far fa-heart"></i> Add to favorites</p>
       <div *ngIf="adDetails.userId === authService.currentUserValue.id">
         <p class="add" (click)="editAd()">Edit offer</p>
+        <p class="add" (click)="deleteAd()">Delete offer</p>
       </div>
     </div>
   </div>
@@ -57,7 +58,11 @@
     </div>
   </section>
   <div class="user-div">
-    <div class="user-img"></div>
+    <div class="user-img">
+      <div class="if-div" *ngIf="adDetails.userImage">
+        <img class="img-user" src={{adDetails.userImage}} alt="">
+      </div>
+    </div>
     <p>{{adDetails.userName}}</p>
     <p>{{adDetails.userPhone}}</p>
     <a href="mailto:{{adDetails.userEmail}}"><i class="far fa-envelope"></i> email me</a>

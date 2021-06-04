@@ -99,8 +99,9 @@ public class AdController {
     }
 
     @DeleteMapping(path = "{adId}")
-    public void deleteAd(@PathVariable("adId") Long id) {
+    public ResponseEntity<Map<String, String>> deleteAd(@PathVariable("adId") Long id) {
         adService.deleteAdById(id);
+        return ResponseEntity.ok().body(Collections.singletonMap("message", "Ad deleted successfully"));
     }
 
     @PatchMapping("active/{adId}/{isActive}")

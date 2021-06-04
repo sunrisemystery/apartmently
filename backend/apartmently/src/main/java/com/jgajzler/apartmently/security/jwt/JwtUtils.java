@@ -48,7 +48,6 @@ public class JwtUtils {
     }
 
     public String getUserNameFromJwtToken(String token) {
-        System.out.println(getClaim(token, Claims::getSubject));
         return getClaim(token, Claims::getSubject);
     }
 

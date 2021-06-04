@@ -83,8 +83,7 @@ public class UserService {
                     return userMapper.toDto(user, userDetails);
                 }
         );
-        final Page<UserDto> page = new PageImpl<>(userDtoList.subList(0, userDtoList.size()), pageable, userDtoList.size());
-        return page;
+        return new PageImpl<>(userDtoList.subList(0, userDtoList.size()), pageable, userDtoList.size());
     }
 
     public void deleteUserById(Long id) {

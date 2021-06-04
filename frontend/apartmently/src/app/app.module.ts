@@ -12,6 +12,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatMenuModule} from '@angular/material/menu';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AngularFireModule} from '@angular/fire';
@@ -35,7 +36,8 @@ import {UserTileComponent} from './components/user-tile/user-tile.component';
 
 const MAT_MODULES = [
   BrowserAnimationsModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatMenuModule
 ];
 
 const routes: Routes = [
