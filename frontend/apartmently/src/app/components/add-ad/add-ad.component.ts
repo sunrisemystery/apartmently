@@ -37,11 +37,13 @@ export class AddAdComponent implements OnInit {
   adId: string;
 
 
-  constructor(private formBuilder: FormBuilder, private adFormService: AdFormService, private adService: AdService, private router: Router,
-              private route: ActivatedRoute, private storage: AngularFireStorage, private authService: AuthenticationService) {
+  constructor(private formBuilder: FormBuilder, private adFormService: AdFormService, private adService: AdService,
+              private router: Router, private route: ActivatedRoute,
+              private storage: AngularFireStorage, private authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
+
     this.adId = this.route.snapshot.params.id;
     this.editMode = !!this.adId;
 
@@ -74,7 +76,6 @@ export class AddAdComponent implements OnInit {
     });
 
     autocomplete.on('suggestions', (suggestions) => {
-      // process suggestions here
     });
 
     this.adFormGroup = this.formBuilder.group({
@@ -113,7 +114,6 @@ export class AddAdComponent implements OnInit {
       this.addedAd.address.country = new Country();
       this.adService.getAdForEdit(+this.adId).subscribe(
         data => {
-          console.log(data);
           this.addedAd.adName = data.adName;
           this.addedAd.adType = data.adType;
           this.addedAd.numberOfBathrooms = data.numberOfBathrooms;
@@ -329,6 +329,8 @@ export class AddAdComponent implements OnInit {
     }
 
     this.router.navigateByUrl('/');
+
+
   }
 
   placeError() {
@@ -341,7 +343,7 @@ export class AddAdComponent implements OnInit {
   placeImages(text: string) {
     return response => {
 
-      this.createdAdId = +this.adId;
+      this.createdAdId = this.editMode ? +this.adId : response.id;
       this.adFormService.placeImages(this.createdAdId, this.adLinks).subscribe(
         {
           next: response => {

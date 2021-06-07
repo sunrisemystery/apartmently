@@ -74,6 +74,9 @@ export class RegistrationComponent implements OnInit {
     this.userInfo.name = this.f.name.value;
     this.userInfo.surname = this.f.surname.value;
     this.userInfo.phoneNumber = this.f.phoneNumber.value;
+    if (this.userInfo.imageUrl) {
+      this.userService.getImage.next(this.userInfo.imageUrl);
+    }
 
     if (!this.editMode) {
       this.userService.saveUserInfo(this.userInfo).subscribe({

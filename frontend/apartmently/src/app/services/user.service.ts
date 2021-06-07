@@ -13,6 +13,7 @@ export class UserService {
   private baseUrl = 'http://localhost:8080/api/user';
   public getImage = new Subject<string>();
 
+
   constructor(private httpClient: HttpClient) {
   }
 

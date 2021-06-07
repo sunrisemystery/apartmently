@@ -92,12 +92,4 @@ public class UserService {
     }
 
 
-//    public Set<AdDto> getUserFavorites(Long id) {
-//        return userRepository.findUserById(id)
-//                .getFavoriteAds()
-//                .stream()
-//                .map(adMapper::toDto).collect(Collectors.toSet());
-//
-//    }
-
 }

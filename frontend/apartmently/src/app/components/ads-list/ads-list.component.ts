@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdTile} from 'src/app/common/ad-tile';
 import {AdService} from 'src/app/services/ad-service.service';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
-import {ViewChild} from '@angular/core';
 import {AuthenticationService} from 'src/app/services/authentication.service';
+import {UserService} from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-ads-list',
@@ -34,6 +34,8 @@ export class AdsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
     if (this.router.url === '/for-rent') {
       this.pageTitle = 'Properties for rent';
 
@@ -57,6 +59,12 @@ export class AdsListComponent implements OnInit {
       });
 
     }
+  }
+
+
+  sortByPrice(val: boolean): void {
+
+    this.ads = this.ads.sort((a, b) => val ? a.price - b.price : b.price - a.price);
   }
 
 

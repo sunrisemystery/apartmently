@@ -104,8 +104,6 @@ export class AdComponent implements OnInit {
           fillOpacity: 0.5,
           radius: 500
         }).addTo(mymap);
-        let marker = L.marker(coordinates).addTo(mymap);
-        marker.bindPopup('<b>hi!</b>').openPopup();
 
       }
     );

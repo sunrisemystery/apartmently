@@ -63,6 +63,7 @@ export class LoginFormComponent implements OnInit {
               this.userInfo = response;
               this.userService.getImage.next(this.userInfo.imageUrl);
 
+
               if (this.authenticationService.currentUserValue.roles.includes('ADMIN')) {
                 this.router.navigateByUrl('/admin-panel');
               }

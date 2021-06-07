@@ -3,7 +3,7 @@
     <div class="ad-info">
       <div class="main-info">
         <div class="loc">
-          <h3>{{adTile.adName}}<i class="far fa-heart"></i></h3>
+          <h3>{{adTile.adName}}<i (click)="addToFavourites()" class="far fa-heart"></i></h3>
           <p><i class="fas fa-map-marker-alt"></i>{{adTile.city}}, {{adTile.country}}</p>
         </div>
         <div *ngIf="adTile.adType == 'SALE'; else myElse">

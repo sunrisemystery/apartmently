@@ -120,6 +120,10 @@ html::-webkit-scrollbar-thumb{
 
 .filter {
   margin-left: 5em;
+  cursor: pointer;
+  border: none;
+  background-color: white;
+  font-size: 1em;
 }
 
 .fa-chevron-down {

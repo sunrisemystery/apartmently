@@ -25,6 +25,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
+
     this.adService.getUserAds(this.thePageNumber, this.thePageSize, this.authService.currentUserValue.id)
       .subscribe(this.processResult());
 
