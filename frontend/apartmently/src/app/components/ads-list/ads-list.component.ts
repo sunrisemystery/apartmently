@@ -4,7 +4,7 @@ import {AdTile} from 'src/app/common/ad-tile';
 import {AdService} from 'src/app/services/ad-service.service';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {AuthenticationService} from 'src/app/services/authentication.service';
-import {UserService} from 'src/app/services/user.service';
+
 
 @Component({
   selector: 'app-ads-list',
@@ -34,7 +34,6 @@ export class AdsListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
 
     if (this.router.url === '/for-rent') {
       this.pageTitle = 'Properties for rent';

@@ -145,7 +145,6 @@ export class AddAdComponent implements OnInit {
                 streetNumber: this.addedAd.address.streetNumber,
                 postalCode: this.addedAd.address.postalCode
 
-
               }
             }
           );
@@ -328,9 +327,6 @@ export class AddAdComponent implements OnInit {
 
     }
 
-    this.router.navigateByUrl('/');
-
-
   }
 
   placeError() {
@@ -353,6 +349,7 @@ export class AddAdComponent implements OnInit {
       );
 
       alert(text);
+      this.router.navigateByUrl('/');
 
     };
   }
