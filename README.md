@@ -6,6 +6,7 @@
 - [APIs](#apis)
 - [Security](#security)
 - [Sample Screenshots](#sample-screenshots)
+- [ER Diagram](#er-diagram)
 ## Introduction
 Apartmently is a fully responsive application. It lets you discover properties wherever you want.
 Only registered users have access to application, because other users publish sensitive information like phone number and email.
@@ -40,6 +41,12 @@ The Authorization is done using JSON Web Token.
 
   <img alt="offers" src="https://user-images.githubusercontent.com/48221938/121030162-86ce4e80-c7a9-11eb-9fdb-5233f0c6beca.png" width=800>
   <img alt="offers" src="https://user-images.githubusercontent.com/48221938/121030398-b8471a00-c7a9-11eb-9328-0c5d03ad2349.png" width=300>
+
+
+- Offer
+
+<img alt="offer" src="https://user-images.githubusercontent.com/48221938/121188185-269ee180-c869-11eb-9caf-96678a0204a1.png" width=800>
+<img alt="offer" src="https://user-images.githubusercontent.com/48221938/121188235-35859400-c869-11eb-9cac-19b8ecf309e2.png" width=800>
   
 
 - Add Offer
@@ -47,3 +54,6 @@ The Authorization is done using JSON Web Token.
 
   <img alt="add" src="https://user-images.githubusercontent.com/48221938/121030573-e4629b00-c7a9-11eb-9554-7fe235409a7e.png" width=800>
   <img alt="add" src="https://user-images.githubusercontent.com/48221938/121030758-0f4cef00-c7aa-11eb-9f22-dadbd657b77e.png" width=300>
+
+## ER Diagram
+  <img alt="add" src="https://user-images.githubusercontent.com/48221938/121187513-6b764880-c868-11eb-8f0f-363cf8cfdf72.png" width=800>
