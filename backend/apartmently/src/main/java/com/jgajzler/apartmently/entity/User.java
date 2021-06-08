@@ -39,7 +39,7 @@ public class User {
     @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "user")
     private Set<Ad> ads;
 
-    @ManyToMany(mappedBy = "usersFav")
+    @ManyToMany(mappedBy = "usersFav", cascade = CascadeType.REMOVE)
     Set<Ad> favoriteAds;
 
     @JsonIgnore
