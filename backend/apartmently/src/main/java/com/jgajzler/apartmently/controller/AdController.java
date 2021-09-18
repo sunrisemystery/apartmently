@@ -70,12 +70,19 @@ public class AdController {
         return adService.findUserFavoritesByUserId(id, pageable);
     }
 
+    @GetMapping(path = "favlist/{userId}")
+    public List<Long> getUserFavoritesIds(@PathVariable("userId") Long id) {
+        return adService.findFavList(id);
+
+    }
+
     @GetMapping(path = "ad-types")
     public List<AdType> getAdTypes() {
         return Arrays.asList(AdType.values());
     }
+
     @GetMapping(path = "edit/{adId}")
-    public AdEditDto getAdForEdit(@PathVariable("adId") Long id){
+    public AdEditDto getAdForEdit(@PathVariable("adId") Long id) {
         return adService.getAdForEdit(id);
     }
 
@@ -96,6 +103,11 @@ public class AdController {
     @PostMapping(path = "favorites/{adId}/{userId}")
     public void addToFavorites(@PathVariable("userId") Long userId, @PathVariable("adId") Long adId) {
         adService.addToFavorites(userId, adId);
+    }
+
+    @PutMapping(path = "favorites/{adId}/{userId}")
+    public void removeFromFavorites(@PathVariable("userId") Long userId, @PathVariable("adId") Long adId) {
+        adService.removeFromFavorites(userId, adId);
     }
 
     @DeleteMapping(path = "{adId}")

@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -29,6 +30,10 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
     Page<Ad> findAllByKeyword(String keyword, Pageable pageable);
 
     Page<Ad> findAdsByUsersFavId(Long id, Pageable pageable);
+
+
+    @Query(value = "select ad_id from users_favorites where user_id = ?", nativeQuery = true)
+    List<Long> findAdsIdByUsersFavId(Long id);
 
     @Transactional
     @Modifying

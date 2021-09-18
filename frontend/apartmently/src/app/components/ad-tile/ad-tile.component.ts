@@ -9,6 +9,7 @@ import {AdTile} from 'src/app/common/ad-tile';
 export class AdTileComponent implements OnInit {
 
   @Input() adTile: AdTile;
+  @Input() favList: number[];
 
   constructor() {
   }

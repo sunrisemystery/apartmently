@@ -19,7 +19,7 @@
   <div class="grid-container">
     <div class="container">
       <div *ngFor="let tempAd of ads">
-        <app-ad-tile routerLink="/offers/{{tempAd.id}}" [state]="{data: tempAd}" [adTile]="tempAd"></app-ad-tile>
+        <app-ad-tile routerLink="/offers/{{tempAd.id}}" [state]="{data: tempAd}" [adTile]="tempAd" [favList]="favIdList"></app-ad-tile>
       </div>
     </div>
   </div>

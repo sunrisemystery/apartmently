@@ -3,7 +3,7 @@
     <div class="ad-info">
       <div class="main-info">
         <div class="loc">
-          <h3>{{adTile.adName}}<i (click)="addToFavourites()" class="far fa-heart"></i></h3>
+          <h3>{{adTile.adName}}<i (click)="handler(heart.value)" class="{{heart.value}}"></i></h3>
           <p><i class="fas fa-map-marker-alt"></i>{{adTile.city}}, {{adTile.country}}</p>
         </div>
         <div *ngIf="adTile.adType == 'SALE'; else myElse">
@@ -40,7 +40,7 @@
         <p>{{adDetails.userPhone}}</p>
         <a href="mailto:{{adDetails.userEmail}}"><i class="far fa-envelope"></i> email me</a>
       </div>
-      <p class="add" (click)="addToFavourites()"><i class="far fa-heart"></i> Add to favorites</p>
+      <p class="add" (click)="handler(heart.value)"><i class="{{heart.value}}"></i>{{favText.value}}</p>
       <div *ngIf="adDetails.userId === authService.currentUserValue.id">
         <p class="add" (click)="editAd()">Edit offer</p>
         <p class="add" (click)="deleteAd()">Delete offer</p>

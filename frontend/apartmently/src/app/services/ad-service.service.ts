@@ -44,6 +44,12 @@ export class AdService {
     return this.getAdTiles(searchUrl);
   }
 
+  getFavoritesId(userId: number): Observable<number[]> {
+    const searchUrl = `${this.baseUrl}/favlist/${userId}`;
+    return this.httpClient.get<number[]>(searchUrl);
+
+  }
+
 
   async getAdDetails(theAdId: number): Promise<AdDetails> {
     const adUrl = `${this.baseUrl}/details/${theAdId}`;
@@ -84,6 +90,12 @@ export class AdService {
     const userId = this.authService.currentUserValue.id;
     const url = `${this.baseUrl}/favorites/${adId}/${userId}`;
     return this.httpClient.post(url, null);
+  }
+
+  removeFromFavorites(adId: number): Observable<any> {
+    const userId = this.authService.currentUserValue.id;
+    const url = `${this.baseUrl}/favorites/${adId}/${userId}`;
+    return this.httpClient.put(url, null);
   }
 
   deleteAd(adId: number): Observable<any> {

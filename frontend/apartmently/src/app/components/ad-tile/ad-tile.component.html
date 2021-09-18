@@ -13,9 +13,17 @@
       <p class="price">{{adTile.price}} zł/mth</p>
     </ng-template>
     <p class="name">{{adTile.adName}}</p>
-    <div class="location">
+    <div *ngIf="favList.includes(adTile.id); then isFav else notFav"></div>
+    <ng-template #isFav>
+    <div class="location" #isFav>
+      <p>{{adTile.city}}, {{adTile.country}}</p><i class="fas fa-heart"></i>
+    </div>
+  </ng-template>
+  <ng-template #notFav>
+    <div class="location" #isFav>
       <p>{{adTile.city}}, {{adTile.country}}</p><i class="far fa-heart"></i>
     </div>
+  </ng-template>
     <div class="additional">
       <i class="fas fa-home"></i>
       <p>{{adTile.plotSurface}}m<sup>2</sup></p>

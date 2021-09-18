@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AdService {
@@ -77,6 +78,12 @@ public class AdService {
         adRepository.save(ad);
     }
 
+    public void removeFromFavorites(Long userId, Long adId) {
+        Ad ad = adRepository.findAdById(adId).orElseThrow(EntityNotFoundException::new);
+        ad.getUsersFav().remove(userRepository.findUserById(userId));
+        adRepository.save(ad);
+    }
+
     public Page<AdDto> getAdByAdType(AdType adType, Pageable pageable) {
         return adRepository.findAllByAdType(adType, pageable).map(adMapper::toDto);
     }
@@ -91,6 +98,10 @@ public class AdService {
 
     public Page<AdDto> findUserFavoritesByUserId(Long id, Pageable pageable) {
         return adRepository.findAdsByUsersFavId(id, pageable).map(adMapper::toDto);
+    }
+
+    public List<Long> findFavList(Long id) {
+        return adRepository.findAdsIdByUsersFavId(id);
     }
 
     public AdEditDto getAdForEdit(Long id) {

@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {BehaviorSubject} from 'rxjs';
 import {AdDetails} from 'src/app/common/ad-details';
 import {AdTile} from 'src/app/common/ad-tile';
 import {AdService} from 'src/app/services/ad-service.service';
 import {AuthenticationService} from 'src/app/services/authentication.service';
+
 
 declare const L: any;
 
@@ -16,8 +18,15 @@ export class AdComponent implements OnInit {
 
   adTile: AdTile = new AdTile();
   adDetails: AdDetails = new AdDetails();
+  favList: number[];
   images: string[] = [];
   currentImage: string;
+  FULL_HEART = 'fas fa-heart';
+  EMPTY_HEART = 'far fa-heart';
+  ADD_TEXT = 'Add to favorites';
+  REMOVE_TEXT = 'Remove from favorites';
+  heart = new BehaviorSubject<string>(this.EMPTY_HEART);
+  favText = new BehaviorSubject<string>(this.ADD_TEXT);
   counter = 0;
 
 
@@ -28,10 +37,12 @@ export class AdComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.route.paramMap.subscribe(() => {
       this.handleAdDetails();
     });
+
+    this.heart.subscribe();
+    this.favText.subscribe();
   }
 
   handleAdDetails(): void {
@@ -53,9 +64,26 @@ export class AdComponent implements OnInit {
     this.adService.getAdDetails(adId).then((data) => {
       this.adDetails = data;
       this.initializeMap([this.adDetails.latitude, this.adDetails.longitude]);
+      this.adService.getFavoritesId(this.authService.currentUserValue.id).subscribe((val) => {
+        this.favList = val;
+        console.log(val);
+        console.log(this.adTile.id);
+        if (val.includes(this.adTile.id)) {
+          this.heart.next(this.FULL_HEART);
+          this.favText.next(this.REMOVE_TEXT);
+        }
+      });
 
     });
 
+  }
+
+  handler(val: string): void {
+    if (val === this.FULL_HEART) {
+      this.removeFromFavorites();
+    } else {
+      this.addToFavourites();
+    }
   }
 
   addToFavourites(): void {
@@ -63,8 +91,23 @@ export class AdComponent implements OnInit {
     this.adService.addToFavourites(adId).subscribe(
       data => {
         alert('Offer added successfully!');
+        this.heart.next(this.FULL_HEART);
+        this.favText.next(this.REMOVE_TEXT);
       }
     );
+  }
+
+  removeFromFavorites(): void {
+    const adId: number = +this.route.snapshot.paramMap.get('id');
+    if (confirm('Do you want to remove this offer from favorites?')) {
+      this.adService.removeFromFavorites(adId).subscribe(
+        data => {
+          this.heart.next(this.EMPTY_HEART);
+          this.favText.next(this.ADD_TEXT);
+          alert('Offer removed from favorites!');
+        }
+      );
+    }
   }
 
   deleteAd(): void {
@@ -85,10 +128,9 @@ export class AdComponent implements OnInit {
 
   initializeMap(coordinates: number[]): void {
 
-
     navigator.geolocation.getCurrentPosition((position) => {
 
-        let mymap = L.map('mapid').setView(coordinates, 14); // 14 - zoom level
+        const mymap = L.map('mapid').setView(coordinates, 14); // 14 - zoom level
 
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoic3VucmlzZW15c3RlcnkiLCJhIjoiY2tscXNvZng5MDVyZTJxbXA1bzZoYTVqOCJ9._g_3XgNOvfLxWP2NlK8IOw', {
           attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -98,7 +140,7 @@ export class AdComponent implements OnInit {
           zoomOffset: -1,
           accessToken: 'your.mapbox.access.token'
         }).addTo(mymap);
-        let circle = L.circle(coordinates, {
+        const circle = L.circle(coordinates, {
           color: 'red',
           fillColor: '#f03',
           fillOpacity: 0.5,

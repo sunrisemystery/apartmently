@@ -14,6 +14,7 @@ import {AuthenticationService} from 'src/app/services/authentication.service';
 export class AdsListComponent implements OnInit {
 
   ads: AdTile[];
+  favIdList: number[];
   // new properties for pagination
   thePageNumber = 0;
   thePageSize = 6;
@@ -58,6 +59,9 @@ export class AdsListComponent implements OnInit {
       });
 
     }
+    this.adService.getFavoritesId(this.authService.currentUserValue.id).subscribe((val) => {
+      this.favIdList = val;
+    })
   }
 
 
