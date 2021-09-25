@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
   thePageSize = 6;
   theTotalElements = 0;
   user: UserInfo = new UserInfo();
+  favIdList: number[];
 
 
   constructor(private userService: UserService, private adService: AdService,
@@ -33,6 +34,10 @@ export class ProfileComponent implements OnInit {
       next: response => {
         this.user = response;
       }
+    });
+
+    this.adService.getFavoritesId(this.authService.currentUserValue.id).subscribe((val) => {
+      this.favIdList = val;
     });
   }
 

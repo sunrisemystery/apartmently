@@ -1,0 +1,25 @@
+<div class="mess-window-container">
+  <div class="user-placeholder">
+    <p>{{username}}</p>
+  </div>
+  <div class="messages">
+    <div *ngFor="let message of conversation.messages">
+      <div *ngIf="message.senderId === userId; else diffUser" class="if-mess">
+        <p class="time">{{message.dateCreated | date:'short' }}</p>
+        <p class="me">me</p>
+        <div class="default-message my-message">
+          <p>{{message.content}}</p>
+        </div>
+      </div>
+      <ng-template #diffUser>
+        <div class="if-mess">
+        <p class="time">{{message.dateCreated | date:'short' }}</p>
+        <p class="user-name">{{message.senderName}}</p>
+        <div class="default-message message">
+          <p>{{message.content}}</p>
+        </div>
+      </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

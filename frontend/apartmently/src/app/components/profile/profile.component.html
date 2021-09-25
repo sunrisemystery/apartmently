@@ -17,7 +17,7 @@
       <h3 class="h3-ad">My ads</h3>
       <div class="list-ad-profile" >
         <div  *ngFor="let tempAd of ads">
-        <app-ad-tile routerLink="/offers/{{tempAd.id}}" [state]="{data: tempAd}" [adTile]="tempAd"></app-ad-tile>
+        <app-ad-tile routerLink="/offers/{{tempAd.id}}" [state]="{data: tempAd}" [adTile]="tempAd" [favList]="favIdList"></app-ad-tile>
       </div>
       </div>
     </div>

@@ -18,14 +18,13 @@ export class AdComponent implements OnInit {
 
   adTile: AdTile = new AdTile();
   adDetails: AdDetails = new AdDetails();
-  favList: number[];
   images: string[] = [];
   currentImage: string;
-  FULL_HEART = 'fas fa-heart';
-  EMPTY_HEART = 'far fa-heart';
+  FULL_HEART_CSS = 'fas fa-heart';
+  EMPTY_HEART_CSS = 'far fa-heart';
   ADD_TEXT = 'Add to favorites';
   REMOVE_TEXT = 'Remove from favorites';
-  heart = new BehaviorSubject<string>(this.EMPTY_HEART);
+  heart = new BehaviorSubject<string>(this.EMPTY_HEART_CSS);
   favText = new BehaviorSubject<string>(this.ADD_TEXT);
   counter = 0;
 
@@ -65,11 +64,8 @@ export class AdComponent implements OnInit {
       this.adDetails = data;
       this.initializeMap([this.adDetails.latitude, this.adDetails.longitude]);
       this.adService.getFavoritesId(this.authService.currentUserValue.id).subscribe((val) => {
-        this.favList = val;
-        console.log(val);
-        console.log(this.adTile.id);
         if (val.includes(this.adTile.id)) {
-          this.heart.next(this.FULL_HEART);
+          this.heart.next(this.FULL_HEART_CSS);
           this.favText.next(this.REMOVE_TEXT);
         }
       });
@@ -79,7 +75,7 @@ export class AdComponent implements OnInit {
   }
 
   handler(val: string): void {
-    if (val === this.FULL_HEART) {
+    if (val === this.FULL_HEART_CSS) {
       this.removeFromFavorites();
     } else {
       this.addToFavourites();
@@ -91,7 +87,7 @@ export class AdComponent implements OnInit {
     this.adService.addToFavourites(adId).subscribe(
       data => {
         alert('Offer added successfully!');
-        this.heart.next(this.FULL_HEART);
+        this.heart.next(this.FULL_HEART_CSS);
         this.favText.next(this.REMOVE_TEXT);
       }
     );
@@ -102,7 +98,7 @@ export class AdComponent implements OnInit {
     if (confirm('Do you want to remove this offer from favorites?')) {
       this.adService.removeFromFavorites(adId).subscribe(
         data => {
-          this.heart.next(this.EMPTY_HEART);
+          this.heart.next(this.EMPTY_HEART_CSS);
           this.favText.next(this.ADD_TEXT);
           alert('Offer removed from favorites!');
         }

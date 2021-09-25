@@ -32,6 +32,10 @@ import {AuthGuard} from './security/auth.guard';
 import {AdminPanelComponent} from './components/admin-panel/admin-panel.component';
 import {AdminGuard} from './security/admin.guard';
 import {UserTileComponent} from './components/user-tile/user-tile.component';
+import { MessengerComponent } from './components/messenger/messenger.component';
+import { MessengerListComponent } from './components/messenger-list/messenger-list.component';
+import { MessengerWindowComponent } from './components/messenger-window/messenger-window.component';
+
 
 
 const MAT_MODULES = [
@@ -56,6 +60,7 @@ const routes: Routes = [
   {path: 'full-info', component: RegistrationComponent, canActivate: [AuthGuard]},
   {path: 'update-info', component: RegistrationComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
+  {path: 'messenger', component: MessengerComponent},
   {path: '', redirectTo: '/offers', pathMatch: 'full'},
   {path: '**', redirectTo: '/offers', pathMatch: 'full'},
 ];
@@ -75,6 +80,9 @@ const routes: Routes = [
     RegistrationComponent,
     AdminPanelComponent,
     UserTileComponent,
+    MessengerComponent,
+    MessengerListComponent,
+    MessengerWindowComponent,
 
   ],
   imports: [
@@ -86,7 +94,6 @@ const routes: Routes = [
     AngularFireStorageModule,
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig, "cloud"),
-
 
   ],
   providers: [

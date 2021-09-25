@@ -12,18 +12,10 @@
     <ng-template #myElse>
       <p class="price">{{adTile.price}} zł/mth</p>
     </ng-template>
-    <p class="name">{{adTile.adName}}</p>
-    <div *ngIf="favList.includes(adTile.id); then isFav else notFav"></div>
-    <ng-template #isFav>
-    <div class="location" #isFav>
-      <p>{{adTile.city}}, {{adTile.country}}</p><i class="fas fa-heart"></i>
+    <p class="name">{{(adTile.adName.length > 20)?(adTile.adName | slice:0:20)+'..':(adTile.adName)}}</p>
+    <div class="location">
+      <p>{{adTile.city}}, {{adTile.country}}</p><i class="{{heart.value}}"></i>
     </div>
-  </ng-template>
-  <ng-template #notFav>
-    <div class="location" #isFav>
-      <p>{{adTile.city}}, {{adTile.country}}</p><i class="far fa-heart"></i>
-    </div>
-  </ng-template>
     <div class="additional">
       <i class="fas fa-home"></i>
       <p>{{adTile.plotSurface}}m<sup>2</sup></p>

@@ -1,0 +1,18 @@
+<div class="mess-list-container">
+  <div class="user-placeholder">
+  </div>
+  <div class="list-for" *ngFor="let conv of conversations">
+    <div class="user-tile" (click)="emitValue(conv.id)">
+      <div class="if-div" *ngIf="conv.user1Id === this.authService.currentUserValue.id; else myElse">
+        <img src="{{conv.user2Url}}" class="user-img">
+        <p>{{conv.user2Name}}</p>
+      </div>
+      <ng-template #myElse>
+        <div class="if-div">
+          <img src="{{conv.user1Url}}" class="user-img">
+          <p>{{conv.user1Name}}</p>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

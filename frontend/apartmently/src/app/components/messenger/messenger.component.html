@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="contact-list">
+    <app-messenger-list (clickedConversation)="handleConversationId($event)" (clickedName)="handleName($event)">
+    </app-messenger-list>
+  </div>
+  <div class="chat-window">
+    <app-messenger-window [conversation]="conversation" [userId]="userId" [username]="username"></app-messenger-window>
+    <div class="reply">
+      <form>
+        <textarea placeholder="Type message" name="" id="" cols="30" rows="2"></textarea>
+        <button><i class="far fa-paper-plane"></i></button>
+      </form>
+    </div>
+  </div>
+</div>

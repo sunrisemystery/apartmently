@@ -64,7 +64,6 @@ export class AdsListComponent implements OnInit {
     })
   }
 
-
   sortByPrice(val: boolean): void {
 
     this.ads = this.ads.sort((a, b) => val ? a.price - b.price : b.price - a.price);
