@@ -34,11 +34,11 @@ li a {
 }
 
 li a:hover,
-.fa-heart:hover {
+.fa-heart:hover, .fa-envelope:hover {
   color: #9b9898;
 }
 
-.fa-heart {
+.fa-heart, .fa-envelope {
   color: white;
   font-size: 1.8em;
   transition: color .5s;

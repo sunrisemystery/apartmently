@@ -1,5 +1,6 @@
-<div class="mess-window-container">
+<div class="mess-window-container" (click)="toBottom()">
   <div class="user-placeholder">
+    <i (click)="emitGoBack()" class="fas fa-angle-left"></i>
     <p>{{username}}</p>
   </div>
   <div class="messages">
@@ -21,5 +22,6 @@
       </div>
       </ng-template>
     </div>
+    <div id="test"></div>
   </div>
 </div>

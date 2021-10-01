@@ -68,3 +68,22 @@ i:hover {
   color: #0DAAC3;
 
 }
+
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    margin-left: 0;
+    margin-right: 0;
+    width: 100%
+  }
+
+  .contact-list {
+    width: 80%;
+    box-shadow: none;
+  }
+
+  .chat-window {
+    width: 100%;
+    box-shadow: none;
+  }
+}

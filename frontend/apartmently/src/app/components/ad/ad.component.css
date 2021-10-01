@@ -164,6 +164,10 @@ a {
   cursor: pointer;
 }
 
+.mess-user {
+  cursor: pointer;
+}
+
 @media screen and (min-width: 1300px) {
   .loc .fa-heart {
     display: none;
@@ -218,8 +222,6 @@ a {
     height: 40%;
     margin: auto;
   }
-
-
 }
 
 @media screen and (max-width: 370px) {

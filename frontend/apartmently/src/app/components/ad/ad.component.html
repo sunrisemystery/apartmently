@@ -38,6 +38,7 @@
         </div>
         <p>{{adDetails.userName}}</p>
         <p>{{adDetails.userPhone}}</p>
+        <p class="mess-user" (click)="messageUser()"><i class="far fa-envelope"></i> message me</p>
         <a href="mailto:{{adDetails.userEmail}}"><i class="far fa-envelope"></i> email me</a>
       </div>
       <p class="add" (click)="handler(heart.value)"><i class="{{heart.value}}"></i>{{favText.value}}</p>
@@ -65,6 +66,7 @@
     </div>
     <p>{{adDetails.userName}}</p>
     <p>{{adDetails.userPhone}}</p>
+    <p class="mess-user" (click)="messageUser()"><i class="far fa-envelope"></i> message me</p>
     <a href="mailto:{{adDetails.userEmail}}"><i class="far fa-envelope"></i> email me</a>
   </div>
   <footer></footer>

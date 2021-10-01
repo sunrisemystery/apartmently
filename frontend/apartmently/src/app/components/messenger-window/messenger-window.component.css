@@ -89,3 +89,14 @@ div::-webkit-scrollbar-thumb {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
   background-color: #48474B;
 }
+
+.fa-angle-left {
+  font-size: 1.5em;
+  margin-left: 1em;
+}
+
+@media screen and (min-width: 768px) {
+  .fa-angle-left {
+    display: none;
+  }
+}

@@ -60,7 +60,7 @@ const routes: Routes = [
   {path: 'full-info', component: RegistrationComponent, canActivate: [AuthGuard]},
   {path: 'update-info', component: RegistrationComponent, canActivate: [AuthGuard]},
   {path: 'admin-panel', component: AdminPanelComponent, canActivate: [AdminGuard]},
-  {path: 'messenger', component: MessengerComponent},
+  {path: 'messenger', component: MessengerComponent, canActivate: [AuthGuard]},
   {path: '', redirectTo: '/offers', pathMatch: 'full'},
   {path: '**', redirectTo: '/offers', pathMatch: 'full'},
 ];

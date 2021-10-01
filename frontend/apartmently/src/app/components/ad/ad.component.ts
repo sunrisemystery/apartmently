@@ -5,6 +5,7 @@ import {AdDetails} from 'src/app/common/ad-details';
 import {AdTile} from 'src/app/common/ad-tile';
 import {AdService} from 'src/app/services/ad-service.service';
 import {AuthenticationService} from 'src/app/services/authentication.service';
+import {ChatService} from 'src/app/services/chat.service';
 
 
 declare const L: any;
@@ -32,7 +33,8 @@ export class AdComponent implements OnInit {
   constructor(private adService: AdService,
               private route: ActivatedRoute,
               public authService: AuthenticationService,
-              private router: Router) {
+              private router: Router,
+              private chatService: ChatService) {
   }
 
   ngOnInit(): void {
@@ -158,6 +160,12 @@ export class AdComponent implements OnInit {
     (this.adDetails.userId === this.authService.currentUserValue.id)
       ? this.router.navigateByUrl(`/edit/${this.adDetails.id}`) : alert('This is not your offer');
 
+  }
+
+  messageUser(): void {
+    this.chatService.createConversation(this.adDetails.userId).subscribe(() => {
+      this.router.navigateByUrl('/messenger');
+    });
   }
 
 }

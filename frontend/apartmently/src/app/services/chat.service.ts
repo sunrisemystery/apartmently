@@ -25,4 +25,16 @@ export class ChatService {
     return this.httpClient.get<ConversationList[]>(url);
   }
 
+  createConversation(userId: number): Observable<any> {
+    const url = `${this.baseUrl}/user/${this.authService.currentUserValue.id}/${userId}`;
+    return this.httpClient.post(url, null);
+  }
+
+  sendMessage(convId: number, content: string): Observable<any> {
+    const url = `${this.baseUrl}/message/${convId}/${this.authService.currentUserValue.id}`;
+    const contentMap = {};
+    contentMap['content'] = content;
+    return this.httpClient.post(url, contentMap);
+  }
+
 }

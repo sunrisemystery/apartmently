@@ -1,11 +1,11 @@
 <nav>
-  <!-- <i class="fas fa-bars"></i> -->
   <button mat-button [matMenuTriggerFor]="menu"><i class="fas fa-bars"></i></button>
   <mat-menu #menu="matMenu" xPosition="after">
     <button routerLink="/for-sale" routerLinkActive="active-link" mat-menu-item>BUY</button>
     <button routerLink="/add-offer" routerLinkActive="active-link" mat-menu-item>SELL</button>
     <button routerLink="/for-rent" routerLinkActive="active-link" mat-menu-item>RENT</button>
     <button routerLink="/profile" routerLinkActive="active-link" mat-menu-item>MY PROFILE</button>
+    <button routerLink="/messenger" routerLinkActive="active-link" mat-menu-item>MESSAGES</button>
     <div *ngIf='authService.isLoggedIn()'>
     <button (click)="logout()" mat-menu-item>LOGOUT</button>
   </div>
@@ -20,6 +20,7 @@
     <div *ngIf='authService.isLoggedIn()'>
       <p class="logout" (click)="logout()">logout</p>
     </div>
+    <a routerLink="/messenger" routerLinkActive="active-link"><i class="far fa-envelope"></i></a>
     <a routerLink="/favorites" routerLinkActive="active-link"><i class="far fa-heart"></i></a>
     <div routerLink="/profile" routerLinkActive="active-link" class="img-container">
       <img src={{imageUrl}}>

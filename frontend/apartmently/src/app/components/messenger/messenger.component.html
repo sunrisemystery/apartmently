@@ -1,14 +1,14 @@
 <div class="container">
-  <div class="contact-list">
+  <div *ngIf="showList" class="contact-list" (click)="showMessages()">
     <app-messenger-list (clickedConversation)="handleConversationId($event)" (clickedName)="handleName($event)">
     </app-messenger-list>
   </div>
-  <div class="chat-window">
-    <app-messenger-window [conversation]="conversation" [userId]="userId" [username]="username"></app-messenger-window>
+  <div *ngIf="showMessage" class="chat-window">
+    <app-messenger-window (goBack)="handleBack($event)" [conversation]="conversation" [userId]="userId" [username]="username"></app-messenger-window>
     <div class="reply">
-      <form>
-        <textarea placeholder="Type message" name="" id="" cols="30" rows="2"></textarea>
-        <button><i class="far fa-paper-plane"></i></button>
+      <form [formGroup]="messageForm" id="message-form" (ngSubmit)="onSubmit()">
+        <textarea (keyup.enter)= "onSubmit()" formControlName="content" placeholder="Type message" name="content" cols="30" rows="2"></textarea>
+        <button type="submit"><i class="far fa-paper-plane"></i></button>
       </form>
     </div>
   </div>

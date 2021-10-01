@@ -20,5 +20,13 @@ public interface ChatConversationRepository extends JpaRepository<ChatConversati
 
     Optional<ChatConversation> findById(Long id);
 
+    @Query("select case when count(a) > 0 then true else false end from ChatConversation a " +
+            "where (a.user1.id = ?1 and a.user2.id = ?2) or (a.user1.id = ?2 and a.user2.id = ?1) ")
+    boolean existsByUsersId(Long user1, Long user2);
+
+    @Query("select c from ChatConversation c where" +
+            " (c.user1.id = ?1 and c.user2.id = ?2) or (c.user1.id = ?2 and c.user2.id = ?1)")
+    Optional<ChatConversation> findConversationByUsersId(Long user1, Long user2);
+
 
 }
