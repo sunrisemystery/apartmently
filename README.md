@@ -56,4 +56,4 @@ The Authorization is done using JSON Web Token.
   <img alt="add" src="https://user-images.githubusercontent.com/48221938/121030758-0f4cef00-c7aa-11eb-9f22-dadbd657b77e.png" width=300>
 
 ## ER Diagram
-  <img alt="add" src="https://user-images.githubusercontent.com/48221938/121187513-6b764880-c868-11eb-8f0f-363cf8cfdf72.png" width=800>
+  <img alt="add" src="https://user-images.githubusercontent.com/48221938/137624824-ed43534f-90a3-4506-95f6-d746a4ea473a.png" width=800>
