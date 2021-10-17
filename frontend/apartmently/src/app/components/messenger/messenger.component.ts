@@ -4,7 +4,12 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Conversation} from 'src/app/common/conversation';
 import {ConversationList} from 'src/app/common/conversation-list';
 import {AuthenticationService} from 'src/app/services/authentication.service';
+import {AdService} from 'src/app/services/ad-service.service'
+import {BadWordService} from 'src/app/services/bad-word.service';
 import {ChatService} from 'src/app/services/chat.service';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogComponent} from '../dialog/dialog.component';
+
 
 @Component({
   selector: 'app-messenger',
@@ -24,10 +29,11 @@ export class MessengerComponent implements OnInit {
   showMessage = false;
   isGoingBack = false;
 
-  constructor(private chatService: ChatService, private authService: AuthenticationService,
-              private formBuilder: FormBuilder, private breakpoint: BreakpointObserver) {
-  }
 
+  constructor(private chatService: ChatService, private authService: AuthenticationService, private adService: AdService,
+              private formBuilder: FormBuilder, private breakpoint: BreakpointObserver,
+              private badWordsService: BadWordService, public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
 
@@ -53,13 +59,15 @@ export class MessengerComponent implements OnInit {
     return this.messageForm.controls;
   }
 
-  onSubmit() {
+  onSubmit(): void {
+
     if (this.messageForm.invalid) {
       this.messageForm.markAllAsTouched();
       return;
     }
 
     this.messageContent = this.messageForm.get('content').value;
+    this.messageContent = this.badWordsService.clean(this.messageContent);
     if (!this.messageContent.startsWith('\n')) {
       this.chatService.sendMessage(this.conversationId, this.messageContent).subscribe({
         next: () => {
@@ -68,8 +76,8 @@ export class MessengerComponent implements OnInit {
         }
       });
     }
-  }
 
+  }
 
   handleConversationId(id: number): void {
     this.conversationId = id;
@@ -102,4 +110,38 @@ export class MessengerComponent implements OnInit {
     }
   }
 
+  sendPdf(id: number): void {
+
+    this.adService.getPdf(id).subscribe(response => {
+      const pdf = new Blob([response], {type: 'application/pdf'});
+      const url = URL.createObjectURL(pdf);
+      const anchor = document.createElement('a');
+
+      anchor.download = id.toString();
+      anchor.href = url;
+      console.log(anchor);
+      anchor.click();
+
+    });
+
+  }
+
+  openDialog(): void {
+
+    const dialogRef = this.dialog.open(DialogComponent);
+    let userId;
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (!isNaN(result)) {
+          this.sendPdf(result);
+          userId = this.conversation.user1Id === this.authService.currentUserValue.id
+            ? this.conversation.user2Id : this.conversation.user1Id;
+          this.adService.givePermission(userId, result).subscribe();
+        } else {
+          this.sendPdf(result.id);
+        }
+      }
+    });
+  }
 }
+

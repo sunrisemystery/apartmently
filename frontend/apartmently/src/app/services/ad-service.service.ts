@@ -69,6 +69,11 @@ export class AdService {
 
   }
 
+  getPermittedAds(userId: number): Observable<AdTile[]> {
+    const searchUrl = `${this.baseUrl}/permitted/${userId}`;
+    return this.httpClient.get<AdTile[]>(searchUrl);
+  }
+
   searchAds(thePage: number, thePageSize: number, keyword: string):
     Observable<GetResponseAdTiles> {
     const searchUrl = `${this.baseUrl}/search/${keyword}?page=${thePage}&size=${thePageSize}`;
@@ -86,9 +91,23 @@ export class AdService {
     return this.httpClient.get<GetResponseAdTiles>(searchUrl);
   }
 
+  getPdf(adId: number): Observable<any> {
+    const url = `${this.baseUrl}/generate-pdf/${adId}`;
+    const options = {
+      responseType: 'arraybuffer' as 'json'
+
+    }
+    return this.httpClient.get(url, options);
+  }
+
   addToFavourites(adId: number): Observable<any> {
     const userId = this.authService.currentUserValue.id;
     const url = `${this.baseUrl}/favorites/${adId}/${userId}`;
+    return this.httpClient.post(url, null);
+  }
+
+  givePermission(userId: number, adId: number): Observable<any> {
+    const url = `${this.baseUrl}/permit-pdf/${adId}/${userId}`;
     return this.httpClient.post(url, null);
   }
 

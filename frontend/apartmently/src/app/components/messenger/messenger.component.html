@@ -4,12 +4,15 @@
     </app-messenger-list>
   </div>
   <div *ngIf="showMessage" class="chat-window">
-    <app-messenger-window (goBack)="handleBack($event)" [conversation]="conversation" [userId]="userId" [username]="username"></app-messenger-window>
+    <app-messenger-window (goBack)="handleBack($event)" [conversation]="conversation" [userId]="userId"
+                          [username]="username"></app-messenger-window>
     <div class="reply">
       <form [formGroup]="messageForm" id="message-form" (ngSubmit)="onSubmit()">
-        <textarea (keyup.enter)= "onSubmit()" formControlName="content" placeholder="Type message" name="content" cols="30" rows="2"></textarea>
+        <textarea (keyup.enter)="onSubmit()" formControlName="content" placeholder="Type message" name="content"
+                  cols="30" rows="2"></textarea>
         <button type="submit"><i class="far fa-paper-plane"></i></button>
       </form>
     </div>
+    <p (click)="openDialog()">send pdf</p>
   </div>
 </div>

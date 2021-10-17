@@ -4,6 +4,7 @@ import com.jgajzler.apartmently.dto.AdDetailsDto;
 import com.jgajzler.apartmently.dto.AdDto;
 import com.jgajzler.apartmently.dto.AdEditDto;
 import com.jgajzler.apartmently.entity.Ad;
+import com.jgajzler.apartmently.entity.User;
 import com.jgajzler.apartmently.entity.enums.AdType;
 import com.jgajzler.apartmently.mapper.AdDetailsMapper;
 import com.jgajzler.apartmently.mapper.AdEditMapper;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdService {
@@ -42,9 +44,13 @@ public class AdService {
                 orElseThrow(EntityNotFoundException::new));
     }
 
-    public AdDto getAdById(Long id) {
+    public AdDto getAdDtoById(Long id) {
         return adMapper.toDto(adRepository.findAdById(id).
                 orElseThrow(EntityNotFoundException::new));
+    }
+
+    public Ad getAdById(Long id) {
+        return adRepository.findAdById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public Page<AdDto> getAllByUserId(Long id, Pageable pageable) {
@@ -76,6 +82,17 @@ public class AdService {
         Ad ad = adRepository.findAdById(adId).orElseThrow(EntityNotFoundException::new);
         ad.getUsersFav().add(userRepository.findUserById(userId));
         adRepository.save(ad);
+    }
+
+    public void givePermissionForPdf(Long adId, Long userId) {
+        Ad ad = adRepository.findAdById(adId).orElseThrow(EntityNotFoundException::new);
+        ad.getPermittedUsers().add(userRepository.findUserById(userId));
+        adRepository.save(ad);
+    }
+
+    public List<AdDto> getPermissionList(Long userId) {
+        User user = userRepository.findUserById(userId);
+        return user.getPermittedAds().stream().map(adMapper::toDto).collect(Collectors.toList());
     }
 
     public void removeFromFavorites(Long userId, Long adId) {

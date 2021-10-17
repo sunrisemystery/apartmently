@@ -6,13 +6,18 @@ import com.jgajzler.apartmently.dto.AdEditDto;
 import com.jgajzler.apartmently.entity.Ad;
 import com.jgajzler.apartmently.entity.enums.AdType;
 import com.jgajzler.apartmently.service.AdService;
+import com.jgajzler.apartmently.util.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.ByteArrayInputStream;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.Collections;
@@ -42,7 +47,7 @@ public class AdController {
 
     @GetMapping(path = "{adId}")
     public AdDto getAdById(@PathVariable("adId") Long id) {
-        return adService.getAdById(id);
+        return adService.getAdDtoById(id);
     }
 
     @GetMapping(path = "user/{userId}")
@@ -86,6 +91,25 @@ public class AdController {
         return adService.getAdForEdit(id);
     }
 
+    @GetMapping(path = "generate-pdf/{adId}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> adReport(@PathVariable("adId") Long id) throws Exception {
+        Ad ad = adService.getAdById(id);
+        ByteArrayInputStream bis = PDFGenerator.adReport(ad);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Disposition", "inline; filename=ad-report.pdf");
+        return ResponseEntity
+                .ok()
+                .headers(httpHeaders)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+    }
+
+
+    @GetMapping(path = "permitted/{userId}")
+    public List<AdDto> getPermissionListByUserId(@PathVariable("userId") Long userId) {
+        return adService.getPermissionList(userId);
+    }
+
     @PostMapping
     public ResponseEntity<Map<String, Long>> create(@RequestBody Ad ad) {
 
@@ -103,6 +127,11 @@ public class AdController {
     @PostMapping(path = "favorites/{adId}/{userId}")
     public void addToFavorites(@PathVariable("userId") Long userId, @PathVariable("adId") Long adId) {
         adService.addToFavorites(userId, adId);
+    }
+
+    @PostMapping(path = "permit-pdf/{adId}/{userId}")
+    public void givePermission(@PathVariable("adId") Long adId, @PathVariable("userId") Long userId) {
+        adService.givePermissionForPdf(adId, userId);
     }
 
     @PutMapping(path = "favorites/{adId}/{userId}")

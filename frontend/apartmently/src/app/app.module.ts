@@ -35,6 +35,8 @@ import {UserTileComponent} from './components/user-tile/user-tile.component';
 import { MessengerComponent } from './components/messenger/messenger.component';
 import { MessengerListComponent } from './components/messenger-list/messenger-list.component';
 import { MessengerWindowComponent } from './components/messenger-window/messenger-window.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -83,6 +85,7 @@ const routes: Routes = [
     MessengerComponent,
     MessengerListComponent,
     MessengerWindowComponent,
+    DialogComponent,
 
   ],
   imports: [
@@ -90,6 +93,7 @@ const routes: Routes = [
     BrowserModule,
     HttpClientModule,
     NoopAnimationsModule,
+    MatDialogModule,
     MAT_MODULES,
     AngularFireStorageModule,
     ReactiveFormsModule,

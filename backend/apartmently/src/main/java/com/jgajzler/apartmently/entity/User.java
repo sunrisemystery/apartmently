@@ -42,6 +42,9 @@ public class User {
     @ManyToMany(mappedBy = "usersFav", cascade = CascadeType.REMOVE)
     Set<Ad> favoriteAds;
 
+    @ManyToMany(mappedBy = "permittedUsers", cascade = CascadeType.REMOVE)
+    Set<Ad> permittedAds;
+
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role", columnDefinition = "user_role_enum default 'COMMON_USER'")

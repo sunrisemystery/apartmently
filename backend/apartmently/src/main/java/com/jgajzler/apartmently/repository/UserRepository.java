@@ -1,5 +1,6 @@
 package com.jgajzler.apartmently.repository;
 
+import com.jgajzler.apartmently.entity.Ad;
 import com.jgajzler.apartmently.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,8 +19,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByEmail(String email);
 
     Page<User> findAll(Pageable pageable);
-
-
-
 
 }

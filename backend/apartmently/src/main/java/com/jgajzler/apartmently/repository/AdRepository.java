@@ -35,6 +35,7 @@ public interface AdRepository extends JpaRepository<Ad, Long> {
     @Query(value = "select ad_id from users_favorites where user_id = ?", nativeQuery = true)
     List<Long> findAdsIdByUsersFavId(Long id);
 
+
     @Transactional
     @Modifying
     @Query("update Ad ad set ad.isActive = ?2 where ad.id = ?1")
