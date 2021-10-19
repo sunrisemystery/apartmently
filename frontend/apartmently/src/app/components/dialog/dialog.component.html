@@ -1,13 +1,12 @@
 <h1 mat-dialog-title>Choose your ad to generate pdf</h1>
 <div mat-dialog-content>
-    <div *ngFor="let ad of adsList">
-        <button mat-button [mat-dialog-close]="ad.id">{{ad.adName}}</button>
-    </div>
-    <p>permitted ads</p>
-    <div *ngFor="let ad of permitted">
-        <button mat-button [mat-dialog-close]="ad">{{ad.adName}}</button>
-    </div>
-
+  <div *ngFor="let ad of adsList">
+    <button mat-button [mat-dialog-close]="ad.id">{{ad.adName}}</button>
+  </div>
+  <p>Permitted Ads</p>
+  <div *ngFor="let ad of permitted">
+    <button mat-button [mat-dialog-close]="ad">{{ad.adName}}</button>
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Close</button>

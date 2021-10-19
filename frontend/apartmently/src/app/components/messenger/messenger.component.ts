@@ -4,7 +4,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Conversation} from 'src/app/common/conversation';
 import {ConversationList} from 'src/app/common/conversation-list';
 import {AuthenticationService} from 'src/app/services/authentication.service';
-import {AdService} from 'src/app/services/ad-service.service'
+import {AdService} from 'src/app/services/ad-service.service';
 import {BadWordService} from 'src/app/services/bad-word.service';
 import {ChatService} from 'src/app/services/chat.service';
 import {MatDialog} from '@angular/material/dialog';
@@ -68,7 +68,8 @@ export class MessengerComponent implements OnInit {
 
     this.messageContent = this.messageForm.get('content').value;
     this.messageContent = this.badWordsService.clean(this.messageContent);
-    if (!this.messageContent.startsWith('\n')) {
+    if (!this.messageContent.startsWith('\n') && this.conversationId !== undefined) {
+      console.log(this.conversationId);
       this.chatService.sendMessage(this.conversationId, this.messageContent).subscribe({
         next: () => {
           this.handleConversationId(this.conversationId);
@@ -119,7 +120,6 @@ export class MessengerComponent implements OnInit {
 
       anchor.download = id.toString();
       anchor.href = url;
-      console.log(anchor);
       anchor.click();
 
     });
@@ -136,7 +136,9 @@ export class MessengerComponent implements OnInit {
           this.sendPdf(result);
           userId = this.conversation.user1Id === this.authService.currentUserValue.id
             ? this.conversation.user2Id : this.conversation.user1Id;
-          this.adService.givePermission(userId, result).subscribe();
+          if (userId !== undefined) {
+            this.adService.givePermission(userId, result).subscribe();
+          }
         } else {
           this.sendPdf(result.id);
         }

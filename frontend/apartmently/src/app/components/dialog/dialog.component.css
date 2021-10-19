@@ -1,0 +1,16 @@
+button {
+  background: #0DAAC3 0 0 no-repeat padding-box;
+  box-shadow: 0 8px 8px #00000029;
+  border: 1px solid #0DAAC3;
+  border-radius: 25px;
+  vertical-align: middle;
+  color: white;
+  text-align: center;
+  margin: auto;
+  font-weight: 600;
+  transition: color .8s;
+}
+
+p {
+  margin-top: 0.7em;
+}
