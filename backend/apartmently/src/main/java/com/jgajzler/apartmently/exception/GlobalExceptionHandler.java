@@ -17,31 +17,38 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(JwtException.class)
     public ResponseEntity<ErrorResponse> jwtException(JwtException e) {
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(body(HttpStatus.NOT_ACCEPTABLE, e, ""));
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(errorResponse(HttpStatus.NOT_ACCEPTABLE, e, ""));
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
     public ResponseEntity<ErrorResponse> jwtExpiredException(ExpiredJwtException e) {
-        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(body(HttpStatus.NOT_ACCEPTABLE, e, "Expired token"));
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(errorResponse(HttpStatus.NOT_ACCEPTABLE, e, "Expired token"));
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorResponse> entityNotFound(EntityNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(body(HttpStatus.UNPROCESSABLE_ENTITY, e, "Entity not found"));
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(errorResponse(HttpStatus.UNPROCESSABLE_ENTITY, e, "Entity not found"));
     }
 
     @ExceptionHandler(InternalAuthenticationServiceException.class)
     public ResponseEntity<ErrorResponse> authException(InternalAuthenticationServiceException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body(HttpStatus.NOT_FOUND, e, "Bad credentials"));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse(HttpStatus.NOT_FOUND, e, "Bad credentials"));
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<ErrorResponse> badCredentials(BadCredentialsException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body(HttpStatus.NOT_FOUND, e, "Bad credentials"));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse(HttpStatus.NOT_FOUND, e, "Bad credentials"));
+    }
+
+    @ExceptionHandler(PDFGeneratorException.class)
+    public ResponseEntity<ErrorResponse> pdfException(PDFGeneratorException e) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(errorResponse(HttpStatus.INTERNAL_SERVER_ERROR, e, "Error generating PDF"));
     }
 
 
-    private ErrorResponse body(HttpStatus status, Exception e, String message) {
+    private ErrorResponse errorResponse(HttpStatus status, Exception e, String message) {
         return new ErrorResponse(
                 status,
                 new Date(),

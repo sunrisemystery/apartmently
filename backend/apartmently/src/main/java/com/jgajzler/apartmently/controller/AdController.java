@@ -36,13 +36,13 @@ public class AdController {
     }
 
     @GetMapping
-    public Page<AdDto> getAll(Pageable pageable) {
-        return adService.getAll(pageable);
+    public ResponseEntity<Page<AdDto>> getAll(Pageable pageable) {
+        return ResponseEntity.ok().body(adService.getAll(pageable));
     }
 
     @GetMapping(path = "details/{adId}")
-    public AdDetailsDto getAdDetailsById(@PathVariable("adId") Long id) {
-        return adService.getAdDetailsById(id);
+    public ResponseEntity<AdDetailsDto> getAdDetailsById(@PathVariable("adId") Long id) {
+        return ResponseEntity.ok().body(adService.getAdDetailsById(id));
     }
 
     @GetMapping(path = "{adId}")
@@ -92,11 +92,11 @@ public class AdController {
     }
 
     @GetMapping(path = "generate-pdf/{adId}", produces = MediaType.APPLICATION_PDF_VALUE)
-    public ResponseEntity<InputStreamResource> adReport(@PathVariable("adId") Long id) throws Exception {
+    public ResponseEntity<InputStreamResource> adReport(@PathVariable("adId") Long id) {
         Ad ad = adService.getAdById(id);
         ByteArrayInputStream bis = PDFGenerator.adReport(ad);
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Content-Disposition", "inline; filename=ad-report.pdf");
+        httpHeaders.add("Content-Disposition", "inline");
         return ResponseEntity
                 .ok()
                 .headers(httpHeaders)

@@ -1,76 +1,102 @@
 package com.jgajzler.apartmently.controller;
 
-import com.jgajzler.apartmently.UnsecuredWebMvcTest;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jgajzler.apartmently.dto.AdDetailsDto;
 import com.jgajzler.apartmently.dto.AdDto;
 import com.jgajzler.apartmently.entity.Ad;
+import com.jgajzler.apartmently.entity.Address;
+import com.jgajzler.apartmently.entity.User;
 import com.jgajzler.apartmently.entity.enums.AdType;
 import com.jgajzler.apartmently.service.AdService;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatchers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Collections;
 import java.util.Date;
 
-import static org.mockito.Mockito.verify;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@UnsecuredWebMvcTest(AdController.class)
+@RunWith(MockitoJUnitRunner.class)
+@WebMvcTest(AdController.class)
 public class AdControllerUnitTest {
-    public static final String URI = "/api/ad";
 
-    @Autowired
-    private MockMvc mvc;
-
-    @MockBean
+    @Mock
     private AdService adService;
 
+    @InjectMocks
+    private AdController adController;
+
     @Test
-    void getAll_returnPages() throws Exception {
+    public void getAll_returnPages() {
         //given
         Page<AdDto> page = new PageImpl<>(Collections.singletonList(getExampleAddDto()));
+        ResponseEntity<Page<AdDto>> expectedResponseEntity = ResponseEntity.ok().body(page);
         when(adService.getAll(ArgumentMatchers.any())).thenReturn(page);
-
-
         //when
+        ResponseEntity<Page<AdDto>> actualResponseEntity = adController.getAll(ArgumentMatchers.any());
         //then
-        mvc.perform(get(URI))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.content[0].id").value(page.getContent().get(0).getId()))
-                .andExpect(jsonPath("$.content[0].adName").value(page.getContent().get(0).getAdName()))
-                .andExpect(jsonPath("$.content[0].plotSurface").value(page.getContent().get(0).getPlotSurface()))
-                .andExpect(jsonPath("$.content[0].price").value(page.getContent().get(0).getPrice()))
-                .andExpect(jsonPath("$.content[0].active").value(page.getContent().get(0).isActive()));
-
-
-        verify(adService).getAll(ArgumentMatchers.any());
+        assertThat(actualResponseEntity.getBody()).isSameAs(expectedResponseEntity.getBody());
     }
 
     @Test
-    void getAdDetails_returnAdDetailsDto() throws Exception {
-        when(adService.getAdDetailsById(getExampleAdDetailsDto().getId())).thenReturn(getExampleAdDetailsDto());
-
-        mvc.perform(get(String.format("%s/details/%s",URI,getExampleAdDetailsDto().getId())))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.id").value(getExampleAdDetailsDto().getId()))
-                .andExpect(jsonPath("$.floor").value(getExampleAdDetailsDto().getFloor()));
-
+    public void getAdDetails_returnAdDetailsDto() {
+        //given
+        AdDetailsDto adDetailsDto = getExampleAdDetailsDto();
+        ResponseEntity<AdDetailsDto> expectedResponseEntity = ResponseEntity.ok().body(adDetailsDto);
+        when(adService.getAdDetailsById(adDetailsDto.getId())).thenReturn(adDetailsDto);
+        //when
+        ResponseEntity<AdDetailsDto> actualResponseEntity = adController.getAdDetailsById(adDetailsDto.getId());
+        //then
+        assertThat(actualResponseEntity.getBody()).isSameAs(expectedResponseEntity.getBody());
     }
 
 //    @Test
-//    void create_returnResponseEntity() throws Exception{
-//        long createdId = 2;
-//        when(adService.add(getExampleAd())).thenReturn(new ResponseEntity<Map<String,Long>>(ResponseEntity.created()))
+//    void getAdDetails_returnAdDetailsDto() throws Exception {
+//        when(adService.getAdDetailsById(getExampleAdDetailsDto().getId())).thenReturn(getExampleAdDetailsDto());
+//
+//        mvc.perform(get(String.format("%s/details/%s", URI, getExampleAdDetailsDto().getId())))
+//                .andExpect(status().isOk())
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(jsonPath("$.id").value(getExampleAdDetailsDto().getId()))
+//                .andExpect(jsonPath("$.floor").value(getExampleAdDetailsDto().getFloor()));
+//
+//    }
+//
+//    @Test
+//    void getAdTypes_returnAdType() throws Exception{
+//        mvc.perform(get(URI+"/ad-types"))
+//                .andExpect(content().json("[SALE, RENT]"));
+//
+//    }
+//
+//    @Test
+//    void create_returnCreated() throws Exception {
+//        Long createdId = 1L;
+//        Ad ad = getExampleAd();
+////        when(adService.add(getExampleAd())).thenReturn(new ResponseEntity<Map<String,Long>>(ResponseEntity.created()));
+//        when(adService.add(ad)).thenReturn(createdId);
+//        ad.setId(createdId);
+//
+//        mvc.perform(post(URI)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(asJsonString(ad)))
+//                .andExpect(status().isCreated());
+//
+////        MvcResult result =  mvc.perform(post(URI)
+////                .contentType(MediaType.APPLICATION_JSON)
+////                .content(asJsonString(ad))).andReturn();
+////
+////        MockHttpServletResponse response = result.getResponse();
+//
 //
 //    }
 
@@ -92,7 +118,7 @@ public class AdControllerUnitTest {
         );
     }
 
-    private AdDetailsDto getExampleAdDetailsDto(){
+    private AdDetailsDto getExampleAdDetailsDto() {
         return new AdDetailsDto(
                 1L,
                 5,
@@ -107,7 +133,29 @@ public class AdControllerUnitTest {
         );
     }
 
-    private Ad getExampleAd(){
-        return new Ad();
+    private Ad getExampleAd() {
+        Ad ad = new Ad();
+        ad.setAdName("name");
+        ad.setDescription("desc");
+        ad.setPlotSurface(1);
+        ad.setPrice(1);
+        ad.setNumberOfBedrooms(1);
+        ad.setNumberOfBathrooms(1);
+        ad.setFloorNumber(1);
+        ad.setDateCreated(new Date());
+        ad.setLastUpdated(new Date());
+        ad.setAddress(new Address());
+        ad.setUser(new User());
+        ad.setAdType(AdType.RENT);
+
+        return ad;
+    }
+
+    private static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
