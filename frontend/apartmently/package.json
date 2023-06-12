@@ -26,7 +26,7 @@
     "angular-jwt": "github:auth0/angular-jwt",
     "firebase": "^8.4.1",
     "rxjs": "~6.6.0",
-    "tslib": "^2.0.0",
+    "tslib": "^2.5.2",
     "uuid": "^8.3.2",
     "zone.js": "~0.11.3"
   },
